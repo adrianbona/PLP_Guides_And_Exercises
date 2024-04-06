@@ -4,7 +4,9 @@ bisiesto,
 factorial,
 divisores,
 esPrimo,
-cantDivisoresPrimos
+cantDivisoresPrimos,
+inverso,
+aEntero
 ) where
 
 -- Ejercicio 1
@@ -70,12 +72,31 @@ factorial :: Int -> Int
 factorial 0 = 1
 factorial x = x * factorial (x - 1)
 
--- d
+-- d [cantDivisoresPrimos x | x <- [1..10]]
 cantDivisoresPrimos :: Int -> Int
 cantDivisoresPrimos x = length (filter esPrimo (divisores x))
 
+-- [esPrimo x | x <- [1..10]]
 esPrimo :: Int -> Bool
 esPrimo x = x > 1 && length (divisores x) == 2
 
+-- [divisores  x | x <- [1..10]]
 divisores :: Int -> [Int]
 divisores n = [x | x <- [1..n], mod n x == 0]
+
+-- Ejercicio 3
+
+-- data Maybe a = Nothing | Just a
+-- data Either a b = Left a | Right b
+
+-- a [inverso x | x <- [0..10]]
+inverso :: Float -> Maybe Float
+inverso 0 = Nothing
+inverso x = Just (1/x)
+
+-- b [aEntero  Left x | x <- [0..10]]
+aEntero :: Either Int Bool -> Int
+aEntero (Left x) = x
+aEntero (Right x) = if x then 1 else 0
+
+-- Ejercicio 4
