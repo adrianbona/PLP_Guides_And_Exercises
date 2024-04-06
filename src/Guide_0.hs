@@ -6,7 +6,9 @@ divisores,
 esPrimo,
 cantDivisoresPrimos,
 inverso,
-aEntero
+aEntero,
+limpiar,
+limpiarB,
 ) where
 
 -- Ejercicio 1
@@ -100,3 +102,11 @@ aEntero (Left x) = x
 aEntero (Right x) = if x then 1 else 0
 
 -- Ejercicio 4
+
+-- a
+limpiar :: String -> String -> String
+limpiar _ [] = []
+limpiar s1 (x:xs) = if elem x s1 then limpiar s1 xs else (x:(limpiar s1 xs))
+
+limpiarB :: String -> String -> String
+limpiarB s1 s2 = filter(\s -> not (elem s s1)) s2
