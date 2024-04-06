@@ -2,7 +2,9 @@ module Main (main) where
 
 import Lib
 
-import Exercises ()
+import Guide_0 ()
+
+import Guide_1 ()
 
 main :: IO ()
 main = someFunc

@@ -1,4 +1,4 @@
-module Exercises (suma) where
+module Guide_1 () where
 
 suma :: [Int] -> Int
 suma [] = 0

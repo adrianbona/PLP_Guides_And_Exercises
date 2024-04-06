@@ -25,7 +25,8 @@ source-repository head
 
 library
   exposed-modules:
-      Exercises
+      Guide_0
+      Guide_1
       Lib
   other-modules:
       Paths_fcen
