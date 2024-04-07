@@ -13,7 +13,9 @@ difPromedio,
 promedio,
 todosIguales,
 AB(Empty, Bin),
-vacioAB
+vacioAB,
+negacionAB,
+productoAB
 ) where
 
 -- Ejercicio 1
@@ -138,3 +140,13 @@ data AB a = Empty | Bin (AB a) a (AB a)
 vacioAB :: AB a -> Bool
 vacioAB Empty = True
 vacioAB (Bin _ _ _) = False
+
+-- b
+negacionAB :: AB Bool -> AB Bool
+negacionAB Empty = Empty
+negacionAB (Bin left root right) = Bin (negacionAB left) (not root) (negacionAB right)
+
+-- c
+productoAB :: AB Int -> Int
+productoAB Empty = 1
+productoAB (Bin left root right) = (productoAB left) * root * (productoAB right)
