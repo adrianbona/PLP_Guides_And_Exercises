@@ -9,6 +9,11 @@ inverso,
 aEntero,
 limpiar,
 limpiarB,
+difPromedio,
+promedio,
+todosIguales,
+AB(Empty, Bin),
+vacioAB
 ) where
 
 -- Ejercicio 1
@@ -110,3 +115,26 @@ limpiar s1 (x:xs) = if elem x s1 then limpiar s1 xs else (x:(limpiar s1 xs))
 
 limpiarB :: String -> String -> String
 limpiarB s1 s2 = filter(\s -> not (elem s s1)) s2
+
+-- b
+difPromedio :: [Float] -> [Float]
+difPromedio xs = map (\x -> x - average) xs where average = promedio xs
+
+promedio :: [Float] -> Float
+promedio [] = 0
+promedio xs = sum xs / fromIntegral (length xs)
+
+-- c
+todosIguales :: [Int] -> Bool
+todosIguales [] = True
+todosIguales (_:[]) = True
+todosIguales (x:xs) = x == head xs && todosIguales xs
+
+-- Ejercicio 5
+
+data AB a = Empty | Bin (AB a) a (AB a)
+
+-- a
+vacioAB :: AB a -> Bool
+vacioAB Empty = True
+vacioAB (Bin _ _ _) = False
