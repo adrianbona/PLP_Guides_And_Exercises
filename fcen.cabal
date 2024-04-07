@@ -27,7 +27,6 @@ library
   exposed-modules:
       Guide_0
       Guide_1
-      Lib
   other-modules:
       Paths_fcen
   autogen-modules:

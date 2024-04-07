@@ -1,93 +1,124 @@
-module Guide_1 () where
+module Guide_1 (
+  max2,
+  max2Curry,
+  normaVectorial,
+  normaVectorialCurry,
+  subtract',
+  predecesor,
+) where
 
-suma :: [Int] -> Int
-suma [] = 0
-suma (x:xs) = x + suma xs
+-- Ejercicio 1
 
-suma' xs = foldr (+) 0 xs
+max2 :: Ord a => (a, a) -> a
+max2 (x, y) | x >= y = x
+            | otherwise = y
 
-elemo :: Int -> [Int] -> Bool
-elemo a [] = False
-elemo a (x:xs) = a == x || elemo a xs
+max2Curry :: Ord a => a -> a -> a
+max2Curry x y = max2 (x,y)
 
-elemo' a b = foldr (\x y -> (x == a || y)) False b
+normaVectorial :: Floating a => (a, a) -> a
+normaVectorial (x, y) = sqrt (x*x + y*y)
 
-filtra :: (Int -> Bool) -> [Int] -> [Int]
-filtra _ [] = []
-filtra f (x:xs) = if f x then x : filtra f xs else filtra f xs
+normaVectorialCurry :: Floating a => a -> a -> a
+normaVectorialCurry x y = normaVectorial (x,y)
 
-filtra' f xs = foldr (\x accum -> if f x then x : accum else accum) [] xs
+subtract' :: Integer -> Integer -> Integer
+subtract' = flip (-)
 
-mapea :: (a -> b) -> [a] -> [b]
-mapea _ [] = []
-mapea f (x:xs) = f x : mapea f xs
+predecesor :: Integer -> Integer
+predecesor = subtract 1
 
-mapea' f xs = foldr (\x accum -> f x : accum) [] xs
 
-mejorSegun :: (a -> a -> Bool) -> [a] -> a
-mejorSegun f (x:[]) = x
-mejorSegun f (x:y:ys) = if f x y then mejorSegun f (x:ys) else mejorSegun f (y:ys)
+-- -- Ejercicio 3
 
-mejorSegun' f xs = foldr1 (\x y -> if f x y then x else y) xs
+-- suma :: [Int] -> Int
+-- suma [] = 0
+-- suma (x:xs) = x + suma xs
 
---Version con funcion auxiliar
-sumasParciales :: Num a => [a] -> [a]
-sumasParciales xs = sumasParcialesAux 0 xs
+-- suma' xs = foldr (+) 0 xs
 
-sumasParcialesAux :: Num a => a -> [a] -> [a]
-sumasParcialesAux accu (x:[]) = [accu + x]
-sumasParcialesAux accu (x:xs) = [accu + x] ++ sumasParcialesAux (accu + x) xs
+-- elemo :: Int -> [Int] -> Bool
+-- elemo a [] = False
+-- elemo a (x:xs) = a == x || elemo a xs
 
---Version con foldl
-sumasParciales' xs = tail (foldl (\accu x -> accu ++ [x + (last accu)]) [0] xs)
+-- elemo' a b = foldr (\x y -> (x == a || y)) False b
 
---Version con foldr
-sumasParciales'' xs = foldr (\x accu -> (x : (map (+x) accu))) [] xs
+-- filtra :: (Int -> Bool) -> [Int] -> [Int]
+-- filtra _ [] = []
+-- filtra f (x:xs) = if f x then x : filtra f xs else filtra f xs
 
-sumaAlt :: Num a => [a] -> a
-sumaAlt xs = foldr (-) 0 xs
+-- filtra' f xs = foldr (\x accum -> if f x then x : accum else accum) [] xs
 
-sumaAltInvertida :: Num a => [a] -> a
-sumaAltInvertida xs = foldl (flip (-)) 0 xs
+-- mapea :: (a -> b) -> [a] -> [b]
+-- mapea _ [] = []
+-- mapea f (x:xs) = f x : mapea f xs
 
---EJERCICIO 5
+-- mapea' f xs = foldr (\x accum -> f x : accum) [] xs
 
---i No es recursion estructural porque no se hace recursion en toda la lista sino sobre tail de xs
+-- mejorSegun :: (a -> a -> Bool) -> [a] -> a
+-- mejorSegun f (x:[]) = x
+-- mejorSegun f (x:y:ys) = if f x y then mejorSegun f (x:ys) else mejorSegun f (y:ys)
 
---ii Es recursion estructural porque cumple ambas condiciones, la reescribimos con foldr en xs
+-- mejorSegun' f xs = foldr1 (\x y -> if f x y then x else y) xs
 
---EJERCICIO 6
+-- --Version con funcion auxiliar
+-- sumasParciales :: Num a => [a] -> [a]
+-- sumasParciales xs = sumasParcialesAux 0 xs
 
-recr :: (a -> [a] -> b -> b) -> b -> [a] -> b
-recr _ z [] = z
-recr f z (x : xs) = f x xs (recr f z xs)
+-- sumasParcialesAux :: Num a => a -> [a] -> [a]
+-- sumasParcialesAux accu (x:[]) = [accu + x]
+-- sumasParcialesAux accu (x:xs) = [accu + x] ++ sumasParcialesAux (accu + x) xs
 
---a
+-- --Version con foldl
+-- sumasParciales' xs = tail (foldl (\accu x -> accu ++ [x + (last accu)]) [0] xs)
 
-sacarUna :: Eq a => a -> [a] -> [a]
-sacarUna el list = recr(\x xs rec -> if el/=x then x:rec else xs) [] list
+-- --Version con foldr
+-- sumasParciales'' xs = foldr (\x accu -> (x : (map (+x) accu))) [] xs
 
---b
+-- sumaAlt :: Num a => [a] -> a
+-- sumaAlt xs = foldr (-) 0 xs
 
---No es adecuado porque no permite "cortar la ejecucion", evitar el resultado de la recursion
+-- sumaAltInvertida :: Num a => [a] -> a
+-- sumaAltInvertida xs = foldl (flip (-)) 0 xs
 
---c
+-- --EJERCICIO 5
 
-insertarOrdenado :: Ord a => a -> [a] -> [a]
-insertarOrdenado el list = recr(\x xs rec -> if el>x then x:rec else el:x:xs) [] list
+-- --i No es recursion estructural porque no se hace recursion en toda la lista sino sobre tail de xs
 
---EJERCICIO 8
+-- --ii Es recursion estructural porque cumple ambas condiciones, la reescribimos con foldr en xs
 
---i
+-- --EJERCICIO 6
 
-mapPares :: (a -> b -> c) -> [(a,b)] -> [c]
-mapPares f xs = map (uncurry f) xs
-mapPares' f xs = foldr (\x accum -> uncurry f x : accum) [] xs
+-- recr :: (a -> [a] -> b -> b) -> b -> [a] -> b
+-- recr _ z [] = z
+-- recr f z (x : xs) = f x xs (recr f z xs)
 
---ii
+-- --a
 
---armarPares :: [a] -> [b] -> [(a,b)]
+-- sacarUna :: Eq a => a -> [a] -> [a]
+-- sacarUna el list = recr(\x xs rec -> if el/=x then x:rec else xs) [] list
 
---iii
+-- --b
 
---mapDoble :: (a -> b -> c) -> [a] -> [b] -> [c]
+-- --No es adecuado porque no permite "cortar la ejecucion", evitar el resultado de la recursion
+
+-- --c
+
+-- insertarOrdenado :: Ord a => a -> [a] -> [a]
+-- insertarOrdenado el list = recr(\x xs rec -> if el>x then x:rec else el:x:xs) [] list
+
+-- --EJERCICIO 8
+
+-- --i
+
+-- mapPares :: (a -> b -> c) -> [(a,b)] -> [c]
+-- mapPares f xs = map (uncurry f) xs
+-- mapPares' f xs = foldr (\x accum -> uncurry f x : accum) [] xs
+
+-- --ii
+
+-- --armarPares :: [a] -> [b] -> [(a,b)]
+
+-- --iii
+
+-- --mapDoble :: (a -> b -> c) -> [a] -> [b] -> [c]
