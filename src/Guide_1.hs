@@ -5,22 +5,36 @@ module Guide_1 (
   normaVectorialCurry,
   subtract',
   predecesor,
+  curry',
+  uncurry',
+  suma,
+  suma',
+  elemo,
+  elemo',
+  filtra,
+  filtra',
+  mapea,
+  mapea',
+  mejorSegun,
+  mejorSegun',
+  sumasParciales,
+  sumasParciales',
+  sumasParciales'',
 ) where
 
 -- Ejercicio 1
 
 max2 :: Ord a => (a, a) -> a
-max2 (x, y) | x >= y = x
-            | otherwise = y
+max2 (x, y) = if x >= y then x else y
 
 max2Curry :: Ord a => a -> a -> a
-max2Curry x y = max2 (x,y)
+max2Curry = \x -> \y -> max2 (x,y)
 
 normaVectorial :: Floating a => (a, a) -> a
 normaVectorial (x, y) = sqrt (x*x + y*y)
 
 normaVectorialCurry :: Floating a => a -> a -> a
-normaVectorialCurry x y = normaVectorial (x,y)
+normaVectorialCurry = \x -> \y -> normaVectorial (x,y)
 
 subtract' :: Integer -> Integer -> Integer
 subtract' = flip (-)
@@ -28,52 +42,81 @@ subtract' = flip (-)
 predecesor :: Integer -> Integer
 predecesor = subtract 1
 
+-- Ejercicio 2
 
--- -- Ejercicio 3
+-- Dada una función de dos argumentos, devuelve su equivalente currificada
+curry' :: ((a, b) -> t) -> a -> b -> t
+curry' f = \x -> \y -> f (x,y)
 
--- suma :: [Int] -> Int
--- suma [] = 0
--- suma (x:xs) = x + suma xs
+-- Dada una función currificada de dos argumentos, devuelve su equivalente no currificada
+uncurry' :: (t1 -> t2 -> t3) -> (t1, t2) -> t3
+uncurry' f = \(x,y) -> f x y
 
--- suma' xs = foldr (+) 0 xs
+-- Ejercicio 3
 
--- elemo :: Int -> [Int] -> Bool
--- elemo a [] = False
--- elemo a (x:xs) = a == x || elemo a xs
+-- Redefinir usando foldr
 
--- elemo' a b = foldr (\x y -> (x == a || y)) False b
+-- SUM
+suma :: [Int] -> Int
+suma [] = 0
+suma (x:xs) = x + suma xs
 
--- filtra :: (Int -> Bool) -> [Int] -> [Int]
--- filtra _ [] = []
--- filtra f (x:xs) = if f x then x : filtra f xs else filtra f xs
+-- SUM con foldr
+suma' :: (Foldable t, Num b) => t b -> b
+suma' xs = foldr (+) 0 xs
 
--- filtra' f xs = foldr (\x accum -> if f x then x : accum else accum) [] xs
+-- ELEM
+elemo :: (Eq a) => a -> [a] -> Bool
+elemo _ [] = False
+elemo a xs = a == head xs || elemo a (tail xs)
 
--- mapea :: (a -> b) -> [a] -> [b]
--- mapea _ [] = []
--- mapea f (x:xs) = f x : mapea f xs
+-- ELEM con foldr
+elemo' :: (Foldable t, Eq a) => a -> t a -> Bool
+elemo' a b = foldr (\x y -> (x == a || y)) False b
 
--- mapea' f xs = foldr (\x accum -> f x : accum) [] xs
+-- FILTER
+filtra :: (a -> Bool) -> [a] -> [a]
+filtra _ [] = []
+filtra f (x:xs) = if f x then x : filtra f xs else filtra f xs
 
--- mejorSegun :: (a -> a -> Bool) -> [a] -> a
--- mejorSegun f (x:[]) = x
--- mejorSegun f (x:y:ys) = if f x y then mejorSegun f (x:ys) else mejorSegun f (y:ys)
+-- FILTER con foldr
+filtra' :: Foldable t => (a -> Bool) -> t a -> [a]
+filtra' f xs = foldr (\x accum -> if f x then x : accum else accum) [] xs
 
--- mejorSegun' f xs = foldr1 (\x y -> if f x y then x else y) xs
+-- MAP
+mapea :: (a -> b) -> [a] -> [b]
+mapea _ [] = []
+mapea f (x:xs) = f x : mapea f xs
 
--- --Version con funcion auxiliar
--- sumasParciales :: Num a => [a] -> [a]
--- sumasParciales xs = sumasParcialesAux 0 xs
+-- MAP con foldr
+mapea' :: Foldable t1 => (t2 -> a) -> t1 t2 -> [a]
+mapea' f xs = foldr (\x accum -> f x : accum) [] xs
 
--- sumasParcialesAux :: Num a => a -> [a] -> [a]
--- sumasParcialesAux accu (x:[]) = [accu + x]
--- sumasParcialesAux accu (x:xs) = [accu + x] ++ sumasParcialesAux (accu + x) xs
+-- Devuelve el máximo elemento de la lista según una función de comparación
+mejorSegun :: (a -> a -> Bool) -> [a] -> a
+mejorSegun _ (x:[]) = x
+mejorSegun f (x:y:ys) = if f x y then mejorSegun f (x:ys) else mejorSegun f (y:ys)
 
--- --Version con foldl
--- sumasParciales' xs = tail (foldl (\accu x -> accu ++ [x + (last accu)]) [0] xs)
+-- mejorSegun con foldr1
+mejorSegun' :: Foldable t1 => (t2 -> t2 -> Bool) -> t1 t2 -> t2
+mejorSegun' f xs = foldr1 (\x y -> if f x y then x else y) xs
 
--- --Version con foldr
--- sumasParciales'' xs = foldr (\x accu -> (x : (map (+x) accu))) [] xs
+-- Devuelve otra de la misma longitud, que tiene en cada posición la suma parcial
+-- de los elementos de la lista original desde la cabeza hasta la posición actual
+sumasParciales :: Num a => [a] -> [a]
+sumasParciales xs = sumasParcialesAux 0 xs
+
+sumasParcialesAux :: Num a => a -> [a] -> [a]
+sumasParcialesAux accu (x:[]) = [accu + x]
+sumasParcialesAux accu (x:xs) = [accu + x] ++ sumasParcialesAux (accu + x) xs
+
+-- sumasParciales con foldr
+sumasParciales' :: (Foldable t, Num a) => t a -> [a]
+sumasParciales' xs = foldr (\x accu -> (x : (map (+x) accu))) [] xs
+
+-- sumasParciales con foldl
+sumasParciales'' :: Num a => [a] -> [a]
+sumasParciales'' xs = foldl (\accu x -> (x : (map (+x) accu))) [] (reverse xs)
 
 -- sumaAlt :: Num a => [a] -> a
 -- sumaAlt xs = foldr (-) 0 xs
