@@ -94,6 +94,7 @@ mapea' f xs = foldr (\x accum -> f x : accum) [] xs
 
 -- Devuelve el máximo elemento de la lista según una función de comparación
 mejorSegun :: (a -> a -> Bool) -> [a] -> a
+mejorSegun _ [] = error "Empty list"
 mejorSegun _ (x:[]) = x
 mejorSegun f (x:y:ys) = if f x y then mejorSegun f (x:ys) else mejorSegun f (y:ys)
 
@@ -107,7 +108,7 @@ sumasParciales :: Num a => [a] -> [a]
 sumasParciales xs = sumasParcialesAux 0 xs
 
 sumasParcialesAux :: Num a => a -> [a] -> [a]
-sumasParcialesAux accu (x:[]) = [accu + x]
+sumasParcialesAux _ [] = []
 sumasParcialesAux accu (x:xs) = [accu + x] ++ sumasParcialesAux (accu + x) xs
 
 -- sumasParciales con foldr
