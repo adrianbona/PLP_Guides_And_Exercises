@@ -139,6 +139,16 @@ sumaAlt xs = foldr (-) 0 xs
 sumaAltInvertida :: Num a => [a] -> a
 sumaAltInvertida xs = foldl (flip (-)) 0 xs
 
+-- Ejercicio 4
+
+ -- i) Dada una lista devuelve todas sus permutaciones
+
+-- permutaciones :: [a] -> [[a]]
+-- (\x -> concatMap (\y -> [(take y x)]) [1..length x]) [1..10]
+-- [[1],[1,2],[1,2,3],[1,2,3,4],[1,2,3,4,5],[1,2,3,4,5,6],[1,2,3,4,5,6,7],[1,2,3,4,5,6,7,8],[1,2,3,4,5,6,7,8,9],[1,2,3,4,5,6,7,8,9,10]]
+-- (\x -> concatMap (\y -> [(drop y x)]) [0..length x-1]) [1..10]
+-- [[1,2,3,4,5,6,7,8,9,10],[2,3,4,5,6,7,8,9,10],[3,4,5,6,7,8,9,10],[4,5,6,7,8,9,10],[5,6,7,8,9,10],[6,7,8,9,10],[7,8,9,10],[8,9,10],[9,10],[10]]
+
 -- Ejercicio 5
 
 -- i No es recursión estructural porque no se hace recursión en toda la lista sino sobre tail de xs
@@ -173,6 +183,10 @@ sacarUna el list = recr(\x xs rec -> if el /= x then x:rec else xs) [] list
 
 insertarOrdenado :: Ord a => a -> [a] -> [a]
 insertarOrdenado el list = recr(\x xs rec -> if el > x then x:rec else el:x:xs) [] list
+
+-- Ejercicio 7
+
+-- XXXXXXXXXXXXXXXXXXXXXXXXXX
 
 -- Ejercicio 8
 
