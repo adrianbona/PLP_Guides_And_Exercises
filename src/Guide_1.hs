@@ -20,6 +20,14 @@ module Guide_1 (
   sumasParciales,
   sumasParciales',
   sumasParciales'',
+  sumaAlt,
+  sumaAltInvertida,
+  elementosEnPosicionesPares,
+  entrelazar,
+  entrelazar',
+  recr,
+  sacarUna,
+  insertarOrdenado,
 ) where
 
 -- Ejercicio 1
@@ -119,50 +127,45 @@ sumasParciales' xs = foldr (\x accu -> (x : (map (+x) accu))) [] xs
 sumasParciales'' :: Num a => [a] -> [a]
 sumasParciales'' xs = foldl (\accu x -> (x : (map (+x) accu))) [] (reverse xs)
 
--- sumaAlt :: Num a => [a] -> a
--- sumaAlt xs = foldr (-) 0 xs
+-- Realiza la suma alternada de los elementos de una lista
+sumaAlt :: Num a => [a] -> a
+sumaAlt xs = foldr (-) 0 xs
 
--- sumaAltInvertida :: Num a => [a] -> a
--- sumaAltInvertida xs = foldl (flip (-)) 0 xs
+-- Suma alternada utilizando foldl
+sumaAltInvertida :: Num a => [a] -> a
+sumaAltInvertida xs = foldl (flip (-)) 0 xs
 
--- --EJERCICIO 5
+-- Ejercicio 5
 
--- --i No es recursion estructural porque no se hace recursion en toda la lista sino sobre tail de xs
+-- i No es recursión estructural porque no se hace recursión en toda la lista sino sobre tail de xs
+elementosEnPosicionesPares :: [a] -> [a]
+elementosEnPosicionesPares [] = []
+elementosEnPosicionesPares (x:xs) = if null xs then [x] else x : elementosEnPosicionesPares (tail xs)
 
--- --ii Es recursion estructural porque cumple ambas condiciones, la reescribimos con foldr en xs
+-- ii Es recursión estructural porque cumple ambas condiciones, la reescribimos con foldr en xs.
 
--- --EJERCICIO 6
+entrelazar :: [a] -> [a] -> [a]
+entrelazar [] = id
+entrelazar (x:xs) = \ys -> if null ys then x : entrelazar xs [] else x : head ys : entrelazar xs (tail ys)
 
--- recr :: (a -> [a] -> b -> b) -> b -> [a] -> b
--- recr _ z [] = z
--- recr f z (x : xs) = f x xs (recr f z xs)
+entrelazar' :: [a] -> [a] -> [a]
+entrelazar' xs ys = (foldr (\x acu -> \t -> if null t then x : acu t else x : head t : acu (tail t)) id xs) ys
 
--- --a
+-- Ejercicio 6
 
--- sacarUna :: Eq a => a -> [a] -> [a]
--- sacarUna el list = recr(\x xs rec -> if el/=x then x:rec else xs) [] list
+-- Recursión primitiva sobre listas
+recr :: (a -> [a] -> b -> b) -> b -> [a] -> b
+recr _ z [] = z
+recr f z (x : xs) = f x xs (recr f z xs)
 
--- --b
+-- a) Dados un elemento y una lista devuelve el resultado de eliminar de la lista la primera aparición del elemento
 
--- --No es adecuado porque no permite "cortar la ejecucion", evitar el resultado de la recursion
+sacarUna :: Eq a => a -> [a] -> [a]
+sacarUna el list = recr(\x xs rec -> if el /= x then x:rec else xs) [] list
 
--- --c
+-- b) Foldr no es adecuado porque no permite "cortar la ejecucion" y así evitar el resultado de la recursion
 
--- insertarOrdenado :: Ord a => a -> [a] -> [a]
--- insertarOrdenado el list = recr(\x xs rec -> if el>x then x:rec else el:x:xs) [] list
+-- c) Inserta un elemento en una lista ordenada (de manera creciente), de manera que se preserva el ordenamiento
 
--- --EJERCICIO 8
-
--- --i
-
--- mapPares :: (a -> b -> c) -> [(a,b)] -> [c]
--- mapPares f xs = map (uncurry f) xs
--- mapPares' f xs = foldr (\x accum -> uncurry f x : accum) [] xs
-
--- --ii
-
--- --armarPares :: [a] -> [b] -> [(a,b)]
-
--- --iii
-
--- --mapDoble :: (a -> b -> c) -> [a] -> [b] -> [c]
+insertarOrdenado :: Ord a => a -> [a] -> [a]
+insertarOrdenado el list = recr(\x xs rec -> if el > x then x:rec else el:x:xs) [] list
