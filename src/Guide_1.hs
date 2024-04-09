@@ -28,6 +28,10 @@ module Guide_1 (
   recr,
   sacarUna,
   insertarOrdenado,
+  mapPares,
+  mapPares',
+  armarPares,
+  mapDoble,
 ) where
 
 -- Ejercicio 1
@@ -169,3 +173,35 @@ sacarUna el list = recr(\x xs rec -> if el /= x then x:rec else xs) [] list
 
 insertarOrdenado :: Ord a => a -> [a] -> [a]
 insertarOrdenado el list = recr(\x xs rec -> if el > x then x:rec else el:x:xs) [] list
+
+-- Ejercicio 8
+
+-- atcliente@correoargentino.com.ar
+
+-- i
+
+-- Versión de map que toma una función currificada de dos argumentos y una lista de pares
+-- de valores, y devuelve la lista de aplicaciones de la función a cada par
+
+mapPares :: (a -> b -> c) -> [(a,b)] -> [c]
+mapPares f xs = map (uncurry f) xs
+
+-- Versión con foldr
+mapPares' :: Foldable t => (a -> b -> c) -> t (a, b) -> [c]
+mapPares' f xs = foldr (\x accum -> uncurry f x : accum) [] xs
+
+-- ii
+
+-- Dadas dos listas arma una lista de pares que contiene, en cada posición, el elemento
+-- correspondiente a esa posición en cada una de las listas (similar a ENTRELAZAR)
+
+armarPares :: [a] -> [b] -> [(a, b)]
+armarPares xs ys = (foldr (\x acu -> \t -> if null t then acu [] else (x, head t) : acu (tail t)) (const []) xs) ys
+
+--iii
+
+-- Toma una función currificada de dos argumentos y dos listas (de igual longitud), y devuelve
+-- una lista de aplicaciones de la función a cada elemento correspondiente de las dos listas
+
+mapDoble :: (a -> b -> c) -> [a] -> [b] -> [c]
+mapDoble f xs ys = (foldr (\x acu -> \t -> f x (head t) : acu (tail t)) (const []) xs) ys
