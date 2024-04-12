@@ -5,6 +5,8 @@ module Guide_Solved (
   foldAB,
   hojas,
   espejo,
+  ramas,
+  foldr2,
 ) where
 
 -- Ejercicio 1
@@ -45,3 +47,35 @@ hojas tree = foldAB (\x -> [x]) (\t1 n t2 -> t1 ++ [n] ++ t2) tree
 
 espejo :: Arbol a -> Arbol a
 espejo tree = foldAB (\n -> Hoja n) (\t1 n t2 -> Bin t2 n t1) tree
+
+-- iv
+
+-- Devuelve la lista de ramas de un árbol
+-- ramas (Guide_Solved.Bin (Hoja 3) 5 (Guide_Solved.Bin (Hoja 7) 8 (Guide_Solved.Bin (Hoja 2) 1 (Hoja 4))))
+-- [[5,3],[5,8,7],[5,8,1,2],[5,8,1,4]]
+
+ramas :: Arbol a -> [[a]]
+ramas tree = foldAB (\r -> [[r]]) (\t1 r t2 ->  (map (r:) t1) ++ (map (r:) t2)) tree
+
+-- Ejercicio 4
+
+-- i
+
+-- Similar a foldr, pero trabaja sobre dos listas en lugar de una
+-- foldr2 (\x y b -> (x,y):b) [] [1,2,3] ["a","b","c"]
+-- [(1,"a"),(2,"b"),(3,"c")]
+
+foldr2:: (a -> b -> c -> c) -> c -> [a] -> [b] -> c
+foldr2 _ _ [] (_:_) = error "Lists should have the same length"
+foldr2 _ _ (_:_) [] = error "Lists should have the same length"
+foldr2 _ z [] [] = z
+foldr2 f z (x:xs) (y:ys) = f x y (foldr2 f z xs ys)
+
+-- ii
+
+-- Utilizando foldr2 y listas por comprensión, y sin utilizar recursión explícita,
+-- definir el operador que toma dos matrices y devuelve el producto entre ellas
+
+type Matriz a = [[a]]
+
+--(<*>) :: Matriz a -> Matriz a -> Matriz a
