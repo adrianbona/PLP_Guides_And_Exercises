@@ -7,6 +7,9 @@ module Guide_Solved (
   espejo,
   ramas,
   foldr2,
+  Matriz,
+  col,
+  productoEntreMatrices,
 ) where
 
 -- Ejercicio 1
@@ -76,6 +79,19 @@ foldr2 f z (x:xs) (y:ys) = f x y (foldr2 f z xs ys)
 -- Utilizando foldr2 y listas por comprensión, y sin utilizar recursión explícita,
 -- definir el operador que toma dos matrices y devuelve el producto entre ellas
 
+-- productoEntreMatrices [[1,2],[4,5],[7,8]] [[1,2,3],[4,5,6]]
+-- [[9,12,15],[24,33,42],[39,54,69]]
+
 type Matriz a = [[a]]
 
---(<*>) :: Matriz a -> Matriz a -> Matriz a
+col :: Int -> Matriz a -> [a]
+col i = map (!!i)
+
+fila :: Int -> Matriz a -> [a]
+fila i = (!!i)
+
+multiplicarFilaPorColumna :: Num a => [a] -> [a] -> a
+multiplicarFilaPorColumna xs ys = foldr2 (\x y z -> x * y + z) 0 xs ys
+
+productoEntreMatrices :: Num a => Matriz a -> Matriz a -> Matriz a
+productoEntreMatrices m1 m2 = [[multiplicarFilaPorColumna (fila j m1) (col i m2) | i <- [0.. length (head m2) - 1]] | j <- [0.. length m1 - 1]]
