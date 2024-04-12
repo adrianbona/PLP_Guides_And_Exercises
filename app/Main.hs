@@ -4,5 +4,7 @@ import Guide_0 ()
 
 import Guide_1 ()
 
+import Guide_Solved ()
+
 main :: IO ()
 main = putStrLn "Main file loaded"

@@ -4,14 +4,14 @@ cabal-version: 2.2
 --
 -- see: https://github.com/sol/hpack
 
-name:           fcen
+name:           plp
 version:        0.1.0.0
-description:    Please see the README on GitHub at <https://github.com/githubuser/fcen#readme>
-homepage:       https://github.com/githubuser/fcen#readme
-bug-reports:    https://github.com/githubuser/fcen/issues
-author:         Author name here
-maintainer:     example@example.com
-copyright:      2024 Author name here
+description:    Please see the README on GitHub at <https://github.com/adrianbona/Haskell_Exercises>
+homepage:       https://github.com/adrianbona/Haskell_Exercises#readme
+bug-reports:    https://github.com/adrianbona/Haskell_Exercises/issues
+author:         Adrian Bona
+maintainer:     adrianbona@outlook.com
+copyright:      2024 Adrian Bona
 license:        BSD-3-Clause
 license-file:   LICENSE
 build-type:     Simple
@@ -21,16 +21,17 @@ extra-source-files:
 
 source-repository head
   type: git
-  location: https://github.com/githubuser/fcen
+  location: https://github.com/adrianbona/Haskell_Exercises
 
 library
   exposed-modules:
       Guide_0
       Guide_1
+      Guide_Solved
   other-modules:
-      Paths_fcen
+      Paths_plp
   autogen-modules:
-      Paths_fcen
+      Paths_plp
   hs-source-dirs:
       src
   ghc-options: -Wall -Wcompat -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wmissing-export-lists -Wmissing-home-modules -Wpartial-fields -Wredundant-constraints
@@ -38,31 +39,31 @@ library
       base >=4.7 && <5
   default-language: Haskell2010
 
-executable fcen-exe
+executable plp-exe
   main-is: Main.hs
   other-modules:
-      Paths_fcen
+      Paths_plp
   autogen-modules:
-      Paths_fcen
+      Paths_plp
   hs-source-dirs:
       app
-  ghc-options: -Wall -Wcompat -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wmissing-export-lists -Wmissing-home-modules -Wpartial-fields -Wredundant-constraints -threaded -rtsopts -with-rtsopts=-N
+  ghc-options: -Wall -Wcompat -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wmissing-export-lists -Wmissing-home-modules -Wpartial-fields -Wredundant-constraints -rtsopts -with-rtsopts=-N
   build-depends:
       base >=4.7 && <5
-    , fcen
+    , plp
   default-language: Haskell2010
 
-test-suite fcen-test
+test-suite plp-test
   type: exitcode-stdio-1.0
   main-is: Spec.hs
   other-modules:
-      Paths_fcen
+      Paths_plp
   autogen-modules:
-      Paths_fcen
+      Paths_plp
   hs-source-dirs:
       test
-  ghc-options: -Wall -Wcompat -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wmissing-export-lists -Wmissing-home-modules -Wpartial-fields -Wredundant-constraints -threaded -rtsopts -with-rtsopts=-N
+  ghc-options: -Wall -Wcompat -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wmissing-export-lists -Wmissing-home-modules -Wpartial-fields -Wredundant-constraints -rtsopts -with-rtsopts=-N
   build-depends:
       base >=4.7 && <5
-    , fcen
+    , plp
   default-language: Haskell2010

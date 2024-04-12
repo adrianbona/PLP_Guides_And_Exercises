@@ -1,10 +1,10 @@
-name:                fcen
+name:                plp
 version:             0.1.0.0
-github:              "githubuser/fcen"
+github:              "adrianbona/Haskell_Exercises"
 license:             BSD-3-Clause
-author:              "Author name here"
-maintainer:          "example@example.com"
-copyright:           "2024 Author name here"
+author:              "Adrian Bona"
+maintainer:          "adrianbona@outlook.com"
+copyright:           "2024 Adrian Bona"
 
 extra-source-files:
 - README.md
@@ -17,7 +17,7 @@ extra-source-files:
 # To avoid duplicated efforts in documentation and dealing with the
 # complications of embedding Haddock markup inside cabal files, it is
 # common to point users to the README.md file.
-description:         Please see the README on GitHub at <https://github.com/githubuser/fcen#readme>
+description:         Please see the README on GitHub at <https://github.com/adrianbona/Haskell_Exercises>
 
 dependencies:
 - base >= 4.7 && < 5
@@ -37,23 +37,21 @@ library:
   source-dirs: src
 
 executables:
-  fcen-exe:
+  plp-exe:
     main:                Main.hs
     source-dirs:         app
     ghc-options:
-    - -threaded
     - -rtsopts
     - -with-rtsopts=-N
     dependencies:
-    - fcen
+    - plp
 
 tests:
-  fcen-test:
+  plp-test:
     main:                Spec.hs
     source-dirs:         test
     ghc-options:
-    - -threaded
     - -rtsopts
     - -with-rtsopts=-N
     dependencies:
-    - fcen
+    - plp

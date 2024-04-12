@@ -190,8 +190,6 @@ insertarOrdenado el list = recr(\x xs rec -> if el > x then x:rec else el:x:xs) 
 
 -- Ejercicio 8
 
--- atcliente@correoargentino.com.ar
-
 -- i
 
 -- Versión de map que toma una función currificada de dos argumentos y una lista de pares
