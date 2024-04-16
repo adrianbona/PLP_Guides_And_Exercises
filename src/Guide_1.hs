@@ -22,6 +22,8 @@ module Guide_1 (
   sumasParciales'',
   sumaAlt,
   sumaAltInvertida,
+  insertarEnTodasLasPosiciones,
+  permutaciones,
   elementosEnPosicionesPares,
   entrelazar,
   entrelazar',
@@ -143,11 +145,11 @@ sumaAltInvertida xs = foldl (flip (-)) 0 xs
 
  -- i) Dada una lista devuelve todas sus permutaciones
 
--- permutaciones :: [a] -> [[a]]
--- (\x -> concatMap (\y -> [(take y x)]) [1..length x]) [1..10]
--- [[1],[1,2],[1,2,3],[1,2,3,4],[1,2,3,4,5],[1,2,3,4,5,6],[1,2,3,4,5,6,7],[1,2,3,4,5,6,7,8],[1,2,3,4,5,6,7,8,9],[1,2,3,4,5,6,7,8,9,10]]
--- (\x -> concatMap (\y -> [(drop y x)]) [0..length x-1]) [1..10]
--- [[1,2,3,4,5,6,7,8,9,10],[2,3,4,5,6,7,8,9,10],[3,4,5,6,7,8,9,10],[4,5,6,7,8,9,10],[5,6,7,8,9,10],[6,7,8,9,10],[7,8,9,10],[8,9,10],[9,10],[10]]
+insertarEnTodasLasPosiciones :: a -> [a] -> [[a]]
+insertarEnTodasLasPosiciones el xs = [take x xs ++ [el] ++ drop x xs | x <- [0..length xs]]
+
+permutaciones :: [a] -> [[a]]
+permutaciones xs = foldr (\x accu -> concatMap (insertarEnTodasLasPosiciones x) accu) [[]] xs
 
 -- Ejercicio 5
 
