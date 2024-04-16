@@ -151,6 +151,24 @@ insertarEnTodasLasPosiciones el xs = [take x xs ++ [el] ++ drop x xs | x <- [0..
 permutaciones :: [a] -> [[a]]
 permutaciones xs = foldr (\x accu -> concatMap (insertarEnTodasLasPosiciones x) accu) [[]] xs
 
+-- ii) Dada una lista devuelve el conjunto de partes de la misma
+
+--partes [5, 1, 2] → [[], [5], [1], [2], [5, 1], [5, 2], [1, 2], [5, 1, 2]]
+
+--partes :: [a] -> [[a]]
+
+-- iii) Dada una lista, devuelve todos sus prefijos
+
+--prefijos [5, 1, 2] → [[], [5], [5, 1], [5, 1, 2]]
+
+--prefijos :: [a] -> [[a]]
+
+-- iv) Dada una lista, devuelve todas las listas de elementos que aparecen consecutivos en la lista original
+
+--sublistas [5, 1, 2] → [[], [5], [1], [2], [5, 1], [1, 2], [5, 1, 2]]
+
+--sublistas :: [a] -> [[a]]
+
 -- Ejercicio 5
 
 -- i No es recursión estructural porque no se hace recursión en toda la lista sino sobre tail de xs
