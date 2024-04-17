@@ -25,6 +25,9 @@ module Guide_1 (
   insertarEnTodasLasPosiciones,
   permutaciones,
   elementosEnPosicionesPares,
+  partes,
+  prefijos,
+  sublistas,
   entrelazar,
   entrelazar',
   recr,
@@ -155,19 +158,22 @@ permutaciones xs = foldr (\x accu -> concatMap (insertarEnTodasLasPosiciones x) 
 
 --partes [5, 1, 2] → [[], [5], [1], [2], [5, 1], [5, 2], [1, 2], [5, 1, 2]]
 
---partes :: [a] -> [[a]]
+partes :: [a] -> [[a]]
+partes xs = foldr (\x accu -> accu ++ map (x:) accu) [[]] xs
 
 -- iii) Dada una lista, devuelve todos sus prefijos
 
 --prefijos [5, 1, 2] → [[], [5], [5, 1], [5, 1, 2]]
 
---prefijos :: [a] -> [[a]]
+prefijos :: [a] -> [[a]]
+prefijos xs = [take x xs | x <- [0..length xs]]
 
 -- iv) Dada una lista, devuelve todas las listas de elementos que aparecen consecutivos en la lista original
 
 --sublistas [5, 1, 2] → [[], [5], [1], [2], [5, 1], [1, 2], [5, 1, 2]]
 
---sublistas :: [a] -> [[a]]
+sublistas :: [a] -> [[a]]
+sublistas xs = foldl (\accu x -> accu ++ map(\y -> y ++ [x]) accu) [[]] xs
 
 -- Ejercicio 5
 
