@@ -33,6 +33,8 @@ module Guide_1 (
   recr,
   sacarUna,
   insertarOrdenado,
+  genLista,
+  desdeHasta,
   mapPares,
   mapPares',
   armarPares,
@@ -212,7 +214,18 @@ insertarOrdenado el list = recr(\x xs rec -> if el > x then x:rec else el:x:xs) 
 
 -- Ejercicio 7
 
--- XXXXXXXXXXXXXXXXXXXXXXXXXX
+-- i
+
+-- Genera una lista de una cantidad dada de elementos, a partir de un elemento inicial y de una función de incremento
+-- Dicha función de incremento, dado un elemento de la lista, devuelve el elemento siguiente.
+
+genLista :: a -> (a -> a) -> Integer -> [a]
+genLista ini f n = foldl (\accu _ -> accu ++ [f (accu !! (length accu - 1))]) [ini] [1..n]
+
+-- ii
+
+desdeHasta :: Integer -> Integer -> [Integer]
+desdeHasta x y = genLista x (+1) (y - x)
 
 -- Ejercicio 8
 
@@ -243,3 +256,31 @@ armarPares xs ys = (foldr (\x acu -> \t -> if null t then acu [] else (x, head t
 
 mapDoble :: (a -> b -> c) -> [a] -> [b] -> [c]
 mapDoble f xs ys = (foldr (\x acu -> \t -> f x (head t) : acu (tail t)) (const []) xs) ys
+
+-- Ejercicio 9
+
+-- XXXXXXXXXXXXXXXXXXXXXXXXXX
+
+-- Ejercicio 10
+
+-- XXXXXXXXXXXXXXXXXXXXXXXXXX
+
+-- Ejercicio 11
+
+-- XXXXXXXXXXXXXXXXXXXXXXXXXX
+
+-- Ejercicio 12
+
+-- XXXXXXXXXXXXXXXXXXXXXXXXXX
+
+-- Ejercicio 13
+
+-- XXXXXXXXXXXXXXXXXXXXXXXXXX
+
+-- Ejercicio 14
+
+-- XXXXXXXXXXXXXXXXXXXXXXXXXX
+
+-- Ejercicio 15
+
+-- XXXXXXXXXXXXXXXXXXXXXXXXXX
