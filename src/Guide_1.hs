@@ -41,6 +41,12 @@ module Guide_1 (
   mapDoble,
   sumaMat,
   trasponer,
+  generate,
+  generateFrom,
+  generateBase,
+  factoriales,
+  iterateN,
+  generateFrom',
 ) where
 
 -- Ejercicio 1
@@ -285,7 +291,48 @@ trasponer xs = foldr (\x accu -> zipWith (:) x accu) (replicate (length (head xs
 
 -- Ejercicio 10
 
--- XXXXXXXXXXXXXXXXXXXXXXXXXX
+generate :: ([a] -> Bool) -> ([a] -> a) -> [a]
+generate stop next = generateFrom stop next []
+
+generateFrom :: ([a] -> Bool) -> ([a] -> a) -> [a] -> [a]
+generateFrom stop next xs | stop xs = init xs
+                          | otherwise = generateFrom stop next (xs ++ [next xs])
+
+-- i
+
+-- Usando generate, definir generateBase similar a generate pero con un caso base para el elemento inicial
+-- y una función que calcula el siguiente elemento en base a el último elemento
+
+generateBase :: ([a] -> Bool) -> a -> (a -> a) -> [a]
+generateBase stop base next = generate stop (\xs -> if null xs then base else next (last xs))
+
+-- ii
+
+-- Dado un entero n genera la lista de los primeros n factoriales
+
+-- factoriales 10
+-- [1,1,2,6,24,120,720,5040,40320,362880]
+
+factoriales :: Int -> [Int]
+factoriales n = generate (\xs -> length xs == n + 1) (\x -> if null x then 1 else (last x) * (length x))
+
+-- iii
+
+-- Toma un entero n, una función f y un elemento inicial x, y devuelve la lista
+-- [x, f x, f (f x), ..., f ( ...(f x) ...)] de longitud n
+
+-- iterateN 5 (+1) 0
+-- [0,1,2,3,4]
+
+iterateN :: Int -> (a -> a) -> a -> [a]
+iterateN n f x = generateBase (\xs -> length xs > n) x f
+
+-- iv
+
+-- Redefinir generateFrom usando iterate y takeWhile
+
+generateFrom' :: ([a] -> Bool) -> ([a] -> a) -> [a] -> [a]
+generateFrom' stop next xs = takeWhile (not . stop) (iterate next xs)
 
 -- Ejercicio 11
 
