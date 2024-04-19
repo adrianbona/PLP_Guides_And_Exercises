@@ -48,6 +48,8 @@ module Guide_1 (
   iterateN,
   generateFrom',
   potencia,
+  Polinomio(..),
+  evaluar,
 ) where
 
 -- Ejercicio 1
@@ -356,6 +358,27 @@ potencia :: Integer -> Integer -> Integer
 potencia x y = foldNat (\_ accu -> x * accu) 1 y
 
 -- Ejercicio 12
+
+-- Definir el esquema de recursión
+
+data Polinomio a = X --CASO BASE
+                 | Cte a -- Caso Recursivo
+                 | Suma (Polinomio a) (Polinomio a) -- Caso Recursivo
+                 | Prod (Polinomio a) (Polinomio a) -- Caso Recursivo
+
+foldPolinomio :: (a -> b) -> b -> (b -> b -> b) -> (b -> b -> b) -> Polinomio a -> b
+foldPolinomio _ z _ _ X = z
+foldPolinomio f _ _ _ (Cte x) = f x
+foldPolinomio f z s p (Suma x y) = s (foldPolinomio f z s p x) (foldPolinomio f z s p y)
+foldPolinomio f z s p (Prod x y) = p (foldPolinomio f z s p x) (foldPolinomio f z s p y)
+
+-- Usar el esquema para escribir la función evaluar
+
+-- evaluar 2 (Suma (Cte 3) (Prod X (Cte 2)))
+-- 7
+
+evaluar :: Num a => a -> Polinomio a -> a
+evaluar x = foldPolinomio id x (+) (*)
 
 -- XXXXXXXXXXXXXXXXXXXXXXXXXX
 
