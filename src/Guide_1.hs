@@ -39,6 +39,8 @@ module Guide_1 (
   mapPares',
   armarPares,
   mapDoble,
+  sumaMat,
+  trasponer,
 ) where
 
 -- Ejercicio 1
@@ -224,6 +226,8 @@ genLista ini f n = foldl (\accu _ -> accu ++ [f (accu !! (length accu - 1))]) [i
 
 -- ii
 
+-- Definir la función que dado un par de números devuelve una lista de números consecutivos desde el primero hasta el segundo
+
 desdeHasta :: Integer -> Integer -> [Integer]
 desdeHasta x y = genLista x (+1) (y - x)
 
@@ -259,7 +263,25 @@ mapDoble f xs ys = (foldr (\x acu -> \t -> f x (head t) : acu (tail t)) (const [
 
 -- Ejercicio 9
 
--- XXXXXXXXXXXXXXXXXXXXXXXXXX
+-- i
+
+-- Escribir la función sumaMat, que representa la suma de matrices, usando zipWith
+
+-- sumaMat [[1,2,3],[4,5,6],[7,8,9]] [[1,2,3],[4,5,6],[7,8,9]]
+-- [[2,4,6],[8,10,12],[14,16,18]]
+
+sumaMat :: Num a => [[a]] -> [[a]] -> [[a]]
+sumaMat xs ys = zipWith (zipWith (+)) xs ys
+
+-- ii
+
+-- Escribir la función trasponer que dada una matriz devuelva su traspuesta
+
+-- trasponer [[1,2,3],[4,5,6]]
+-- [[1,4],[2,5],[3,6]]
+
+trasponer :: [[a]] -> [[a]]
+trasponer xs = foldr (\x accu -> zipWith (:) x accu) (replicate (length (head xs)) []) xs
 
 -- Ejercicio 10
 
