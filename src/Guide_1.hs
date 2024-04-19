@@ -47,6 +47,7 @@ module Guide_1 (
   factoriales,
   iterateN,
   generateFrom',
+  potencia,
 ) where
 
 -- Ejercicio 1
@@ -332,11 +333,27 @@ iterateN n f x = generateBase (\xs -> length xs > n) x f
 -- Redefinir generateFrom usando iterate y takeWhile
 
 generateFrom' :: ([a] -> Bool) -> ([a] -> a) -> [a] -> [a]
-generateFrom' stop next xs = takeWhile (not . stop) (iterate next xs)
+generateFrom' stop next xs = generateFrom stop next xs
 
 -- Ejercicio 11
 
--- XXXXXXXXXXXXXXXXXXXXXXXXXX
+-- i
+
+-- Definir y dar el tipo del esquema de recursión foldNat sobre los naturales. Utilizar el tipo Integer de Haskell
+
+foldNat :: (Integer -> b -> b) -> b -> Integer -> b
+foldNat _ z 0 = z
+foldNat f z n = f n (foldNat f z (n - 1))
+
+-- ii
+
+-- Utilizando foldNat definir la función potencia
+
+-- potencia 2 5
+-- 32
+
+potencia :: Integer -> Integer -> Integer
+potencia x y = foldNat (\_ accu -> x * accu) 1 y
 
 -- Ejercicio 12
 
