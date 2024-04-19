@@ -50,7 +50,12 @@ module Guide_1 (
   potencia,
   Polinomio(..),
   evaluar,
+  esNil,
+  altura,
+  cantNodos,
 ) where
+
+import Guide_0 (AB(Empty, Bin))
 
 -- Ejercicio 1
 
@@ -382,7 +387,39 @@ evaluar x = foldPolinomio id x (+) (*)
 
 -- Ejercicio 13
 
--- XXXXXXXXXXXXXXXXXXXXXXXXXX
+-- i
+
+-- Usando recursión explícita, definir los esquemas de recursión estructural
+
+foldAB :: (b -> a -> b -> b) -> b -> AB a -> b
+foldAB _ z Empty = z
+foldAB f z (Bin izq root der) = f (foldAB f z izq) root (foldAB f z der)
+
+-- Usando recursión explícita, definir los esquemas de recursión primitiva
+
+recAB :: (AB a -> b -> a -> b -> b) -> b -> AB a -> b
+recAB _ z Empty = z
+recAB f z (Bin izq root der) = f (Bin izq root der) (recAB f z izq) root (recAB f z der)
+
+-- ii
+
+-- Definir las funciones esNil, altura y cantNodos
+
+esNil :: AB a -> Bool
+esNil = foldAB (\_ _ _ -> False) True
+
+altura :: AB a -> Int
+altura = foldAB (\izq _ der -> 1 + max izq der) 0
+
+cantNodos :: AB a -> Int
+cantNodos = foldAB (\izq _ der -> 1 + izq + der) 0
+
+-- iii
+
+-- Definir la función mejorSegún análoga a la del ejercicio 3, para árboles
+
+-- mejorSegunAB (\x y -> x > y) (Bin (Bin Empty 3 Empty) 5 (Bin Empty 4 Empty))
+-- 5
 
 -- Ejercicio 14
 
