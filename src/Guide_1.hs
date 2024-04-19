@@ -362,7 +362,7 @@ potencia x y = foldNat (\_ accu -> x * accu) 1 y
 -- Definir el esquema de recursión
 
 data Polinomio a = X --CASO BASE
-                 | Cte a -- Caso Recursivo
+                 | Cte a -- CASO BASE
                  | Suma (Polinomio a) (Polinomio a) -- Caso Recursivo
                  | Prod (Polinomio a) (Polinomio a) -- Caso Recursivo
 
@@ -379,8 +379,6 @@ foldPolinomio f z s p (Prod x y) = p (foldPolinomio f z s p x) (foldPolinomio f 
 
 evaluar :: Num a => a -> Polinomio a -> a
 evaluar x = foldPolinomio id x (+) (*)
-
--- XXXXXXXXXXXXXXXXXXXXXXXXXX
 
 -- Ejercicio 13
 
