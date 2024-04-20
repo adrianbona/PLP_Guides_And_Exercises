@@ -105,10 +105,7 @@ id x = x --{ID}
 -- ∀ x::a . ∀ y::b . flip const x y = const id x y
 -- flip const x y {F}
 -- const y x {CO}
--- y {ID}
--- id y {CO}
--- const id x y {reemplazo}
--- const id {queda demostrada la igualdad}
+-- ?
 
 -- iv. ∀ f::a->b . ∀ g::b->c . ∀ h::c->d . ((h . g) . f) = (h . (g . f))
 -- Sea la definición de la composición: (.) f g x = f (g x)
