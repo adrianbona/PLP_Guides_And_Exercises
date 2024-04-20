@@ -53,6 +53,7 @@ module Guide_1 (
   esNil,
   altura,
   cantNodos,
+  mejorSegunAB,
 ) where
 
 import Guide_0 (AB(Empty, Bin))
@@ -387,6 +388,8 @@ evaluar x = foldPolinomio id x (+) (*)
 
 -- Ejercicio 13
 
+-- data AB a = Empty | Bin (AB a) a (AB a)
+
 -- i
 
 -- Usando recursión explícita, definir los esquemas de recursión estructural
@@ -420,6 +423,13 @@ cantNodos = foldAB (\izq _ der -> 1 + izq + der) 0
 
 -- mejorSegunAB (\x y -> x > y) (Bin (Bin Empty 3 Empty) 5 (Bin Empty 4 Empty))
 -- 5
+
+mejorSegunAB :: (a -> a -> Bool) -> AB a -> a
+mejorSegunAB _ Empty = error "Empty tree"
+mejorSegunAB f (Bin izq root der) = foldAB (\izq' root' der' -> mejorSegunEntreTres f izq' root' der') root (Bin izq root der)
+
+mejorSegunEntreTres :: (a -> a -> Bool) -> a -> a -> a -> a
+mejorSegunEntreTres f izq root der = if f root izq && f root der then root else if f izq der then izq else der
 
 -- Ejercicio 14
 
