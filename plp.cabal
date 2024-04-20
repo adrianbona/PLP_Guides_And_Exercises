@@ -27,6 +27,7 @@ library
   exposed-modules:
       Guide_0
       Guide_1
+      Guide_2
       Guide_Solved
   other-modules:
       Paths_plp
