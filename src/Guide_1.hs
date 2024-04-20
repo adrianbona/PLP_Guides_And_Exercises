@@ -54,6 +54,7 @@ module Guide_1 (
   altura,
   cantNodos,
   mejorSegunAB,
+  esABB,
 ) where
 
 import Guide_0 (AB(Empty, Bin))
@@ -430,6 +431,20 @@ mejorSegunAB f (Bin izq root der) = foldAB (\izq' root' der' -> mejorSegunEntreT
 
 mejorSegunEntreTres :: (a -> a -> Bool) -> a -> a -> a -> a
 mejorSegunEntreTres f izq root der = if f root izq && f root der then root else if f izq der then izq else der
+
+-- iv
+
+-- Chequea si un árbol es un árbol binario de búsqueda
+
+esABB :: AB Int -> Bool
+esABB ab = recAB (\tree izq _ der -> izq && der && esABBAux tree) True ab
+
+esABBAux :: AB Int -> Bool
+esABBAux Empty = True
+esABBAux (Bin Empty _ Empty) = True
+esABBAux (Bin Empty root (Bin _ subroot _)) = root < subroot
+esABBAux (Bin (Bin _ subroot _) root Empty) = root > subroot
+esABBAux (Bin (Bin _ subrootleft _) root (Bin _ subrootright _)) = root > subrootleft && root < subrootright
 
 -- Ejercicio 14
 
