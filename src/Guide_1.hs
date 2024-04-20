@@ -55,6 +55,16 @@ module Guide_1 (
   cantNodos,
   mejorSegunAB,
   esABB,
+  ramas,
+  cantHojas,
+  espejo,
+  AIH(..),
+  alturaAIH,
+  tamañoAIH,
+  RoseTree(..),
+  hojasRT,
+  distanciasRT,
+  alturaRT,
 ) where
 
 import Guide_0 (AB(Empty, Bin))
@@ -82,10 +92,12 @@ predecesor = subtract 1
 -- Ejercicio 2
 
 -- Dada una función de dos argumentos, devuelve su equivalente currificada
+
 curry' :: ((a, b) -> t) -> a -> b -> t
 curry' f = \x -> \y -> f (x,y)
 
 -- Dada una función currificada de dos argumentos, devuelve su equivalente no currificada
+
 uncurry' :: (t1 -> t2 -> t3) -> (t1, t2) -> t3
 uncurry' f = \(x,y) -> f x y
 
@@ -94,53 +106,64 @@ uncurry' f = \(x,y) -> f x y
 -- Redefinir usando foldr
 
 -- SUM
+
 suma :: [Int] -> Int
 suma [] = 0
 suma (x:xs) = x + suma xs
 
 -- SUM con foldr
+
 suma' :: (Foldable t, Num b) => t b -> b
 suma' xs = foldr (+) 0 xs
 
 -- ELEM
+
 elemo :: (Eq a) => a -> [a] -> Bool
 elemo _ [] = False
 elemo a xs = a == head xs || elemo a (tail xs)
 
 -- ELEM con foldr
+
 elemo' :: (Foldable t, Eq a) => a -> t a -> Bool
 elemo' a b = foldr (\x y -> (x == a || y)) False b
 
 -- FILTER
+
 filtra :: (a -> Bool) -> [a] -> [a]
 filtra _ [] = []
 filtra f (x:xs) = if f x then x : filtra f xs else filtra f xs
 
 -- FILTER con foldr
+
 filtra' :: Foldable t => (a -> Bool) -> t a -> [a]
 filtra' f xs = foldr (\x accum -> if f x then x : accum else accum) [] xs
 
 -- MAP
+
 mapea :: (a -> b) -> [a] -> [b]
 mapea _ [] = []
 mapea f (x:xs) = f x : mapea f xs
 
 -- MAP con foldr
+
 mapea' :: Foldable t1 => (t2 -> a) -> t1 t2 -> [a]
 mapea' f xs = foldr (\x accum -> f x : accum) [] xs
 
 -- Devuelve el máximo elemento de la lista según una función de comparación
+
 mejorSegun :: (a -> a -> Bool) -> [a] -> a
 mejorSegun _ [] = error "Empty list"
 mejorSegun _ (x:[]) = x
 mejorSegun f (x:y:ys) = if f x y then mejorSegun f (x:ys) else mejorSegun f (y:ys)
 
 -- mejorSegun con foldr1
+
 mejorSegun' :: Foldable t1 => (t2 -> t2 -> Bool) -> t1 t2 -> t2
 mejorSegun' f xs = foldr1 (\x y -> if f x y then x else y) xs
 
 -- Devuelve otra de la misma longitud, que tiene en cada posición la suma parcial
 -- de los elementos de la lista original desde la cabeza hasta la posición actual
+
 sumasParciales :: Num a => [a] -> [a]
 sumasParciales xs = sumasParcialesAux 0 xs
 
@@ -149,18 +172,22 @@ sumasParcialesAux _ [] = []
 sumasParcialesAux accu (x:xs) = [accu + x] ++ sumasParcialesAux (accu + x) xs
 
 -- sumasParciales con foldr
+
 sumasParciales' :: (Foldable t, Num a) => t a -> [a]
 sumasParciales' xs = foldr (\x accu -> (x : (map (+x) accu))) [] xs
 
 -- sumasParciales con foldl
+
 sumasParciales'' :: Num a => [a] -> [a]
 sumasParciales'' xs = foldl (\accu x -> (x : (map (+x) accu))) [] (reverse xs)
 
 -- Realiza la suma alternada de los elementos de una lista
+
 sumaAlt :: Num a => [a] -> a
 sumaAlt xs = foldr (-) 0 xs
 
 -- Suma alternada utilizando foldl
+
 sumaAltInvertida :: Num a => [a] -> a
 sumaAltInvertida xs = foldl (flip (-)) 0 xs
 
@@ -422,9 +449,6 @@ cantNodos = foldAB (\izq _ der -> 1 + izq + der) 0
 
 -- Definir la función mejorSegún análoga a la del ejercicio 3, para árboles
 
--- mejorSegunAB (\x y -> x > y) (Bin (Bin Empty 3 Empty) 5 (Bin Empty 4 Empty))
--- 5
-
 mejorSegunAB :: (a -> a -> Bool) -> AB a -> a
 mejorSegunAB _ Empty = error "Empty tree"
 mejorSegunAB f (Bin izq root der) = foldAB (\izq' root' der' -> mejorSegunEntreTres f izq' root' der') root (Bin izq root der)
@@ -448,8 +472,90 @@ esABBAux (Bin (Bin _ subrootleft _) root (Bin _ subrootright _)) = root > subroo
 
 -- Ejercicio 14
 
--- XXXXXXXXXXXXXXXXXXXXXXXXXX
+-- i
+
+ramas :: AB a -> [[a]]
+ramas tree = foldAB (\izq root der -> if null izq && null der then [[root]] else map (root:) (izq ++ der)) [] tree
+
+cantHojas :: AB a -> Int
+cantHojas tree = foldAB (\izq _ der -> if izq == 0 && der == 0 then 1 else izq + der) 0 tree
+
+espejo :: AB a -> AB a
+espejo tree = foldAB (\izq root der -> Bin der root izq) Empty tree
+
+-- ii ?
+
+-- mismaEstructura :: AB a -> AB b -> Bool
 
 -- Ejercicio 15
 
--- XXXXXXXXXXXXXXXXXXXXXXXXXX
+data AIH a = Hoja a | Bin' (AIH a) (AIH a)
+
+-- a
+
+foldAIH :: (b -> b -> b) -> (a -> b) -> AIH a -> b
+foldAIH _ fHoja (Hoja x) = fHoja x
+foldAIH fArbol fHoja (Bin' izq der) = fArbol (foldAIH fArbol fHoja izq) (foldAIH fArbol fHoja der)
+
+-- b
+
+-- alturaAIH (Bin' (Bin' (Guide_1.Hoja 4) (Guide_1.Hoja 5)) (Bin' (Guide_1.Hoja 1) (Bin' (Guide_1.Hoja 2) (Guide_1.Hoja 3))))
+-- 4
+
+alturaAIH :: AIH a -> Int
+alturaAIH = foldAIH (\izq der -> 1 + max izq der) (\_ -> 1)
+
+-- tamañoAIH (Bin' (Bin' (Guide_1.Hoja 4) (Guide_1.Hoja 5)) (Bin' (Guide_1.Hoja 1) (Bin' (Guide_1.Hoja 2) (Guide_1.Hoja 3))))
+-- 5
+
+tamañoAIH :: AIH a -> Int
+tamañoAIH = foldAIH (+) (\_ -> 1)
+
+-- c ?
+
+-- Definir la lista (infinita) de todos los AIH cuyas hojas tienen tipo unit
+
+-- Ejercicio 16
+
+-- i
+
+-- Árboles no vacíos, con una cantidad indeterminada de hijos para cada nodo
+
+data RoseTree a = RoseTree a [RoseTree a]
+
+-- ii
+
+foldRT :: (a -> [b] -> b) -> RoseTree a -> b
+foldRT f (RoseTree root children) = f root (map (foldRT f) children)
+
+-- iii
+
+-- a
+
+-- Devuelve una lista con sus hojas ordenadas de izquierda a derecha según el orden en que aparecen en el árbol
+
+-- hojasRT RoseTree 1 [RoseTree 2 [RoseTree 3 []], RoseTree 4 [RoseTree 6 []], RoseTree 5 []]
+-- [3,6,5]
+
+hojasRT :: RoseTree a -> [a]
+hojasRT rt = foldRT (\root children -> if null children then [root] else concat children) rt
+
+-- b
+
+-- Dado un RoseTree, devuelva las distancias de su raíz a cada una de sus hojas
+
+-- distanciasRT RoseTree 1 [RoseTree 2 [RoseTree 3 []], RoseTree 4 [RoseTree 6 []], RoseTree 5 []]
+-- [2,2,1]
+
+distanciasRT :: RoseTree a -> [Int]
+distanciasRT rt = foldRT (\_ children -> if null children then [1] else map (+1) (concat children)) rt
+
+-- c
+
+-- Devuelve la altura de un RoseTree (la cantidad de nodos de la rama más larga
+
+-- alturaRT RoseTree 1 [RoseTree 2 [RoseTree 3 []], RoseTree 4 [RoseTree 6 []], RoseTree 5 []]
+-- 3
+
+alturaRT :: RoseTree a -> Int
+alturaRT rt = foldRT (\_ children -> if null children then 1 else 1 + maximum children) rt
