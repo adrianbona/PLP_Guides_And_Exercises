@@ -19,10 +19,16 @@ flip :: (a -> b -> c) -> b -> a -> c
 flip f x y = f y x --{F}
 
 curry :: ((a,b) -> c) -> a -> b -> c
-curry f x y = f (x,y) --{C}
+curry f x y = f (x,y) --{CU}
 
 uncurry :: (a -> b -> c) -> (a,b) -> c
 uncurry f (x,y) = f x y --{UC}
+
+const :: a -> b -> a
+const x _ = x --{CO}
+
+id :: a -> a
+id x = x --{ID}
 
 -- Extensionalidad para pares
 -- Si p :: (a, b), entonces ∃x :: a. ∃y :: b. p = (x, y).
@@ -44,22 +50,22 @@ uncurry f (x,y) = f x y --{UC}
 -- ii. ∀ p::(a,(b,c)) . asociarD (asociarI p) = p
 
 -- asociarD (asociarI (x,(y,z))) por {reemplazo}
--- asociarD ((x,y),z) por {AI}
--- (x,(y,z)) por {AD}
+-- asociarD ((x,y),z) {AI}
+-- (x,(y,z)) {AD}
 -- p {queda demostrada la igualdad}
 
 -- iii. ∀ p::Either a b . espejar (espejar p) = p
 
 -- Caso donde: p = Left x
--- espejar (espejar (Left x)) por {reemplazo}
--- espejar (Right x) por {E1}
--- Left x por {E1}
+-- espejar (espejar (Left x)) {reemplazo}
+-- espejar (Right x) {E1}
+-- Left x {E1}
 -- p {queda demostrada la igualdad}
 
 -- Caso donde: p = Right x
--- espejar (espejar (Right x)) por {reemplazo}
--- espejar (Left x) por {E2}
--- Right x por {E2}
+-- espejar (espejar (Right x)) {reemplazo}
+-- espejar (Left x) {E2}
+-- Right x {E2}
 -- p {queda demostrada la igualdad}
 
 -- iv. ∀ f::a->b->c . ∀ x::a . ∀ y::b . flip (flip f) x y = f x y
@@ -72,6 +78,43 @@ uncurry f (x,y) = f x y --{UC}
 -- v. ∀ f::a->b->c . ∀ x::a . ∀ y::b . curry (uncurry f) x y = f x y
 
 -- curry (uncurry f) x y
--- uncurry f (x,y) {C}
--- f x y {U}
+-- uncurry f (x,y) {CU}
+-- f x y {UC}
 -- f x y {queda demostrada la igualdad}
+
+-- Ejercicio 2
+
+-- i. flip . flip = id
+
+-- ∀p :: (a, b). (flip . flip) p = id p
+-- flip (flip p) {.}
+-- flip (flip (x, y)) {reemplazo}
+-- flip y x {F}
+-- x y {reemplazo}
+-- p {I}
+-- id p {queda demostrada la igualdad}
+
+-- ii. ∀ f::(a,b)->c . uncurry (curry f) = f
+-- uncurry (curry f) {CU}
+-- uncurry (\x y -> f (x, y)) {UC}
+-- (\(x', y') -> (\x y -> f (x, y))) x' y') {reemplazo}
+-- (\(x', y') -> f (x', y')) {nu}
+-- f {queda demostrada la igualdad}
+
+-- iii. flip const = const id
+-- ∀ x::a . ∀ y::b . flip const x y = const id x y
+-- flip const x y {F}
+-- const y x {CO}
+-- y {ID}
+-- id y {CO}
+-- const id x y {reemplazo}
+-- const id {queda demostrada la igualdad}
+
+-- iv. ∀ f::a->b . ∀ g::b->c . ∀ h::c->d . ((h . g) . f) = (h . (g . f))
+-- Sea la definición de la composición: (.) f g x = f (g x)
+
+-- ((h . g) . f) x {.}
+-- (h . g) f x {.}
+-- h (g (f x)) {.}
+-- (h . (g . f)) x {reemplazo}
+-- (h . (g . f)) {queda demostrada la igualdad}
