@@ -148,11 +148,22 @@ asociarD ((x,y),z) = (x,(y,z)) --{AD}
 -- reverse :: [a] -> [a]
 -- reverse = foldl (flip (:)) [] {R0}
 
+-- Agregadas y utilizadas en demostraciones posteriores
+
+-- map :: (a -> b) -> [a] -> [b]
+-- map f = foldr ((:) . f) [] {M0}
+
+-- filter :: (a -> Bool) -> [a] -> [a]
+-- filter p = foldr (\x xs -> if p x then x : xs else xs) [] {F0}
+
+-- elem :: Eq a => a -> [a] -> Bool
+-- elem e = foldr (\x b -> b || x == e) False {E0}
+
 -- Demostrar las siguientes propiedades
 
 -- i. ∀ xs::[a] . length (duplicar xs) = 2 * length xs
 
--- Predicado unario: P(xs) = ∀ xs::[a] . length (duplicar xs) = 2 * length xs
+-- Predicado unario: P(xs) = length (duplicar xs) = 2 * length xs
 
 -- Caso base: P([]) =
 -- length (duplicar []) = 2 * length [] {D0}
@@ -169,3 +180,120 @@ asociarD ((x,y),z) = (x,(y,z)) --{AD}
 -- 2 + 2 * length xs = 2 * length (x:xs) {L1}
 -- 2 + 2 * length xs = 2 * (1 + length xs) {aritmética}
 -- 2 + 2 * length xs = 2 + 2 * length xs {queda demostrada la igualdad}
+
+-- ii. ∀ xs::[a] . ∀ ys::[a] . length (append xs ys) = length xs + length ys
+
+-- Predicado unario: P(xs) = ∀ ys::[a] . length (append xs ys) = length xs + length ys
+
+-- Caso base: P([]) =
+-- ∀ ys::[a] . length (append [] ys) = length [] + length ys {A0}
+-- ∀ ys::[a] . length ys = length [] + length ys {L0}
+-- ∀ ys::[a] . length ys = length ys {queda demostrada la igualdad}
+
+-- Hipótesis inductiva: P(xs) = ∀ xs::[a] . ∀ ys::[a] . length (append xs ys) = length xs + length ys
+-- Caso inductivo: P(x:xs) = ∀ x :: a . ∀ xs :: [a] . ∀ ys::[a] . length (append (x:xs) ys) = length (x:xs) + length ys
+
+-- ∀ ys::[a] . length (append (x:xs) ys) = length (x:xs) + length ys {A1}
+-- ∀ ys::[a] . length (x : append xs ys) = length (x:xs) + length ys {L1}
+-- ∀ ys::[a] . 1 + length (append xs ys) = length (x:xs) + length ys {L1}
+-- ∀ ys::[a] . 1 + length (append xs ys) = 1 + length xs + length ys {HI}
+-- ∀ ys::[a] . length xs + length ys = length xs + length ys {queda demostrada la igualdad}
+
+-- iii. ∀ xs::[a] . ∀ f::(a->b) . length (map f xs) = length xs
+
+-- Predicado unario: P(xs) = ∀ f::(a->b) . length (map f xs) = length xs
+
+-- Caso base: P([]) =
+-- ∀ f::(a->b) . length (map f []) = length [] {M0}
+-- ∀ f::(a->b) . length [] = length [] {L0}
+-- 0 = 0 {queda demostrada la igualdad}
+
+-- Hipótesis inductiva: P(xs) = ∀ xs::[a] . ∀ f::(a->b) . length (map f xs) = length xs
+-- Caso inductivo: P(x:xs) = ∀ x :: a . ∀ xs :: [a] . ∀ f::(a->b) . length (map f (x:xs)) = length (x:xs)
+
+-- ∀ f::(a->b) . length (map f (x:xs)) = length (x:xs) {M0}
+-- ∀ f::(a->b) . length ((:) (f x) (map f xs)) = length (x:xs) {L1}
+-- ∀ f::(a->b) . 1 + length (map f xs) = length (x:xs) {HI}
+-- ∀ f::(a->b) . 1 + length xs = length (x:xs) {L1}
+-- 1 + length xs = 1 + length xs {aritmética}
+-- length xs = length xs {queda demostrada la igualdad}
+
+-- iv. ∀ xs::[a] . ∀ p::a->Bool . ∀ e::a . (elem e (filter p xs) = True) ⇒ (elem e xs = True) (asumiendo Eq a)
+
+-- Predicado unario: P(xs) = ∀ p::a->Bool . ∀ e::a . (elem e (filter p xs) = True) ⇒ (elem e xs = True)
+
+-- Caso base: P([]) =
+-- ∀ p::a->Bool . ∀ e::a . (elem e (filter p []) = True) ⇒ (elem e [] = True) {F0}
+-- ∀ p::a->Bool . ∀ e::a . (elem e [] = True) ⇒ (elem e [] = True) {E0}
+-- ∀ p::a->Bool . ∀ e::a . False ⇒ (elem e [] = True) {queda demostrada la implicación}
+
+-- Hipótesis inductiva: P(xs) = ∀ xs::[a] . ∀ p::a->Bool . ∀ e::a . (elem e (filter p xs) = True) ⇒ (elem e xs = True)
+-- Caso inductivo: P(x:xs) = ∀ x :: a . ∀ xs :: [a] . ∀ p::a->Bool . ∀ e::a . (elem e (filter p (x:xs)) = True) ⇒ (elem e (x:xs) = True)
+
+-- ∀ p::a->Bool . ∀ e::a . (elem e (filter p (x:xs)) = True) ⇒ (elem e (x:xs) = True) {F0}
+-- ∀ p::a->Bool . ∀ e::a . (elem e (if p x then x : filter p xs else filter p xs) = True) ⇒ (elem e (x:xs) = True) {abrimos en casos)
+
+-- La función p aplicada a x puede devolver True o False, por lo que se deben considerar ambos casos:
+
+-- Caso 1: p x = True
+-- ∀ p::a->Bool . ∀ e::a . (elem e (x : filter p xs) = True) ⇒ (elem e (x:xs) = True) {E0}
+-- ∀ p::a->Bool . ∀ e::a . (e == x || elem e (filter p xs) = True) ⇒ (elem e (x:xs) = True) {HI}
+-- ∀ p::a->Bool . ∀ e::a . (e == x || elem e xs = True) ⇒ (elem e (x:xs) = True) {E0}
+-- ∀ p::a->Bool . ∀ e::a . (e == x || elem e xs = True) ⇒ (e == x || elem e xs = True) {queda demostrada la implicación}
+
+-- Caso 2: p x = False
+-- ∀ p::a->Bool . ∀ e::a . (elem e (filter p xs) = True) ⇒ (elem e xs = True) {HI}
+-- ∀ p::a->Bool . ∀ e::a . (elem e xs = True) ⇒ (elem e xs = True) {queda demostrada la implicación}
+
+-- v. ∀ xs::[a] . ∀ x::a . length (ponerAlFinal x xs) = 1 + length xs
+
+-- Predicado unario: P(xs) = ∀ x::a . length (ponerAlFinal x xs) = 1 + length xs
+
+-- Caso base: P([]) =
+-- ∀ x::a . length (ponerAlFinal x []) = 1 + length [] {P0}
+-- ∀ x::a . length (foldr (:) (x:[]) []) = 1 + length [] {FR}
+-- ∀ x::a . length (x:[]) = 1 + length [] {L0}
+-- ∀ x::a . 1 = 1 {queda demostrada la igualdad}
+
+-- Hipótesis inductiva: P(xs) = ∀ y::a . length (ponerAlFinal y xs) = 1 + length xs
+-- Caso inductivo: P(x:xs) = ∀ y :: a . length (ponerAlFinal y (x:xs)) = 1 + length (x:xs)
+
+-- ∀ y::a . length (ponerAlFinal y (x:xs)) = 1 + length (x:xs) {P0}
+-- ∀ y::a . length (foldr (:) (y:[]) (x:xs)) = 1 + length (x:xs) {FR}
+-- ∀ y::a . length (y : foldr (:) (y:[]) xs) = 1 + length (x:xs) {L1}
+-- ∀ y::a . 1 + length (foldr (:) (y:[]) xs) = 1 + length (x:xs) {P0}
+-- ∀ y::a . 1 + length (ponerAlFinal y xs) = 1 + length (x:xs) {HI}
+-- 1 + 1 + length xs = 1 + length (x:xs) {L1}
+-- 1 + 1 + length xs = 1 + 1 + length xs {aritmética}
+-- 2 + length xs = 2 + length xs {aritmética}
+-- length xs = length xs {queda demostrada la igualdad}
+
+-- vi. ∀ xs::[a] . ∀ x::a . head (reverse (ponerAlFinal x xs)) = x
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
