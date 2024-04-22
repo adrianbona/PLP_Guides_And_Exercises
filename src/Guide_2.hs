@@ -170,6 +170,10 @@ asociarD ((x,y),z) = (x,(y,z)) --{AD}
 -- foldl f z [] = z {FL0}
 -- foldl f z (x:xs) = foldl f (f z x) xs {FL1}
 
+-- (:) :: a -> [a] -> [a]
+-- x : xs = foldr (:) [x] xs {:}
+
+
 -- Demostrar las siguientes propiedades
 
 -- i. ∀ xs::[a] . length (duplicar xs) = 2 * length xs
@@ -304,55 +308,51 @@ asociarD ((x,y),z) = (x,(y,z)) --{AD}
 -- ∀ y::a . head (reverse (ponerAlFinal y xs)) = y {HI}
 -- y = y {queda demostrada la igualdad}
 
+-- Ejercicio 4
 
+-- i. reverse . reverse = id
 
+-- Predicado unario: P(xs) = reverse . reverse xs = id xs
 
+-- Caso base: P([]) =
 
+-- ∀ xs::[a] . reverse . reverse [] = id [] {.}
+-- ∀ xs::[a] . reverse (reverse []) = id [] {R0}
+-- ∀ xs::[a] . reverse [] = id [] {R0}
+-- ∀ xs::[a] . [] = id [] {ID}
+-- ∀ xs::[a] . [] = [] {queda demostrada la igualdad}
 
+-- Hipótesis inductiva: P(xs) = reverse . reverse xs = id xs
+-- Caso inductivo: P(x:xs) = ∀ x :: a . ∀ xs :: [a] . reverse . reverse (x:xs) = id (x:xs)
 
+-- ∀ x :: a . ∀ xs :: [a] . reverse . reverse (x:xs) = id (x:xs) {.}
+-- ∀ x :: a . ∀ xs :: [a] . reverse (reverse (x:xs)) = id (x:xs) {ID}
+-- ∀ x :: a . ∀ xs :: [a] . reverse (reverse (x:xs)) = x:xs {R0}
+-- ∀ x :: a . ∀ xs :: [a] . reverse (foldl (flip (:)) [] (x:xs)) = x:xs {FL1}
+-- ∀ x :: a . ∀ xs :: [a] . reverse (foldl (flip (:)) [x] xs) = x:xs {R0}
+-- ∀ x :: a . ∀ xs :: [a] . reverse (reverse xs ++ [x]) = x:xs
 
+-- ?
 
+-- ii. append = (++)
 
+-- Predicado unario: P(xs) = ∀ ys::[a] . append xs ys = xs ++ ys
 
+-- Caso base: P([]) =
 
+-- ∀ ys::[a] . append [] ys = [] ++ ys {A0}
+-- ∀ ys::[a] . ys = [] ++ ys {++}
+-- ∀ ys::[a] . ys = ys {queda demostrada la igualdad}
 
+-- Hipótesis inductiva: P(xs) = ∀ ys::[a] . append xs ys = xs ++ ys
+-- Caso inductivo: P(x:xs) = ∀ x :: a . ∀ ys::[a] . append (x:xs) ys = (x:xs) ++ ys
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+-- ∀ x :: a . ∀ ys::[a] . append (x:xs) ys = (x:xs) ++ ys {A1}
+-- ∀ x :: a . ∀ ys::[a] . x : append xs ys = (x:xs) ++ ys {HI}
+-- ∀ x :: a . ∀ ys::[a] . x : (xs ++ ys) = (x:xs) ++ ys {++}
+-- ∀ x :: a . ∀ ys::[a] . [x] ++ (xs ++ ys) = (x:xs) ++ ys {++}
+-- ∀ x :: a . ∀ ys::[a] . [x] ++ xs ++ ys = (x:xs) ++ ys {++}
+-- ∀ x :: a . ∀ ys::[a] . [x] ++ xs ++ ys = [x] ++ xs ++ ys {queda demostrada la igualdad}
 
 
 
