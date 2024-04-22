@@ -316,21 +316,21 @@ asociarD ((x,y),z) = (x,(y,z)) --{AD}
 
 -- Caso base: P([]) =
 
--- ∀ xs::[a] . reverse . reverse [] = id [] {.}
--- ∀ xs::[a] . reverse (reverse []) = id [] {R0}
--- ∀ xs::[a] . reverse [] = id [] {R0}
--- ∀ xs::[a] . [] = id [] {ID}
--- ∀ xs::[a] . [] = [] {queda demostrada la igualdad}
+-- reverse . reverse [] = id [] {.}
+-- reverse (reverse []) = id [] {R0}
+-- reverse [] = id [] {R0}
+-- [] = id [] {ID}
+-- [] = [] {queda demostrada la igualdad}
 
 -- Hipótesis inductiva: P(xs) = reverse . reverse xs = id xs
--- Caso inductivo: P(x:xs) = ∀ x :: a . ∀ xs :: [a] . reverse . reverse (x:xs) = id (x:xs)
+-- Caso inductivo: P(x:xs) = ∀ x :: a . reverse . reverse (x:xs) = id (x:xs)
 
--- ∀ x :: a . ∀ xs :: [a] . reverse . reverse (x:xs) = id (x:xs) {.}
--- ∀ x :: a . ∀ xs :: [a] . reverse (reverse (x:xs)) = id (x:xs) {ID}
--- ∀ x :: a . ∀ xs :: [a] . reverse (reverse (x:xs)) = x:xs {R0}
--- ∀ x :: a . ∀ xs :: [a] . reverse (foldl (flip (:)) [] (x:xs)) = x:xs {FL1}
--- ∀ x :: a . ∀ xs :: [a] . reverse (foldl (flip (:)) [x] xs) = x:xs {R0}
--- ∀ x :: a . ∀ xs :: [a] . reverse (reverse xs ++ [x]) = x:xs
+-- ∀ x :: a . reverse . reverse (x:xs) = id (x:xs) {.}
+-- ∀ x :: a . reverse (reverse (x:xs)) = id (x:xs) {ID}
+-- ∀ x :: a . reverse (reverse (x:xs)) = x:xs {R0}
+-- ∀ x :: a . reverse (foldl (flip (:)) [] (x:xs)) = x:xs {FL1}
+-- ∀ x :: a . reverse (foldl (flip (:)) [x] xs) = x:xs {R0}
+-- ∀ x :: a . reverse (reverse xs ++ [x]) = x:xs
 
 -- ?
 
@@ -353,6 +353,56 @@ asociarD ((x,y),z) = (x,(y,z)) --{AD}
 -- ∀ x :: a . ∀ ys::[a] . [x] ++ (xs ++ ys) = (x:xs) ++ ys {++}
 -- ∀ x :: a . ∀ ys::[a] . [x] ++ xs ++ ys = (x:xs) ++ ys {++}
 -- ∀ x :: a . ∀ ys::[a] . [x] ++ xs ++ ys = [x] ++ xs ++ ys {queda demostrada la igualdad}
+
+-- iii. map id = id
+
+-- Predicado unario: P(xs) = map id xs = id xs
+
+-- Caso base: P([]) =
+
+-- map id [] = id [] {M0}
+-- [] = id [] {ID}
+-- [] = [] {queda demostrada la igualdad}
+
+-- Hipótesis inductiva: P(xs) = map id xs = id xs
+-- Caso inductivo: P(x:xs) = ∀ x :: a . map id (x:xs) = id (x:xs)
+
+-- ∀ x :: a . map id (x:xs) = id (x:xs) {M0}
+-- ∀ x :: a . foldr ((:) . id) [] (x:xs) = id (x:xs) {FR1}
+-- ∀ x :: a . x : (foldr (:) [] xs) = id (x:xs) {M0}
+-- ∀ x :: a . x : (map id xs) = id (x:xs) {HI}
+-- ∀ x :: a . x : (id xs) = x:xs {ID}
+-- ∀ x :: a . x:xs = x:xs {queda demostrada la igualdad}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
