@@ -295,18 +295,18 @@ asociarD ((x,y),z) = (x,(y,z)) --{AD}
 -- ∀ x::a . head [x] = x {H0}
 -- ∀ x::a . x = x {queda demostrada la igualdad}
 
--- Hipótesis inductiva: P(xs) = ∀ y::a . head (reverse (ponerAlFinal y xs)) = y
--- Caso inductivo: P(x:xs) = ∀ y :: a . head (reverse (ponerAlFinal y (x:xs)) = y
+-- Hipótesis inductiva: P(xs) = ∀ y::a . head (reverse (ponerAlFinal y xs))) = y
+-- Caso inductivo: P(x:xs) = ∀ y :: a . head (reverse (ponerAlFinal y (x:xs))) = y
 
--- ∀ y::a . head (reverse (ponerAlFinal y (x:xs)) = y {P0}
--- ∀ y::a . head (reverse (foldr (:) (y:[]) (x:xs)) = y {FR1}
--- ∀ y::a . head (reverse (x : foldr (:) (y:[]) xs) = y {P0}
--- ∀ y::a . head (reverse (x : (ponerAlFinal y xs)) = y {R0}
--- ∀ y::a . head (foldl (flip (:)) [] (x : (ponerAlFinal y xs)) = y {FL1}
--- ∀ y::a . head (foldl (flip (:)) [] (ponerAlFinal y xs) ++ [x]) = y {R0}
+-- ∀ y::a . head (reverse (ponerAlFinal y (x:xs))) = y {P0}
+-- ∀ y::a . head (reverse (foldr (:) (y:[]) (x:xs))) = y {FR1}
+-- ∀ y::a . head (reverse (x:(foldr (:) (y:[]) xs))) = y {P0}
+-- ∀ y::a . head (reverse (x:(ponerAlFinal y xs))) = y {R0}
+-- ∀ y::a . head (foldl (flip (:) [] (x : ponerAlFinal y xs)) = y {FL1}
+-- ∀ y::a . head (foldl (flip (:) [x] (ponerAlFinal y xs)) = y {R0}
 -- ∀ y::a . head (reverse (ponerAlFinal y xs) ++ [x]) = y {H0}
 -- ∀ y::a . head (reverse (ponerAlFinal y xs)) = y {HI}
--- y = y {queda demostrada la igualdad}
+-- ∀ y::a . y = y {queda demostrada la igualdad}
 
 -- Ejercicio 4
 
@@ -374,6 +374,9 @@ asociarD ((x,y),z) = (x,(y,z)) --{AD}
 -- ∀ x :: a . x : (id xs) = x:xs {ID}
 -- ∀ x :: a . x:xs = x:xs {queda demostrada la igualdad}
 
+-- iv. ∀ f::a->b . ∀ g::b->c . map (g . f) = map g . map f
+
+-- map (g . f) = map g . map f {.}
 
 
 
