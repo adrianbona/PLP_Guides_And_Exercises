@@ -166,6 +166,10 @@ asociarD ((x,y),z) = (x,(y,z)) --{AD}
 -- foldr f z [] = z {FR0}
 -- foldr f z (x:xs) = f x (foldr f z xs) {FR1}
 
+-- foldl :: (b -> a -> b) -> b -> [a] -> b
+-- foldl f z [] = z {FL0}
+-- foldl f z (x:xs) = foldl f (f z x) xs {FL1}
+
 -- Demostrar las siguientes propiedades
 
 -- i. ∀ xs::[a] . length (duplicar xs) = 2 * length xs
@@ -283,6 +287,7 @@ asociarD ((x,y),z) = (x,(y,z)) --{AD}
 -- ∀ x::a . head (reverse (ponerAlFinal x [])) = x {P0}
 -- ∀ x::a . head (reverse (foldr (:) (x:[]) [])) = x {FR0}
 -- ∀ x::a . head (reverse (x:[])) = x {:}
+-- ∀ x::a . head (reverse [x]) = x {R0}
 -- ∀ x::a . head [x] = x {H0}
 -- ∀ x::a . x = x {queda demostrada la igualdad}
 
@@ -291,14 +296,104 @@ asociarD ((x,y),z) = (x,(y,z)) --{AD}
 
 -- ∀ y::a . head (reverse (ponerAlFinal y (x:xs)) = y {P0}
 -- ∀ y::a . head (reverse (foldr (:) (y:[]) (x:xs)) = y {FR1}
--- ∀ y::a . head (reverse (x : foldr (:) (y:[]) xs) = y {L1}
--- ∀ y::a . head (reverse (x : ponerAlFinal y xs)) = y {LEMA_REVERSE_1}
--- ∀ y::a . head (reverse (ponerAlFinal y xs) ++ [x]) = y {LEMA_HEAD_1}
+-- ∀ y::a . head (reverse (x : foldr (:) (y:[]) xs) = y {P0}
+-- ∀ y::a . head (reverse (x : (ponerAlFinal y xs)) = y {R0}
+-- ∀ y::a . head (foldl (flip (:)) [] (x : (ponerAlFinal y xs)) = y {FL1}
+-- ∀ y::a . head (foldl (flip (:)) [] (ponerAlFinal y xs) ++ [x]) = y {R0}
+-- ∀ y::a . head (reverse (ponerAlFinal y xs) ++ [x]) = y {H0}
 -- ∀ y::a . head (reverse (ponerAlFinal y xs)) = y {HI}
--- ∀ y::a . y = y {queda demostrada la igualdad}
+-- y = y {queda demostrada la igualdad}
 
--- Lema 1: ∀ xs::[a] . ∀ x::a . reverse (x:xs) = reverse xs ++ [x]
--- Predicado unario: P(xs) = ∀ x::a . reverse (x:xs) = reverse xs ++ [x]
 
--- Lema 2: ∀ xs::[a] . ∀ x::a . head (reverse (x:xs)) = head (reverse xs)
--- Predicado unario: P(xs) = ∀ x::a . head (reverse (x:xs)) = head (reverse xs)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
