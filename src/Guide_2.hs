@@ -159,6 +159,13 @@ asociarD ((x,y),z) = (x,(y,z)) --{AD}
 -- elem :: Eq a => a -> [a] -> Bool
 -- elem e = foldr (\x b -> b || x == e) False {E0}
 
+-- head :: [a] -> a
+-- head (x:_) = x {H0}
+
+-- foldr :: (a -> b -> b) -> b -> [a] -> b
+-- foldr f z [] = z {FR0}
+-- foldr f z (x:xs) = f x (foldr f z xs) {FR1}
+
 -- Demostrar las siguientes propiedades
 
 -- i. ∀ xs::[a] . length (duplicar xs) = 2 * length xs
@@ -251,7 +258,7 @@ asociarD ((x,y),z) = (x,(y,z)) --{AD}
 
 -- Caso base: P([]) =
 -- ∀ x::a . length (ponerAlFinal x []) = 1 + length [] {P0}
--- ∀ x::a . length (foldr (:) (x:[]) []) = 1 + length [] {FR}
+-- ∀ x::a . length (foldr (:) (x:[]) []) = 1 + length [] {FR0}
 -- ∀ x::a . length (x:[]) = 1 + length [] {L0}
 -- ∀ x::a . 1 = 1 {queda demostrada la igualdad}
 
@@ -259,7 +266,7 @@ asociarD ((x,y),z) = (x,(y,z)) --{AD}
 -- Caso inductivo: P(x:xs) = ∀ y :: a . length (ponerAlFinal y (x:xs)) = 1 + length (x:xs)
 
 -- ∀ y::a . length (ponerAlFinal y (x:xs)) = 1 + length (x:xs) {P0}
--- ∀ y::a . length (foldr (:) (y:[]) (x:xs)) = 1 + length (x:xs) {FR}
+-- ∀ y::a . length (foldr (:) (y:[]) (x:xs)) = 1 + length (x:xs) {FR1}
 -- ∀ y::a . length (y : foldr (:) (y:[]) xs) = 1 + length (x:xs) {L1}
 -- ∀ y::a . 1 + length (foldr (:) (y:[]) xs) = 1 + length (x:xs) {P0}
 -- ∀ y::a . 1 + length (ponerAlFinal y xs) = 1 + length (x:xs) {HI}
@@ -270,30 +277,28 @@ asociarD ((x,y),z) = (x,(y,z)) --{AD}
 
 -- vi. ∀ xs::[a] . ∀ x::a . head (reverse (ponerAlFinal x xs)) = x
 
+-- Predicado unario: P(xs) = ∀ x::a . head (reverse (ponerAlFinal x xs)) = x
 
+-- Caso base: P([]) =
+-- ∀ x::a . head (reverse (ponerAlFinal x [])) = x {P0}
+-- ∀ x::a . head (reverse (foldr (:) (x:[]) [])) = x {FR0}
+-- ∀ x::a . head (reverse (x:[])) = x {:}
+-- ∀ x::a . head [x] = x {H0}
+-- ∀ x::a . x = x {queda demostrada la igualdad}
 
+-- Hipótesis inductiva: P(xs) = ∀ y::a . head (reverse (ponerAlFinal y xs)) = y
+-- Caso inductivo: P(x:xs) = ∀ y :: a . head (reverse (ponerAlFinal y (x:xs)) = y
 
+-- ∀ y::a . head (reverse (ponerAlFinal y (x:xs)) = y {P0}
+-- ∀ y::a . head (reverse (foldr (:) (y:[]) (x:xs)) = y {FR1}
+-- ∀ y::a . head (reverse (x : foldr (:) (y:[]) xs) = y {L1}
+-- ∀ y::a . head (reverse (x : ponerAlFinal y xs)) = y {LEMA_REVERSE_1}
+-- ∀ y::a . head (reverse (ponerAlFinal y xs) ++ [x]) = y {LEMA_HEAD_1}
+-- ∀ y::a . head (reverse (ponerAlFinal y xs)) = y {HI}
+-- ∀ y::a . y = y {queda demostrada la igualdad}
 
+-- Lema 1: ∀ xs::[a] . ∀ x::a . reverse (x:xs) = reverse xs ++ [x]
+-- Predicado unario: P(xs) = ∀ x::a . reverse (x:xs) = reverse xs ++ [x]
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+-- Lema 2: ∀ xs::[a] . ∀ x::a . head (reverse (x:xs)) = head (reverse xs)
+-- Predicado unario: P(xs) = ∀ x::a . head (reverse (x:xs)) = head (reverse xs)
