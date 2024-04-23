@@ -153,6 +153,10 @@ asociarD ((x,y),z) = (x,(y,z)) --{AD}
 -- map :: (a -> b) -> [a] -> [b]
 -- map f = foldr ((:) . f) [] {M0}
 
+-- map :: (a -> b) -> [a] -> [b]
+-- map _ [] = [] {MA0}
+-- map f (x:xs) = f x : map f xs {MA1}
+
 -- filter :: (a -> Bool) -> [a] -> [a]
 -- filter p = foldr (\x xs -> if p x then x : xs else xs) [] {F0}
 
@@ -304,6 +308,9 @@ asociarD ((x,y),z) = (x,(y,z)) --{AD}
 -- ∀ y::a . head (reverse (x:(ponerAlFinal y xs))) = y {R0}
 -- ∀ y::a . head (foldl (flip (:) [] (x : ponerAlFinal y xs)) = y {FL1}
 -- ∀ y::a . head (foldl (flip (:) [x] (ponerAlFinal y xs)) = y {R0}
+
+-- NO ALCANZA CON R0
+
 -- ∀ y::a . head (reverse (ponerAlFinal y xs) ++ [x]) = y {H0}
 -- ∀ y::a . head (reverse (ponerAlFinal y xs)) = y {HI}
 -- ∀ y::a . y = y {queda demostrada la igualdad}
@@ -376,28 +383,24 @@ asociarD ((x,y),z) = (x,(y,z)) --{AD}
 
 -- iv. ∀ f::a->b . ∀ g::b->c . map (g . f) = map g . map f
 
--- map (g . f) = map g . map f {.}
+-- Predicado unario: P(xs) = ∀ f::a->b . ∀ g::b->c . map (g . f) xs = map g . map f xs
 
+-- Caso base: P([]) =
 
+-- ∀ f::a->b . ∀ g::b->c . map (g . f) [] = map g . map f [] {M0}
+-- ∀ f::a->b . ∀ g::b->c . map (g . f) [] = map g [] {M0}
+-- ∀ f::a->b . ∀ g::b->c . [] = [] {queda demostrada la igualdad}
 
+-- Hipótesis inductiva: P(xs) = ∀ f::a->b . ∀ g::b->c . map (g . f) xs = map g . map f xs
+-- Caso inductivo: P(x:xs) = ∀ f::a->b . ∀ g::b->c . map (g . f) (x:xs) = map g . map f (x:xs)
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+-- ∀ f::a->b . ∀ g::b->c . map (g . f) (x:xs) = map g . map f (x:xs) {MA1}
+-- ∀ f::a->b . ∀ g::b->c . (g . f) x : (map (g . f) xs) = map g . map f (x:xs) {HI}
+-- ∀ f::a->b . ∀ g::b->c . (g . f) x : (map g . map f xs) = map g . map f (x:xs) {MA1}
+-- ∀ f::a->b . ∀ g::b->c . (g . f) x : (map g . map f xs) = map g (f x : map f xs) {MA1}
+-- ∀ f::a->b . ∀ g::b->c . (g . f) x : (map g . map f xs) = g (f x) : map g (map f xs) {.}
+-- ∀ f::a->b . ∀ g::b->c . (g . f) x : (map g . map f xs) = (g . f) x : map g (map f xs) {.}
+-- ∀ f::a->b . ∀ g::b->c . (g . f) x : (map g . map f xs) = (g . f) x : (map g . map f xs) {queda demostrada la igualdad}
 
 
 
