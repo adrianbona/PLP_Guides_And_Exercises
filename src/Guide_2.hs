@@ -402,6 +402,50 @@ asociarD ((x,y),z) = (x,(y,z)) --{AD}
 -- ∀ f::a->b . ∀ g::b->c . (g . f) x : (map g . map f xs) = (g . f) x : map g (map f xs) {.}
 -- ∀ f::a->b . ∀ g::b->c . (g . f) x : (map g . map f xs) = (g . f) x : (map g . map f xs) {queda demostrada la igualdad}
 
+-- v. ∀ f::a->b . ∀ p::b->Bool . filter (p . f) = filter p . map f
+
+-- Predicado unario: P(xs) = ∀ f::a->b . ∀ p::b->Bool . filter (p . f) xs = filter p . map f xs
+
+-- Caso base: P([]) =
+
+-- ∀ f::a->b . ∀ p::b->Bool . filter (p . f) [] = filter p . map f [] {MA0}
+-- ∀ f::a->b . ∀ p::b->Bool . filter (p . f) [] = filter p [] {F0}
+-- [] = [] {queda demostrada la igualdad}
+
+-- Hipótesis inductiva: P(xs) = ∀ f::a->b . ∀ p::b->Bool . filter (p . f) xs = filter p . map f xs
+-- Caso inductivo: P(x:xs) = ∀ f::a->b . ∀ p::b->Bool . filter (p . f) (x:xs) = filter p . map f (x:xs)
+
+-- ∀ f::a->b . ∀ p::b->Bool . filter (p . f) (x:xs) = filter p . map f (x:xs) {F0}
+-- ∀ f::a->b . ∀ p::b->Bool . if (p . f) x then x : (filter (p . f) xs) else filter (p . f) xs = filter p . map f (x:xs)
+
+-- La función p aplicada a f x puede devolver True o False, por lo que se deben considerar ambos casos:
+
+-- Caso 1: (p . f) x = True
+
+-- ∀ f::a->b . ∀ p::b->Bool . f x : (filter (p . f) xs) = filter p . map f (x:xs) {HI}
+-- ∀ f::a->b . ∀ p::b->Bool . f x : (filter p . map f xs) = filter p . map f (x:xs) {MA1}
+-- ∀ f::a->b . ∀ p::b->Bool . f x : (filter p . map f xs) = filter p . (f x : map f xs) {F0}
+-- ∀ f::a->b . ∀ p::b->Bool . f x : (filter p . map f xs) = f x : filter p . map f xs {queda demostrada la igualdad}
+
+-- Caso 2: (p . f) x = False
+
+-- ∀ f::a->b . ∀ p::b->Bool . filter (p . f) xs = filter p . map f xs {HI}
+-- ∀ f::a->b . ∀ p::b->Bool . filter p . map f xs = filter p . map f xs {queda demostrada la igualdad}
+
+-- vi. ∀ f::a->b . ∀ e::a . ∀ xs::[xs] . (elem e xs = True) ⇒ (elem (f e) (map f xs) = True) (asumiendo Eq a y Eq b)
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
