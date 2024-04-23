@@ -509,6 +509,46 @@ _zip' (x:xs) ys = if null ys then [] else (x, head ys) : _zip' xs (tail ys) --{Z
 -- (x, head ys) : _zip' xs (tail ys) = _zip' (x:xs) ys {Z'1}
 -- (x, head ys) : _zip' xs (tail ys) = (x, head ys) : _zip' xs (tail ys) {queda demostrada la igualdad}
 
+-- Ejericio 6
+
+nub :: Eq a => [a] -> [a]
+nub [] = [] -- {N0}
+nub (x:xs) = x : nub (filter (\y -> x /= y) xs) --{N1}
+
+union :: Eq a => [a] -> [a] -> [a]
+union xs ys = nub (xs++ys) --{U0}
+
+intersect :: Eq a => [a] -> [a] -> [a]
+intersect xs ys = filter (\e -> elem e ys) xs --{I0}
+
+-- i. Eq a => ∀ xs::[a] . ∀ e::a . elem e xs = elem e (nub xs)
+
+-- ii. Eq a => ∀ xs::[a] . ∀ ys::[a] . ∀ e::a . elem e (union xs ys) = (elem e xs) || (elem e ys)
+
+-- iii. Eq a => ∀ xs::[a] . ∀ ys::[a] . ∀ e::a . elem e (intersect xs ys) = (elem e xs) && (elem e ys)
+
+-- iv. Eq a => ∀ xs::[a] . ∀ ys::[a] . length (union xs ys) = length xs + length ys
+
+-- v. Eq a => ∀ xs::[a] . ∀ ys::[a] . length (union xs ys) ≤ length xs + length ys
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
