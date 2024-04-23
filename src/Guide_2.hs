@@ -434,8 +434,31 @@ asociarD ((x,y),z) = (x,(y,z)) --{AD}
 
 -- vi. ∀ f::a->b . ∀ e::a . ∀ xs::[xs] . (elem e xs = True) ⇒ (elem (f e) (map f xs) = True) (asumiendo Eq a y Eq b)
 
+-- Predicado unario: P(xs) = ∀ f::a->b . ∀ e::a . (elem e xs = True) ⇒ (elem (f e) (map f xs) = True)
 
+-- Caso base: P([]) =
 
+-- ∀ f::a->b . ∀ e::a . (elem e [] = True) ⇒ (elem (f e) (map f []) = True) {E0}
+-- ∀ f::a->b . ∀ e::a . False ⇒ (elem (f e) (map f []) = True) {queda demostrada la implicación}
+
+-- Hipótesis inductiva: P(xs) = ∀ f::a->b . ∀ e::a . (elem e xs = True) ⇒ (elem (f e) (map f xs) = True)
+-- Caso inductivo: P(x:xs) = ∀ f::a->b . ∀ e::a . (elem e (x:xs) = True) ⇒ (elem (f e) (map f (x:xs)) = True)
+
+-- ∀ f::a->b . ∀ e::a . (elem e (x:xs) = True) ⇒ (elem (f e) (map f (x:xs)) = True) {E0}
+-- ∀ f::a->b . ∀ e::a . (e == x || elem e xs = True) ⇒ (elem (f e) (map f (x:xs)) = True)
+
+-- Partimos en dos casos: o bien e == x o en caso contrario e /= x
+
+-- Caso 1: e == x
+
+-- ∀ f::a->b . ∀ e::a . Treu ⇒ (elem (f e) (map f (x:xs)) = True) {MA1}
+-- ∀ f::a->b . ∀ e::a . True ⇒ (elem (f e) (f x : map f xs) = True) {E0}
+-- ∀ f::a->b . ∀ e::a . True ⇒ (foldr (\y b -> b || y == (f e)) False (f x : map f xs) {FR1}
+-- ∀ f::a->b . ∀ e::a . True ⇒ (f x == (f e) || foldr (\y b -> b || y == (f e)) False (map f xs) {por CASO 1}
+-- ∀ f::a->b . ∀ e::a . True ⇒ (True || elem (f e) (map f xs) = True) {lógica}
+-- ∀ f::a->b . ∀ e::a . True ⇒ True = True {queda demostrada la igualdad}
+
+-- Caso 2: e /= x
 
 
 
