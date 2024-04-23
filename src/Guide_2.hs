@@ -3,6 +3,8 @@ module Guide_2 (
   espejar,
   asociarI,
   asociarD,
+  _zip,
+  _zip',
 ) where
 
 -- Ejercicio 1
@@ -190,7 +192,7 @@ asociarD ((x,y),z) = (x,(y,z)) --{AD}
 -- 0 = 0 {queda demostrada la igualdad}
 
 -- Hipótesis inductiva: P(xs) = length (duplicar xs) = 2 * length xs
--- Caso inductivo: P(x:xs) = ∀ x :: a . ∀ xs :: [a] . length (duplicar (x:xs)) = 2 * length (x:xs)
+-- Caso inductivo: P(x:xs) = length (duplicar (x:xs)) = 2 * length (x:xs)
 
 -- length (duplicar (x:xs)) = 2 * length (x:xs) {D1}
 -- length (x : x : duplicar xs) = 2 * length (x:xs) {L1}
@@ -210,7 +212,7 @@ asociarD ((x,y),z) = (x,(y,z)) --{AD}
 -- ∀ ys::[a] . length ys = length ys {queda demostrada la igualdad}
 
 -- Hipótesis inductiva: P(xs) = ∀ xs::[a] . ∀ ys::[a] . length (append xs ys) = length xs + length ys
--- Caso inductivo: P(x:xs) = ∀ x :: a . ∀ xs :: [a] . ∀ ys::[a] . length (append (x:xs) ys) = length (x:xs) + length ys
+-- Caso inductivo: P(x:xs) = ∀ ys::[a] . length (append (x:xs) ys) = length (x:xs) + length ys
 
 -- ∀ ys::[a] . length (append (x:xs) ys) = length (x:xs) + length ys {A1}
 -- ∀ ys::[a] . length (x : append xs ys) = length (x:xs) + length ys {L1}
@@ -228,7 +230,7 @@ asociarD ((x,y),z) = (x,(y,z)) --{AD}
 -- 0 = 0 {queda demostrada la igualdad}
 
 -- Hipótesis inductiva: P(xs) = ∀ xs::[a] . ∀ f::(a->b) . length (map f xs) = length xs
--- Caso inductivo: P(x:xs) = ∀ x :: a . ∀ xs :: [a] . ∀ f::(a->b) . length (map f (x:xs)) = length (x:xs)
+-- Caso inductivo: P(x:xs) = ∀ f::(a->b) . length (map f (x:xs)) = length (x:xs)
 
 -- ∀ f::(a->b) . length (map f (x:xs)) = length (x:xs) {M0}
 -- ∀ f::(a->b) . length ((:) (f x) (map f xs)) = length (x:xs) {L1}
@@ -247,7 +249,7 @@ asociarD ((x,y),z) = (x,(y,z)) --{AD}
 -- ∀ p::a->Bool . ∀ e::a . False ⇒ (elem e [] = True) {queda demostrada la implicación}
 
 -- Hipótesis inductiva: P(xs) = ∀ xs::[a] . ∀ p::a->Bool . ∀ e::a . (elem e (filter p xs) = True) ⇒ (elem e xs = True)
--- Caso inductivo: P(x:xs) = ∀ x :: a . ∀ xs :: [a] . ∀ p::a->Bool . ∀ e::a . (elem e (filter p (x:xs)) = True) ⇒ (elem e (x:xs) = True)
+-- Caso inductivo: P(x:xs) = ∀ p::a->Bool . ∀ e::a . (elem e (filter p (x:xs)) = True) ⇒ (elem e (x:xs) = True)
 
 -- ∀ p::a->Bool . ∀ e::a . (elem e (filter p (x:xs)) = True) ⇒ (elem e (x:xs) = True) {F0}
 -- ∀ p::a->Bool . ∀ e::a . (elem e (if p x then x : filter p xs else filter p xs) = True) ⇒ (elem e (x:xs) = True) {abrimos en casos)
@@ -330,14 +332,14 @@ asociarD ((x,y),z) = (x,(y,z)) --{AD}
 -- [] = [] {queda demostrada la igualdad}
 
 -- Hipótesis inductiva: P(xs) = reverse . reverse xs = id xs
--- Caso inductivo: P(x:xs) = ∀ x :: a . reverse . reverse (x:xs) = id (x:xs)
+-- Caso inductivo: P(x:xs) = reverse . reverse (x:xs) = id (x:xs)
 
--- ∀ x :: a . reverse . reverse (x:xs) = id (x:xs) {.}
--- ∀ x :: a . reverse (reverse (x:xs)) = id (x:xs) {ID}
--- ∀ x :: a . reverse (reverse (x:xs)) = x:xs {R0}
--- ∀ x :: a . reverse (foldl (flip (:)) [] (x:xs)) = x:xs {FL1}
--- ∀ x :: a . reverse (foldl (flip (:)) [x] xs) = x:xs {R0}
--- ∀ x :: a . reverse (reverse xs ++ [x]) = x:xs
+-- reverse . reverse (x:xs) = id (x:xs) {.}
+-- reverse (reverse (x:xs)) = id (x:xs) {ID}
+-- reverse (reverse (x:xs)) = x:xs {R0}
+-- reverse (foldl (flip (:)) [] (x:xs)) = x:xs {FL1}
+-- reverse (foldl (flip (:)) [x] xs) = x:xs {R0}
+-- reverse (reverse xs ++ [x]) = x:xs
 
 -- ?
 
@@ -352,14 +354,14 @@ asociarD ((x,y),z) = (x,(y,z)) --{AD}
 -- ∀ ys::[a] . ys = ys {queda demostrada la igualdad}
 
 -- Hipótesis inductiva: P(xs) = ∀ ys::[a] . append xs ys = xs ++ ys
--- Caso inductivo: P(x:xs) = ∀ x :: a . ∀ ys::[a] . append (x:xs) ys = (x:xs) ++ ys
+-- Caso inductivo: P(x:xs) = ∀ ys::[a] . append (x:xs) ys = (x:xs) ++ ys
 
--- ∀ x :: a . ∀ ys::[a] . append (x:xs) ys = (x:xs) ++ ys {A1}
--- ∀ x :: a . ∀ ys::[a] . x : append xs ys = (x:xs) ++ ys {HI}
--- ∀ x :: a . ∀ ys::[a] . x : (xs ++ ys) = (x:xs) ++ ys {++}
--- ∀ x :: a . ∀ ys::[a] . [x] ++ (xs ++ ys) = (x:xs) ++ ys {++}
--- ∀ x :: a . ∀ ys::[a] . [x] ++ xs ++ ys = (x:xs) ++ ys {++}
--- ∀ x :: a . ∀ ys::[a] . [x] ++ xs ++ ys = [x] ++ xs ++ ys {queda demostrada la igualdad}
+-- ∀ ys::[a] . append (x:xs) ys = (x:xs) ++ ys {A1}
+-- ∀ ys::[a] . x : append xs ys = (x:xs) ++ ys {HI}
+-- ∀ ys::[a] . x : (xs ++ ys) = (x:xs) ++ ys {++}
+-- ∀ ys::[a] . [x] ++ (xs ++ ys) = (x:xs) ++ ys {++}
+-- ∀ ys::[a] . [x] ++ xs ++ ys = (x:xs) ++ ys {++}
+-- ∀ ys::[a] . [x] ++ xs ++ ys = [x] ++ xs ++ ys {queda demostrada la igualdad}
 
 -- iii. map id = id
 
@@ -372,14 +374,14 @@ asociarD ((x,y),z) = (x,(y,z)) --{AD}
 -- [] = [] {queda demostrada la igualdad}
 
 -- Hipótesis inductiva: P(xs) = map id xs = id xs
--- Caso inductivo: P(x:xs) = ∀ x :: a . map id (x:xs) = id (x:xs)
+-- Caso inductivo: P(x:xs) = map id (x:xs) = id (x:xs)
 
--- ∀ x :: a . map id (x:xs) = id (x:xs) {M0}
--- ∀ x :: a . foldr ((:) . id) [] (x:xs) = id (x:xs) {FR1}
--- ∀ x :: a . x : (foldr (:) [] xs) = id (x:xs) {M0}
--- ∀ x :: a . x : (map id xs) = id (x:xs) {HI}
--- ∀ x :: a . x : (id xs) = x:xs {ID}
--- ∀ x :: a . x:xs = x:xs {queda demostrada la igualdad}
+-- map id (x:xs) = id (x:xs) {M0}
+-- foldr ((:) . id) [] (x:xs) = id (x:xs) {FR1}
+-- x : (foldr (:) [] xs) = id (x:xs) {M0}
+-- x : (map id xs) = id (x:xs) {HI}
+-- x : (id xs) = x:xs {ID}
+-- x:xs = x:xs {queda demostrada la igualdad}
 
 -- iv. ∀ f::a->b . ∀ g::b->c . map (g . f) = map g . map f
 
@@ -451,7 +453,7 @@ asociarD ((x,y),z) = (x,(y,z)) --{AD}
 
 -- Caso 1: e == x
 
--- ∀ f::a->b . ∀ e::a . Treu ⇒ (elem (f e) (map f (x:xs)) = True) {MA1}
+-- ∀ f::a->b . ∀ e::a . True ⇒ (elem (f e) (map f (x:xs)) = True) {MA1}
 -- ∀ f::a->b . ∀ e::a . True ⇒ (elem (f e) (f x : map f xs) = True) {E0}
 -- ∀ f::a->b . ∀ e::a . True ⇒ (foldr (\y b -> b || y == (f e)) False (f x : map f xs) {FR1}
 -- ∀ f::a->b . ∀ e::a . True ⇒ (f x == (f e) || foldr (\y b -> b || y == (f e)) False (map f xs) {por CASO 1}
@@ -460,17 +462,52 @@ asociarD ((x,y),z) = (x,(y,z)) --{AD}
 
 -- Caso 2: e /= x
 
+-- ∀ f::a->b . ∀ e::a . (elem e xs = True) ⇒ (elem (f e) (map f (x:xs)) = True) {HI}
+-- ∀ f::a->b . ∀ e::a . (elem e xs = True) ⇒ (elem (f e) (map f xs) = True) ⇒ (elem (f e) (map f (x:xs)) = True) {queda demostrada la implicación}
+-- Es decir, por hipótesis inductiva queda demostrada la implicación para cualquier e en xs. Luego se puede afirmar que
+-- si elem (f e) (map f xs) = True para cualquier e en xs, entonces elem (f e) (map f (x:xs)) = True
 
+-- Ejercicio 5
 
+_zip :: [a] -> [b] -> [(a,b)]
+_zip = foldr (\x rec ys -> if null ys then [] else (x, head ys) : rec (tail ys)) (const []) --{Z0}
 
+_zip' :: [a] -> [b] -> [(a,b)]
+_zip' [] _ = [] --{Z'0}
+_zip' (x:xs) ys = if null ys then [] else (x, head ys) : _zip' xs (tail ys) --{Z'1}
 
+-- _zip = _zip'
 
+-- Predicado unario: P(xs) = _zip xs ys = _zip' xs ys
 
+-- Caso base: P([]) =
 
+-- _zip [] ys = _zip' [] ys {Z0}
+-- foldr (\x rec ys -> if null ys then [] else (x, head ys) : rec (tail ys)) (const []) [] ys = _zip' [] ys {FR0}
+-- const [] = _zip' [] ys {Z'0}
+-- [] = [] {queda demostrada la igualdad}
 
+-- Hipótesis inductiva: P(xs) = _zip xs ys = _zip' xs ys
+-- Caso inductivo: P(x:xs) = ∀ ys::[b] . _zip (x:xs) ys = _zip' (x:xs) ys
 
+-- ∀ ys::[b] . _zip (x:xs) ys = _zip' (x:xs) ys {Z0}
+-- ∀ ys::[b] . foldr (\x rec ys -> if null ys then [] else (x, head ys) : rec (tail ys)) (const []) (x:xs) ys = _zip' (x:xs) ys
 
+-- Partimos en dos casos: o bien ys es vacío o en caso contrario ys no es vacío
 
+-- Caso 1: ys es vacío
+
+-- foldr (\x rec [] -> if null [] then [] else (x, head []) : rec (tail [])) (const []) (x:xs) [] = _zip' (x:xs) [] {reescribimos}
+-- foldr (\x rec [] -> []) (const []) (x:xs) [] = _zip' (x:xs) [] {FR1}
+-- [] = _zip' (x:xs) [] {Z'1}
+-- [] = [] {queda demostrada la igualdad}
+
+-- Caso 2: ys no es vacío
+
+-- foldr (\x' rec ys -> (x', head ys) : rec (tail ys)) (const []) (x:xs) ys = _zip' (x:xs) ys {FR1}
+-- (x, head ys) : foldr (\x' rec ys -> (x', head ys) : rec (tail ys)) (const []) xs (tail ys) = _zip' (x:xs) ys {HI}
+-- (x, head ys) : _zip' xs (tail ys) = _zip' (x:xs) ys {Z'1}
+-- (x, head ys) : _zip' xs (tail ys) = (x, head ys) : _zip' xs (tail ys) {queda demostrada la igualdad}
 
 
 
