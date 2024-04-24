@@ -562,16 +562,56 @@ intersect xs ys = filter (\e -> elem e ys) xs --{I0}
 -- elem e (nub xs) = (x == e || foldr (\y b -> b || y == e) False (nub (filter (\y -> x /= y) xs)) {CASO 2}
 -- elem e (nub xs) = (False || foldr (\y b -> b || y == e) False (nub (filter (\y -> x /= y) xs)) {lógica}
 -- elem e (nub xs) = foldr (\y b -> b || y == e) False (nub (filter (\y -> x /= y) xs) {E0}
--- elem e (nub xs) = elem e (nub (filter (\y -> x /= y) xs) {N1}
+-- elem e (nub xs) = elem e (nub (filter (\y -> x /= y) xs) {N1} //POLÉMICO
 -- elem e (nub xs) = elem e (nub xs) {queda demostrada la igualdad}
 
 -- ii. Eq a => ∀ xs::[a] . ∀ ys::[a] . ∀ e::a . elem e (union xs ys) = (elem e xs) || (elem e ys)
 
+-- Predicado unario: P(xs) = ∀ ys::[a] . ∀ e::a . elem e (union xs ys) = (elem e xs) || (elem e ys)
+
+-- Caso base: P([]) =
+
+-- ∀ ys::[a] . ∀ e::a . elem e (union [] ys) = (elem e []) || (elem e ys) {U0}
+-- ∀ ys::[a] . ∀ e::a . elem e (nub ([] ++ ys)) = (elem e []) || (elem e ys) {++}
+-- ∀ ys::[a] . ∀ e::a . elem e (nub ys) = (elem e []) || (elem e ys) {E0}
+-- ∀ ys::[a] . ∀ e::a . elem e (nub ys) = False || (elem e ys) {lógica}
+-- ∀ ys::[a] . ∀ e::a . elem e (nub ys) = elem e ys {LEMA_NUB}
+-- ∀ ys::[a] . ∀ e::a . True {queda demostrada la igualdad}
+
+
+-- Hipótesis inductiva: P(xs) = ∀ ys::[a] . ∀ e::a . elem e (union xs ys) = (elem e xs) || (elem e ys)
+-- Caso inductivo: P(x:xs) = ∀ ys::[a] . ∀ e::a . elem e (union (x:xs) ys) = (elem e (x:xs)) || (elem e ys)
+
+-- ∀ ys::[a] . ∀ e::a . elem e (union (x:xs) ys) = (elem e (x:xs)) || (elem e ys)
+
+-- Lema Nub: ∀ ys::[a] . ∀ e::a . elem e (nub ys) = elem e ys
+
+-- Predicado unario: P(ys) = ∀ e::a . elem e (nub ys) = elem e ys
+
+-- Caso base: P([]) =
+
+-- ∀ e::a . elem e (nub []) = elem e [] {N0}
+-- ∀ e::a . elem e [] = elem e [] {E0}
+-- ∀ e::a . False = False {queda demostrada la igualdad}
+
+-- Hipótesis inductiva: P(ys) = ∀ e::a . elem e (nub ys) = elem e ys
+-- Caso inductivo: P(y:ys) = ∀ e::a . elem e (nub (y:ys)) = elem e (y:ys)
+
+-- ∀ e::a . elem e (nub (y:ys)) = elem e (y:ys) {N1}
+-- ∀ e::a . elem e (y : nub (filter (\y' -> y /= y') ys)) = elem e (y:ys)
+
 -- iii. Eq a => ∀ xs::[a] . ∀ ys::[a] . ∀ e::a . elem e (intersect xs ys) = (elem e xs) && (elem e ys)
+
 
 -- iv. Eq a => ∀ xs::[a] . ∀ ys::[a] . length (union xs ys) = length xs + length ys
 
+
 -- v. Eq a => ∀ xs::[a] . ∀ ys::[a] . length (union xs ys) ≤ length xs + length ys
+
+
+
+
+
 
 
 
