@@ -598,10 +598,12 @@ intersect xs ys = filter (\e -> elem e ys) xs --{I0}
 -- Caso inductivo: P(y:ys) = ∀ e::a . elem e (nub (y:ys)) = elem e (y:ys)
 
 -- ∀ e::a . elem e (nub (y:ys)) = elem e (y:ys) {N1}
--- ∀ e::a . elem e (y : nub (filter (\y' -> y /= y') ys)) = elem e (y:ys)
+-- ∀ e::a . elem e (y : nub (filter (\y' -> y /= y') ys)) = elem e (y:ys) {E0}
+-- ∀ e::a . e == y || elem e (nub (filter (\y' -> y /= y') ys) = elem e (y:ys) {HI}
 
 -- iii. Eq a => ∀ xs::[a] . ∀ ys::[a] . ∀ e::a . elem e (intersect xs ys) = (elem e xs) && (elem e ys)
 
+-- Predicado unario: P(xs) = ∀ ys::[a] . ∀ e::a . elem e (intersect xs ys) = (elem e xs) && (elem e ys)
 
 -- iv. Eq a => ∀ xs::[a] . ∀ ys::[a] . length (union xs ys) = length xs + length ys
 
