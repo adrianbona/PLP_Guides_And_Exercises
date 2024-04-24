@@ -182,6 +182,8 @@ asociarD ((x,y),z) = (x,(y,z)) --{AD}
 -- (:) :: a -> [a] -> [a]
 -- x : xs = foldr (:) [x] xs {:}
 
+-- reverseFR :: [a] -> [a]
+-- reverseFR = foldr (:) [] {RFR0}
 
 -- Demostrar las siguientes propiedades
 
@@ -195,7 +197,7 @@ asociarD ((x,y),z) = (x,(y,z)) --{AD}
 -- 0 = 0 {queda demostrada la igualdad}
 
 -- Hipótesis inductiva: P(xs) = length (duplicar xs) = 2 * length xs
--- Caso inductivo: P(x:xs) = length (duplicar (x:xs)) = 2 * length (x:xs)
+-- Paso inductivo: P(x:xs) = length (duplicar (x:xs)) = 2 * length (x:xs)
 
 -- length (duplicar (x:xs)) = 2 * length (x:xs) {D1}
 -- length (x : x : duplicar xs) = 2 * length (x:xs) {L1}
@@ -215,7 +217,7 @@ asociarD ((x,y),z) = (x,(y,z)) --{AD}
 -- ∀ ys::[a] . length ys = length ys {queda demostrada la igualdad}
 
 -- Hipótesis inductiva: P(xs) = ∀ xs::[a] . ∀ ys::[a] . length (append xs ys) = length xs + length ys
--- Caso inductivo: P(x:xs) = ∀ ys::[a] . length (append (x:xs) ys) = length (x:xs) + length ys
+-- Paso inductivo: P(x:xs) = ∀ ys::[a] . length (append (x:xs) ys) = length (x:xs) + length ys
 
 -- ∀ ys::[a] . length (append (x:xs) ys) = length (x:xs) + length ys {A1}
 -- ∀ ys::[a] . length (x : append xs ys) = length (x:xs) + length ys {L1}
@@ -233,7 +235,7 @@ asociarD ((x,y),z) = (x,(y,z)) --{AD}
 -- 0 = 0 {queda demostrada la igualdad}
 
 -- Hipótesis inductiva: P(xs) = ∀ xs::[a] . ∀ f::(a->b) . length (map f xs) = length xs
--- Caso inductivo: P(x:xs) = ∀ f::(a->b) . length (map f (x:xs)) = length (x:xs)
+-- Paso inductivo: P(x:xs) = ∀ f::(a->b) . length (map f (x:xs)) = length (x:xs)
 
 -- ∀ f::(a->b) . length (map f (x:xs)) = length (x:xs) {M0}
 -- ∀ f::(a->b) . length ((:) (f x) (map f xs)) = length (x:xs) {L1}
@@ -252,7 +254,7 @@ asociarD ((x,y),z) = (x,(y,z)) --{AD}
 -- ∀ p::a->Bool . ∀ e::a . False ⇒ (elem e [] = True) {queda demostrada la implicación}
 
 -- Hipótesis inductiva: P(xs) = ∀ xs::[a] . ∀ p::a->Bool . ∀ e::a . (elem e (filter p xs) = True) ⇒ (elem e xs = True)
--- Caso inductivo: P(x:xs) = ∀ p::a->Bool . ∀ e::a . (elem e (filter p (x:xs)) = True) ⇒ (elem e (x:xs) = True)
+-- Paso inductivo: P(x:xs) = ∀ p::a->Bool . ∀ e::a . (elem e (filter p (x:xs)) = True) ⇒ (elem e (x:xs) = True)
 
 -- ∀ p::a->Bool . ∀ e::a . (elem e (filter p (x:xs)) = True) ⇒ (elem e (x:xs) = True) {F0}
 -- ∀ p::a->Bool . ∀ e::a . (elem e (if p x then x : filter p xs else filter p xs) = True) ⇒ (elem e (x:xs) = True) {abrimos en casos)
@@ -280,7 +282,7 @@ asociarD ((x,y),z) = (x,(y,z)) --{AD}
 -- ∀ x::a . 1 = 1 {queda demostrada la igualdad}
 
 -- Hipótesis inductiva: P(xs) = ∀ y::a . length (ponerAlFinal y xs) = 1 + length xs
--- Caso inductivo: P(x:xs) = ∀ y :: a . length (ponerAlFinal y (x:xs)) = 1 + length (x:xs)
+-- Paso inductivo: P(x:xs) = ∀ y :: a . length (ponerAlFinal y (x:xs)) = 1 + length (x:xs)
 
 -- ∀ y::a . length (ponerAlFinal y (x:xs)) = 1 + length (x:xs) {P0}
 -- ∀ y::a . length (foldr (:) (y:[]) (x:xs)) = 1 + length (x:xs) {FR1}
@@ -305,7 +307,7 @@ asociarD ((x,y),z) = (x,(y,z)) --{AD}
 -- ∀ x::a . x = x {queda demostrada la igualdad}
 
 -- Hipótesis inductiva: P(xs) = ∀ y::a . head (reverse (ponerAlFinal y xs))) = y
--- Caso inductivo: P(x:xs) = ∀ y :: a . head (reverse (ponerAlFinal y (x:xs))) = y
+-- Paso inductivo: P(x:xs) = ∀ y :: a . head (reverse (ponerAlFinal y (x:xs))) = y
 
 -- ∀ y::a . head (reverse (ponerAlFinal y (x:xs))) = y {P0}
 -- ∀ y::a . head (reverse (foldr (:) (y:[]) (x:xs))) = y {FR1}
@@ -335,16 +337,21 @@ asociarD ((x,y),z) = (x,(y,z)) --{AD}
 -- [] = [] {queda demostrada la igualdad}
 
 -- Hipótesis inductiva: P(xs) = reverse . reverse xs = id xs
--- Caso inductivo: P(x:xs) = reverse . reverse (x:xs) = id (x:xs)
+-- Paso inductivo: P(x:xs) = reverse . reverse (x:xs) = id (x:xs)
+
+-- Utilizamos un lema que reescribe reverse utilizando foldr
 
 -- reverse . reverse (x:xs) = id (x:xs) {.}
--- reverse (reverse (x:xs)) = id (x:xs) {ID}
--- reverse (reverse (x:xs)) = x:xs {R0}
--- reverse (foldl (flip (:)) [] (x:xs)) = x:xs {FL1}
--- reverse (foldl (flip (:)) [x] xs) = x:xs {R0}
--- reverse (reverse xs ++ [x]) = x:xs
-
--- ?
+-- reverse (reverse (x:xs)) = id (x:xs) {R0}
+-- reverse (foldr (:) [] (x:xs)) = id (x:xs) {FR1}
+-- reverse (x : foldr (:) [] xs) = id (x:xs) {R0}
+-- reverse (x : reverse xs) = id (x:xs) {R0}
+-- foldr (:) [] (x : reverse xs) = id (x:xs) {FR1}
+-- x : foldr (:) [] (reverse xs) = id (x:xs) {R0}
+-- x : reverse (reverse xs) = id (x:xs) {.}
+-- x : (reverse . reverse xs) = id (x:xs) {HI}
+-- x : id xs = id (x:xs) {ID}
+-- x:xs = x:xs {queda demostrada la igualdad}
 
 -- ii. append = (++)
 
@@ -357,7 +364,7 @@ asociarD ((x,y),z) = (x,(y,z)) --{AD}
 -- ∀ ys::[a] . ys = ys {queda demostrada la igualdad}
 
 -- Hipótesis inductiva: P(xs) = ∀ ys::[a] . append xs ys = xs ++ ys
--- Caso inductivo: P(x:xs) = ∀ ys::[a] . append (x:xs) ys = (x:xs) ++ ys
+-- Paso inductivo: P(x:xs) = ∀ ys::[a] . append (x:xs) ys = (x:xs) ++ ys
 
 -- ∀ ys::[a] . append (x:xs) ys = (x:xs) ++ ys {A1}
 -- ∀ ys::[a] . x : append xs ys = (x:xs) ++ ys {HI}
@@ -377,7 +384,7 @@ asociarD ((x,y),z) = (x,(y,z)) --{AD}
 -- [] = [] {queda demostrada la igualdad}
 
 -- Hipótesis inductiva: P(xs) = map id xs = id xs
--- Caso inductivo: P(x:xs) = map id (x:xs) = id (x:xs)
+-- Paso inductivo: P(x:xs) = map id (x:xs) = id (x:xs)
 
 -- map id (x:xs) = id (x:xs) {M0}
 -- foldr ((:) . id) [] (x:xs) = id (x:xs) {FR1}
@@ -397,7 +404,7 @@ asociarD ((x,y),z) = (x,(y,z)) --{AD}
 -- ∀ f::a->b . ∀ g::b->c . [] = [] {queda demostrada la igualdad}
 
 -- Hipótesis inductiva: P(xs) = ∀ f::a->b . ∀ g::b->c . map (g . f) xs = map g . map f xs
--- Caso inductivo: P(x:xs) = ∀ f::a->b . ∀ g::b->c . map (g . f) (x:xs) = map g . map f (x:xs)
+-- Paso inductivo: P(x:xs) = ∀ f::a->b . ∀ g::b->c . map (g . f) (x:xs) = map g . map f (x:xs)
 
 -- ∀ f::a->b . ∀ g::b->c . map (g . f) (x:xs) = map g . map f (x:xs) {MA1}
 -- ∀ f::a->b . ∀ g::b->c . (g . f) x : (map (g . f) xs) = map g . map f (x:xs) {HI}
@@ -418,7 +425,7 @@ asociarD ((x,y),z) = (x,(y,z)) --{AD}
 -- [] = [] {queda demostrada la igualdad}
 
 -- Hipótesis inductiva: P(xs) = ∀ f::a->b . ∀ p::b->Bool . filter (p . f) xs = filter p . map f xs
--- Caso inductivo: P(x:xs) = ∀ f::a->b . ∀ p::b->Bool . filter (p . f) (x:xs) = filter p . map f (x:xs)
+-- Paso inductivo: P(x:xs) = ∀ f::a->b . ∀ p::b->Bool . filter (p . f) (x:xs) = filter p . map f (x:xs)
 
 -- ∀ f::a->b . ∀ p::b->Bool . filter (p . f) (x:xs) = filter p . map f (x:xs) {F0}
 -- ∀ f::a->b . ∀ p::b->Bool . if (p . f) x then x : (filter (p . f) xs) else filter (p . f) xs = filter p . map f (x:xs)
@@ -447,7 +454,7 @@ asociarD ((x,y),z) = (x,(y,z)) --{AD}
 -- ∀ f::a->b . ∀ e::a . False ⇒ (elem (f e) (map f []) = True) {queda demostrada la implicación}
 
 -- Hipótesis inductiva: P(xs) = ∀ f::a->b . ∀ e::a . (elem e xs = True) ⇒ (elem (f e) (map f xs) = True)
--- Caso inductivo: P(x:xs) = ∀ f::a->b . ∀ e::a . (elem e (x:xs) = True) ⇒ (elem (f e) (map f (x:xs)) = True)
+-- Paso inductivo: P(x:xs) = ∀ f::a->b . ∀ e::a . (elem e (x:xs) = True) ⇒ (elem (f e) (map f (x:xs)) = True)
 
 -- ∀ f::a->b . ∀ e::a . (elem e (x:xs) = True) ⇒ (elem (f e) (map f (x:xs)) = True) {E0}
 -- ∀ f::a->b . ∀ e::a . (e == x || elem e xs = True) ⇒ (elem (f e) (map f (x:xs)) = True)
@@ -491,7 +498,7 @@ _zip' (x:xs) ys = if null ys then [] else (x, head ys) : _zip' xs (tail ys) --{Z
 -- [] = [] {queda demostrada la igualdad}
 
 -- Hipótesis inductiva: P(xs) = _zip xs ys = _zip' xs ys
--- Caso inductivo: P(x:xs) = ∀ ys::[b] . _zip (x:xs) ys = _zip' (x:xs) ys
+-- Paso inductivo: P(x:xs) = ∀ ys::[b] . _zip (x:xs) ys = _zip' (x:xs) ys
 
 -- ∀ ys::[b] . _zip (x:xs) ys = _zip' (x:xs) ys {Z0}
 -- ∀ ys::[b] . foldr (\x rec ys -> if null ys then [] else (x, head ys) : rec (tail ys)) (const []) (x:xs) ys = _zip' (x:xs) ys
@@ -535,7 +542,7 @@ intersect xs ys = filter (\e -> elem e ys) xs --{I0}
 -- ∀ e::a . False = False {queda demostrada la igualdad}
 
 -- Hipótesis inductiva: P(xs) = ∀ e::a . elem e xs = elem e (nub xs)
--- Caso inductivo: P(x:xs) = ∀ e::a . elem e (x:xs) = elem e (nub (x:xs))
+-- Paso inductivo: P(x:xs) = ∀ e::a . elem e (x:xs) = elem e (nub (x:xs))
 
 -- ∀ e::a . elem e (x:xs) = elem e (nub (x:xs)) {E0}
 -- ∀ e::a . foldr (\y b -> b || y == e) False (x:xs) = elem e (nub (x:xs)) {FR1}
@@ -580,7 +587,7 @@ intersect xs ys = filter (\e -> elem e ys) xs --{I0}
 
 
 -- Hipótesis inductiva: P(xs) = ∀ ys::[a] . ∀ e::a . elem e (union xs ys) = (elem e xs) || (elem e ys)
--- Caso inductivo: P(x:xs) = ∀ ys::[a] . ∀ e::a . elem e (union (x:xs) ys) = (elem e (x:xs)) || (elem e ys)
+-- Paso inductivo: P(x:xs) = ∀ ys::[a] . ∀ e::a . elem e (union (x:xs) ys) = (elem e (x:xs)) || (elem e ys)
 
 -- ∀ ys::[a] . ∀ e::a . elem e (union (x:xs) ys) = (elem e (x:xs)) || (elem e ys)
 
@@ -595,7 +602,7 @@ intersect xs ys = filter (\e -> elem e ys) xs --{I0}
 -- ∀ e::a . False = False {queda demostrada la igualdad}
 
 -- Hipótesis inductiva: P(ys) = ∀ e::a . elem e (nub ys) = elem e ys
--- Caso inductivo: P(y:ys) = ∀ e::a . elem e (nub (y:ys)) = elem e (y:ys)
+-- Paso inductivo: P(y:ys) = ∀ e::a . elem e (nub (y:ys)) = elem e (y:ys)
 
 -- ∀ e::a . elem e (nub (y:ys)) = elem e (y:ys) {N1}
 -- ∀ e::a . elem e (y : nub (filter (\y' -> y /= y') ys)) = elem e (y:ys) {E0}
@@ -609,6 +616,22 @@ intersect xs ys = filter (\e -> elem e ys) xs --{I0}
 
 
 -- v. Eq a => ∀ xs::[a] . ∀ ys::[a] . length (union xs ys) ≤ length xs + length ys
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
