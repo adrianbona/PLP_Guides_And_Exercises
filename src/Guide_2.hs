@@ -381,7 +381,9 @@ reverseFR = foldr (\x xs -> xs ++ [x]) [] --{RFR0}
 
 -- reverse . reverse [] = id [] {.}
 -- reverse (reverse []) = id [] {R0}
+-- reverse (foldl (flip (:)) [] []) = id [] {FL0}
 -- reverse [] = id [] {R0}
+-- foldl (flip (:)) [] [] = id [] {FL0}
 -- [] = id [] {ID}
 -- [] = [] {queda demostrada la igualdad}
 
