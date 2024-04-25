@@ -298,7 +298,9 @@ asociarD ((x,y),z) = (x,(y,z)) --{AD}
 -- Caso base: P([]) =
 -- ∀ x::a . length (ponerAlFinal x []) = 1 + length [] {P0}
 -- ∀ x::a . length (foldr (:) (x:[]) []) = 1 + length [] {FR0}
--- ∀ x::a . length (x:[]) = 1 + length [] {L0}
+-- ∀ x::a . length (x:[]) = 1 + length [] {:}
+-- ∀ x::a . length [x] = 1 + length [] {L0}
+-- ∀ x::a . 1 = 1 + 0 {aritmética}
 -- ∀ x::a . 1 = 1 {queda demostrada la igualdad}
 
 -- Hipótesis inductiva: P(xs) = ∀ y::a . length (ponerAlFinal y xs) = 1 + length xs
@@ -306,7 +308,7 @@ asociarD ((x,y),z) = (x,(y,z)) --{AD}
 
 -- ∀ y::a . length (ponerAlFinal y (x:xs)) = 1 + length (x:xs) {P0}
 -- ∀ y::a . length (foldr (:) (y:[]) (x:xs)) = 1 + length (x:xs) {FR1}
--- ∀ y::a . length (y : foldr (:) (y:[]) xs) = 1 + length (x:xs) {L1}
+-- ∀ y::a . length (x : foldr (:) (y:[]) xs) = 1 + length (x:xs) {L1}
 -- ∀ y::a . 1 + length (foldr (:) (y:[]) xs) = 1 + length (x:xs) {P0}
 -- ∀ y::a . 1 + length (ponerAlFinal y xs) = 1 + length (x:xs) {HI}
 -- 1 + 1 + length xs = 1 + length (x:xs) {L1}
