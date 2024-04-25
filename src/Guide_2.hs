@@ -266,7 +266,7 @@ asociarD ((x,y),z) = (x,(y,z)) --{AD}
 
 -- ∀ p::a->Bool . ∀ e::a . False ⇒ (elem e [] = True) {queda demostrada la implicación}
 
--- Hipótesis inductiva: P(xs) = ∀ xs::[a] . ∀ p::a->Bool . ∀ e::a . (elem e (filter p xs) = True) ⇒ (elem e xs = True)
+-- Hipótesis inductiva: P(xs) = ∀ p::a->Bool . ∀ e::a . (elem e (filter p xs) = True) ⇒ (elem e xs = True)
 -- Paso inductivo: P(x:xs) = ∀ p::a->Bool . ∀ e::a . (elem e (filter p (x:xs)) = True) ⇒ (elem e (x:xs) = True)
 
 -- ∀ p::a->Bool . ∀ e::a . (elem e (filter p (x:xs)) = True) ⇒ (elem e (x:xs) = True) {F0}
@@ -276,13 +276,20 @@ asociarD ((x,y),z) = (x,(y,z)) --{AD}
 
 -- Caso 1: p x = True
 -- ∀ p::a->Bool . ∀ e::a . (elem e (x : filter p xs) = True) ⇒ (elem e (x:xs) = True) {E0}
--- ∀ p::a->Bool . ∀ e::a . (e == x || elem e (filter p xs) = True) ⇒ (elem e (x:xs) = True) {HI}
--- ∀ p::a->Bool . ∀ e::a . (e == x || elem e xs = True) ⇒ (elem e (x:xs) = True) {E0}
--- ∀ p::a->Bool . ∀ e::a . (e == x || elem e xs = True) ⇒ (e == x || elem e xs = True) {queda demostrada la implicación}
+-- ∀ p::a->Bool . ∀ e::a . (foldr (\x b -> b || x == e) False (x : filter p xs) = True) ⇒ (elem e (x:xs) = True) {FR1}
+-- ∀ p::a->Bool . ∀ e::a . ((foldr (\x b -> b || x == e) False (filter p xs) || x == e) = True) ⇒ (elem e (x:xs) = True) {E0}
+-- ∀ p::a->Bool . ∀ e::a . ((elem e (filter p xs) || x == e) = True) ⇒ (elem e (x:xs) = True) {E0}
+-- ∀ p::a->Bool . ∀ e::a . ((elem e (filter p xs) || x == e) = True) ⇒ (foldr (\x b -> b || x == e) False (x:xs) = True) {FR1}
+-- ∀ p::a->Bool . ∀ e::a . ((elem e (filter p xs) || x == e) = True) ⇒ ((foldr (\x b -> b || x == e) False (xs) || x == e) = True) {E0}
+-- ∀ p::a->Bool . ∀ e::a . ((elem e (filter p xs) || x == e) = True) ⇒ ((elem e xs || x == e) = True) {HI}
+
+-- La hipótesis inductiva demuestra una implicación más fuerte que la que se pide demostrar, por lo que queda demostrada la implicación
 
 -- Caso 2: p x = False
--- ∀ p::a->Bool . ∀ e::a . (elem e (filter p xs) = True) ⇒ (elem e xs = True) {HI}
--- ∀ p::a->Bool . ∀ e::a . (elem e xs = True) ⇒ (elem e xs = True) {queda demostrada la implicación}
+-- ∀ p::a->Bool . ∀ e::a . (elem e (filter p xs) = True) ⇒ (elem e (x:xs) = True) {HI}
+-- ∀ p::a->Bool . ∀ e::a . (elem e (filter p xs) = True) ⇒ (elem e xs = True) ⇒ (elem e (x:xs) = True) {HI}
+
+-- Por hipótesis inductiva, si vale elem e xs también vale elem e (x:xs), por lo que queda demostrada la implicación
 
 -- v. ∀ xs::[a] . ∀ x::a . length (ponerAlFinal x xs) = 1 + length xs
 
