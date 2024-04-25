@@ -471,9 +471,11 @@ reverseFR = foldr (\x xs -> xs ++ [x]) [] --{RFR0}
 
 -- map id (x:xs) = id (x:xs) {M0}
 -- foldr ((:) . id) [] (x:xs) = id (x:xs) {FR1}
--- x : (foldr (:) [] xs) = id (x:xs) {M0}
+-- (:) (id x) (foldr ((:) . id) [] xs) = id (x:xs) {ID}
+-- (:) x (foldr ((:) . id) [] xs) = id (x:xs) {:}
+-- x : (foldr ((:) . id) [] xs) = id (x:xs) {M0}
 -- x : (map id xs) = id (x:xs) {HI}
--- x : (id xs) = x:xs {ID}
+-- x : (id xs) = id (x:xs) {ID}
 -- x:xs = x:xs {queda demostrada la igualdad}
 
 -- iv. ∀ f::a->b . ∀ g::b->c . map (g . f) = map g . map f
