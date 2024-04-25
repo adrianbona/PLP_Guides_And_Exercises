@@ -553,31 +553,43 @@ reverseFR = foldr (\x xs -> xs ++ [x]) [] --{RFR0}
 -- Caso base: P([]) =
 
 -- ∀ f::a->b . ∀ e::a . (elem e [] = True) ⇒ (elem (f e) (map f []) = True) {E0}
+-- ∀ f::a->b . ∀ e::a . (foldr (\y b -> b || y == e) False [] = True) ⇒ (elem (f e) (map f []) = True) {FR0}
+-- ∀ f::a->b . ∀ e::a . (False = True) ⇒ (elem (f e) (map f []) = True) {lógica}
 -- ∀ f::a->b . ∀ e::a . False ⇒ (elem (f e) (map f []) = True) {queda demostrada la implicación}
 
 -- Hipótesis inductiva: P(xs) = ∀ f::a->b . ∀ e::a . (elem e xs = True) ⇒ (elem (f e) (map f xs) = True)
 -- Paso inductivo: P(x:xs) = ∀ f::a->b . ∀ e::a . (elem e (x:xs) = True) ⇒ (elem (f e) (map f (x:xs)) = True)
 
 -- ∀ f::a->b . ∀ e::a . (elem e (x:xs) = True) ⇒ (elem (f e) (map f (x:xs)) = True) {E0}
--- ∀ f::a->b . ∀ e::a . (e == x || elem e xs = True) ⇒ (elem (f e) (map f (x:xs)) = True)
+-- ∀ f::a->b . ∀ e::a . (foldr (\y b -> b || y == e) False (x:xs) = True) ⇒ (elem (f e) (map f (x:xs)) = True) {FR1}
+-- ∀ f::a->b . ∀ e::a . (((foldr (\y b -> b || y == e) False xs) || e == x) = True) ⇒ (elem (f e) (map f (x:xs)) = True) {FR1}
+-- ∀ f::a->b . ∀ e::a . ((elem e xs || e == x) = True) ⇒ (elem (f e) (map f (x:xs)) = True) {partimos en casos}
 
 -- Partimos en dos casos: o bien e == x o en caso contrario e /= x
 
 -- Caso 1: e == x
 
+-- ∀ f::a->b . ∀ e::a . ((elem e xs || e == x) = True) ⇒ (elem (f e) (map f (x:xs)) = True) {CASO 1}
+-- ∀ f::a->b . ∀ e::a . (True = True) ⇒ (elem (f e) (map f (x:xs)) = True) {lógica}
 -- ∀ f::a->b . ∀ e::a . True ⇒ (elem (f e) (map f (x:xs)) = True) {MA1}
 -- ∀ f::a->b . ∀ e::a . True ⇒ (elem (f e) (f x : map f xs) = True) {E0}
--- ∀ f::a->b . ∀ e::a . True ⇒ (foldr (\y b -> b || y == (f e)) False (f x : map f xs) {FR1}
--- ∀ f::a->b . ∀ e::a . True ⇒ (f x == (f e) || foldr (\y b -> b || y == (f e)) False (map f xs) {por CASO 1}
--- ∀ f::a->b . ∀ e::a . True ⇒ (True || elem (f e) (map f xs) = True) {lógica}
--- ∀ f::a->b . ∀ e::a . True ⇒ True = True {queda demostrada la igualdad}
+-- ∀ f::a->b . ∀ e::a . True ⇒ ((foldr (\y b -> b || y == (f e)) False (f x : map f xs) || f x == f e) = True) {FR1}
+-- ∀ f::a->b . ∀ e::a . True ⇒ ((foldr (\y b -> b || y == (f e)) False (map f xs) || f x == f e) = True) {MA1}
+-- ∀ f::a->b . ∀ e::a . True ⇒ ((elem (f e) (map f xs) || f x == f e) = True) {CASO 1}
+-- ∀ f::a->b . ∀ e::a . True ⇒ ((elem (f e) (map f xs) || True) = True) {lógica}
+-- ∀ f::a->b . ∀ e::a . True ⇒ (True = True) {lógica}
+-- ∀ f::a->b . ∀ e::a . True ⇒ True {queda demostrada la implicación}
 
 -- Caso 2: e /= x
 
+-- ∀ f::a->b . ∀ e::a . ((elem e xs || e == x) = True) ⇒ (elem (f e) (map f (x:xs)) = True) {CASO 2}
+-- ∀ f::a->b . ∀ e::a . ((elem e xs || False) = True) ⇒ (elem (f e) (map f (x:xs)) = True) {lógica}
 -- ∀ f::a->b . ∀ e::a . (elem e xs = True) ⇒ (elem (f e) (map f (x:xs)) = True) {HI}
 -- ∀ f::a->b . ∀ e::a . (elem e xs = True) ⇒ (elem (f e) (map f xs) = True) ⇒ (elem (f e) (map f (x:xs)) = True) {queda demostrada la implicación}
--- Es decir, por hipótesis inductiva queda demostrada la implicación para cualquier e en xs. Luego se puede afirmar que
--- si elem (f e) (map f xs) = True para cualquier e en xs, entonces elem (f e) (map f (x:xs)) = True
+
+-- Es decir, por hipótesis inductiva queda demostrada la implicación para cualquier e en xs. Luego se puede afirmar
+-- que si elem (f e) (map f xs) = True para cualquier e en xs, entonces elem (f e) (map f (x:xs)) = True, que es
+-- la misma lista pero con un elemento más
 
 -- Ejercicio 5
 
