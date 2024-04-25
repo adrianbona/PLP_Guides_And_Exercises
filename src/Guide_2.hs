@@ -35,18 +35,18 @@ asociarD ((x,y),z) = (x,(y,z)) --{AD}
 -- uncurry f (x,y) = f x y {UC}
 
 -- const :: a -> b -> a
--- const x _ = x {CO}
+-- const x _ = x {C0}
 
 -- id :: a -> a
 -- id x = x {ID}
 
 
--- Extensionalidad para pares
+-- Extensionalidad para PARES:
 -- Si p :: (a, b), entonces ∃x :: a. ∃y :: b. p = (x, y).
--- data Either a b = Left a | Right b
 
--- Extensionalidad para sumas
--- Si e :: Either a b, entonces:
+-- Extensionalidad para SUMAS:
+-- data Either a b = Left a | Right b
+-- Si e :: Either a b, entonces
 -- o bien ∃x :: a. e = Left x
 -- o bien ∃y :: b. e = Right b
 
@@ -101,37 +101,42 @@ asociarD ((x,y),z) = (x,(y,z)) --{AD}
 
 -- i. flip . flip = id
 
--- ∀p :: (a, b). (flip . flip) p = id p
--- flip (flip p) {.}
--- flip (flip (x, y)) {reemplazo}
--- flip y x {F}
--- x y {reemplazo}
--- p {ID}
--- id p {queda demostrada la igualdad}
+-- flip . flip = id {extensionalidad}
+-- ∀ f::a->b->c . ∀ x::a . ∀ y::b (flip . flip) f x y = id f x y
+-- (flip . flip) f x y = id f x y {.}
+-- flip (flip f) x y = id f x y {F}
+-- flip f y x = id f x y {F}
+-- f x y = f x y {ID}
+-- f = f {queda demostrada la igualdad}
 
 -- ii. ∀ f::(a,b)->c . uncurry (curry f) = f
 
--- uncurry (curry f) {CU}
--- uncurry (\x y -> f (x, y)) {UC}
--- (\(x', y') -> (\x y -> f (x, y))) x' y') {reemplazo}
--- (\(x', y') -> f (x', y')) {nu}
--- f {queda demostrada la igualdad}
+-- uncurry (curry f) = f {extensionalidad}
+-- uncurry (curry f) (x,y) = f (x,y) {UC}
+-- curry f x y = f (x,y) {CU}
+-- f (x,y) = f (x,y) {queda demostrada la igualdad}
 
 -- iii. flip const = const id
 
+-- flip const = const id {extensionalidad}
 -- ∀ x::a . ∀ y::b . flip const x y = const id x y
--- flip const x y {F}
--- const y x {CO}
--- ?
+-- flip const x y = const id x y {F}
+-- const y x = const id x y {C0}
+-- y = const id x y {C0}
+-- y = const id y {C0}
+-- y = id y {ID}
+-- y = y {queda demostrada la igualdad}
 
 -- iv. ∀ f::a->b . ∀ g::b->c . ∀ h::c->d . ((h . g) . f) = (h . (g . f))
 -- Sea la definición de la composición: (.) f g x = f (g x)
 
--- ((h . g) . f) x {.}
--- (h . g) (f x) {reemplazo}
--- h (g (f x)) {.}
--- (h . (g . f)) x {reemplazo}
--- (h . (g . f)) {queda demostrada la igualdad}
+-- ((h . g) . f) = (h . (g . f)) {extensionalidad}
+-- ∀ x::a . ((h . g) . f) x = (h . (g . f)) x
+-- ((h . g) . f) x = (h . (g . f)) x {.}
+-- (h . g) (f x) = (h . (g . f)) x {.}
+-- h (g (f x)) = (h . (g . f)) x {.}
+-- h ((g . f) x) = (h . (g . f)) x {.}
+-- (h . (g . f)) x = (h . (g . f)) x {queda demostrada la igualdad}
 
 -- Ejercicio 3
 
