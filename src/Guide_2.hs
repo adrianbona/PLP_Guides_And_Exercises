@@ -442,7 +442,7 @@ reverseFR = foldr (\x xs -> xs ++ [x]) [] --{RFR0}
 -- Caso base: P([]) =
 
 -- ∀ ys::[a] . append [] ys = [] ++ ys {A0}
--- ∀ ys::[a] . ys = [] ++ ys {++}
+-- ∀ ys::[a] . ys = [] ++ ys {++AUX2}
 -- ∀ ys::[a] . ys = ys {queda demostrada la igualdad}
 
 -- Hipótesis inductiva: P(xs) = ∀ ys::[a] . append xs ys = xs ++ ys
@@ -451,9 +451,10 @@ reverseFR = foldr (\x xs -> xs ++ [x]) [] --{RFR0}
 -- ∀ ys::[a] . append (x:xs) ys = (x:xs) ++ ys {A1}
 -- ∀ ys::[a] . x : append xs ys = (x:xs) ++ ys {HI}
 -- ∀ ys::[a] . x : (xs ++ ys) = (x:xs) ++ ys {++}
--- ∀ ys::[a] . [x] ++ (xs ++ ys) = (x:xs) ++ ys {++}
--- ∀ ys::[a] . [x] ++ xs ++ ys = (x:xs) ++ ys {++}
--- ∀ ys::[a] . [x] ++ xs ++ ys = [x] ++ xs ++ ys {queda demostrada la igualdad}
+-- ∀ ys::[a] . x : (xs ++ ys) = foldr (:) ys (x:xs) {FR1}
+-- ∀ ys::[a] . x : (xs ++ ys) = (:) x (foldr (:) yz xs) {++}
+-- ∀ ys::[a] . x : (xs ++ ys) = (:) x (xs ++ ys) {:}
+-- ∀ ys::[a] . x : xs ++ ys = x : xs ++ ys {queda demostrada la igualdad}
 
 -- iii. map id = id
 
