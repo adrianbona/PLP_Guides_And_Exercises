@@ -602,36 +602,25 @@ _zip' (x:xs) ys = if null ys then [] else (x, head ys) : _zip' xs (tail ys) --{Z
 
 -- _zip = _zip'
 
--- Predicado unario: P(xs) = _zip xs ys = _zip' xs ys
+-- Predicado unario: P(xs) = ∀ ys::[b] . _zip xs ys = _zip' xs ys
 
 -- Caso base: P([]) =
 
--- _zip [] ys = _zip' [] ys {Z0}
--- foldr (\x rec ys -> if null ys then [] else (x, head ys) : rec (tail ys)) (const []) [] ys = _zip' [] ys {FR0}
--- const [] = _zip' [] ys {Z'0}
+-- ∀ ys::[b] . _zip [] ys = _zip' [] ys {Z0}
+-- ∀ ys::[b] . foldr (\x rec ys -> if null ys then [] else (x, head ys) : rec (tail ys)) (const []) [] ys = _zip' [] ys {FR0}
+-- ∀ ys::[b] . const [] ys = _zip' [] ys {Z'0}
+-- ∀ ys::[b] . const [] ys = [] {C0}
 -- [] = [] {queda demostrada la igualdad}
 
--- Hipótesis inductiva: P(xs) = _zip xs ys = _zip' xs ys
+-- Hipótesis inductiva: P(xs) = ∀ ys::[b] . _zip xs ys = _zip' xs ys
 -- Paso inductivo: P(x:xs) = ∀ ys::[b] . _zip (x:xs) ys = _zip' (x:xs) ys
 
 -- ∀ ys::[b] . _zip (x:xs) ys = _zip' (x:xs) ys {Z0}
--- ∀ ys::[b] . foldr (\x rec ys -> if null ys then [] else (x, head ys) : rec (tail ys)) (const []) (x:xs) ys = _zip' (x:xs) ys
-
--- Partimos en dos casos: o bien ys es vacío o en caso contrario ys no es vacío
-
--- Caso 1: ys es vacío
-
--- foldr (\x rec [] -> if null [] then [] else (x, head []) : rec (tail [])) (const []) (x:xs) [] = _zip' (x:xs) [] {reescribimos}
--- foldr (\x rec [] -> []) (const []) (x:xs) [] = _zip' (x:xs) [] {FR1}
--- [] = _zip' (x:xs) [] {Z'1}
--- [] = [] {queda demostrada la igualdad}
-
--- Caso 2: ys no es vacío
-
--- foldr (\x' rec ys -> (x', head ys) : rec (tail ys)) (const []) (x:xs) ys = _zip' (x:xs) ys {FR1}
--- (x, head ys) : foldr (\x' rec ys -> (x', head ys) : rec (tail ys)) (const []) xs (tail ys) = _zip' (x:xs) ys {HI}
--- (x, head ys) : _zip' xs (tail ys) = _zip' (x:xs) ys {Z'1}
--- (x, head ys) : _zip' xs (tail ys) = (x, head ys) : _zip' xs (tail ys) {queda demostrada la igualdad}
+-- ∀ ys::[b] . foldr (\x rec ys -> if null ys then [] else (x, head ys) : rec (tail ys)) (const []) (x:xs) ys = _zip' (x:xs) ys {FR1}
+-- ∀ ys::[b] . (if null ys then [] else (x, head ys) : foldr (\x rec ys -> if null ys then [] else (x, head ys) : rec (tail ys)) (const []) xs (tail ys)) = _zip' (x:xs) ys {Z0}
+-- ∀ ys::[b] . (if null ys then [] else (x, head ys) : _zip xs (tail ys)) = _zip' (x:xs) ys {HI}
+-- ∀ ys::[b] . (if null ys then [] else (x, head ys) : _zip' xs (tail ys)) = _zip' (x:xs) ys {Z'1}
+-- ∀ ys::[b] . (if null ys then [] else (x, head ys) : _zip' xs (tail ys)) = (if null ys then [] else (x, head ys) : _zip' xs (tail ys)) {queda demostrada la igualdad}
 
 -- Ejercicio 6
 
