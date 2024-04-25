@@ -480,54 +480,71 @@ reverseFR = foldr (\x xs -> xs ++ [x]) [] --{RFR0}
 
 -- iv. ∀ f::a->b . ∀ g::b->c . map (g . f) = map g . map f
 
--- Predicado unario: P(xs) = ∀ f::a->b . ∀ g::b->c . map (g . f) xs = map g . map f xs
+-- Predicado unario: P(xs) = ∀ f::a->b . ∀ g::b->c . map (g . f) xs = (map g . map f) xs
 
 -- Caso base: P([]) =
 
--- ∀ f::a->b . ∀ g::b->c . map (g . f) [] = map g . map f [] {M0}
--- ∀ f::a->b . ∀ g::b->c . map (g . f) [] = map g [] {M0}
--- ∀ f::a->b . ∀ g::b->c . [] = [] {queda demostrada la igualdad}
+-- ∀ f::a->b . ∀ g::b->c . map (g . f) [] = (map g . map f) [] {MA0}
+-- ∀ f::a->b . ∀ g::b->c . [] = (map g . map f) [] {.}
+-- [] = map g (map f []) {MA0}
+-- [] = map g [] {MA0}
+-- [] = [] {queda demostrada la igualdad}
 
--- Hipótesis inductiva: P(xs) = ∀ f::a->b . ∀ g::b->c . map (g . f) xs = map g . map f xs
--- Paso inductivo: P(x:xs) = ∀ f::a->b . ∀ g::b->c . map (g . f) (x:xs) = map g . map f (x:xs)
+-- Hipótesis inductiva: P(xs) = ∀ f::a->b . ∀ g::b->c . map (g . f) xs = (map g . map f) xs
+-- Paso inductivo: P(x:xs) = ∀ f::a->b . ∀ g::b->c . map (g . f) (x:xs) = (map g . map f) (x:xs)
 
--- ∀ f::a->b . ∀ g::b->c . map (g . f) (x:xs) = map g . map f (x:xs) {MA1}
--- ∀ f::a->b . ∀ g::b->c . (g . f) x : (map (g . f) xs) = map g . map f (x:xs) {HI}
--- ∀ f::a->b . ∀ g::b->c . (g . f) x : (map g . map f xs) = map g . map f (x:xs) {MA1}
--- ∀ f::a->b . ∀ g::b->c . (g . f) x : (map g . map f xs) = map g (f x : map f xs) {MA1}
--- ∀ f::a->b . ∀ g::b->c . (g . f) x : (map g . map f xs) = g (f x) : map g (map f xs) {.}
--- ∀ f::a->b . ∀ g::b->c . (g . f) x : (map g . map f xs) = (g . f) x : map g (map f xs) {.}
--- ∀ f::a->b . ∀ g::b->c . (g . f) x : (map g . map f xs) = (g . f) x : (map g . map f xs) {queda demostrada la igualdad}
+-- ∀ f::a->b . ∀ g::b->c . map (g . f) (x:xs) = (map g . map f) (x:xs) {MA1}
+-- ∀ f::a->b . ∀ g::b->c . (g . f) x : map (g . f) xs = (map g . map f) (x:xs) {HI}
+-- ∀ f::a->b . ∀ g::b->c . (g . f) x : ((map g . map f) xs) = (map g . map f) (x:xs) {.}
+-- ∀ f::a->b . ∀ g::b->c . (g . f) x : (map g (map f xs)) = (map g . map f) (x:xs) {.}
+-- ∀ f::a->b . ∀ g::b->c . (g . f) x : (map g (map f xs)) = (map g (map f x:xs)) {MA1}
+-- ∀ f::a->b . ∀ g::b->c . (g . f) x : (map g (map f xs)) = (map g (f x : map f xs)) {MA1}
+-- ∀ f::a->b . ∀ g::b->c . (g . f) x : (map g (map f xs)) = g (f x) : (map g (map f xs)) {.}
+-- ∀ f::a->b . ∀ g::b->c . (g . f) x : (map g (map f xs)) = (g . f) x : (map g (map f xs)) {queda demostrada la igualdad}
 
 -- v. ∀ f::a->b . ∀ p::b->Bool . filter (p . f) = filter p . map f
 
--- Predicado unario: P(xs) = ∀ f::a->b . ∀ p::b->Bool . filter (p . f) xs = filter p . map f xs
+-- Predicado unario: P(xs) = ∀ f::a->b . ∀ p::b->Bool . filter (p . f) xs = (filter p . map f) xs
 
 -- Caso base: P([]) =
 
--- ∀ f::a->b . ∀ p::b->Bool . filter (p . f) [] = filter p . map f [] {MA0}
--- ∀ f::a->b . ∀ p::b->Bool . filter (p . f) [] = filter p [] {F0}
+-- ∀ f::a->b . ∀ p::b->Bool . filter (p . f) [] = (filter p . map f) [] {F0}
+-- ∀ f::a->b . ∀ p::b->Bool . foldr (\x xs -> if p (f x) then x : xs else xs) [] [] = (filter p . map f) [] {FR0}
+-- ∀ f::a->b . ∀ p::b->Bool . [] = (filter p . map f) [] {.}
+-- ∀ f::a->b . ∀ p::b->Bool . [] = filter p (map f []) {MA0}
+-- [] = filter p [] {F0}
+-- [] = foldr (\x xs -> if p x then x : xs else xs) [] [] {FR0}
 -- [] = [] {queda demostrada la igualdad}
 
--- Hipótesis inductiva: P(xs) = ∀ f::a->b . ∀ p::b->Bool . filter (p . f) xs = filter p . map f xs
--- Paso inductivo: P(x:xs) = ∀ f::a->b . ∀ p::b->Bool . filter (p . f) (x:xs) = filter p . map f (x:xs)
+-- Hipótesis inductiva: P(xs) = ∀ f::a->b . ∀ p::b->Bool . filter (p . f) xs = (filter p . map f) xs
+-- Paso inductivo: P(x:xs) = ∀ f::a->b . ∀ p::b->Bool . filter (p . f) (x:xs) = (filter p . map f) (x:xs)
 
--- ∀ f::a->b . ∀ p::b->Bool . filter (p . f) (x:xs) = filter p . map f (x:xs) {F0}
--- ∀ f::a->b . ∀ p::b->Bool . if (p . f) x then x : (filter (p . f) xs) else filter (p . f) xs = filter p . map f (x:xs)
+-- ∀ f::a->b . ∀ p::b->Bool . filter (p . f) (x:xs) = (filter p . map f) (x:xs) {F0}
+-- ∀ f::a->b . ∀ p::b->Bool . foldr (\y ys -> if (p . f) y then y : ys else ys) [] (x:xs) = (filter p . map f) (x:xs) {FR1}
 
 -- La función p aplicada a f x puede devolver True o False, por lo que se deben considerar ambos casos:
 
 -- Caso 1: (p . f) x = True
 
--- ∀ f::a->b . ∀ p::b->Bool . f x : (filter (p . f) xs) = filter p . map f (x:xs) {HI}
--- ∀ f::a->b . ∀ p::b->Bool . f x : (filter p . map f xs) = filter p . map f (x:xs) {MA1}
--- ∀ f::a->b . ∀ p::b->Bool . f x : (filter p . map f xs) = filter p . (f x : map f xs) {F0}
--- ∀ f::a->b . ∀ p::b->Bool . f x : (filter p . map f xs) = f x : filter p . map f xs {queda demostrada la igualdad}
+-- ∀ f::a->b . ∀ p::b->Bool . f x : (filter (p . f) xs) = (filter p . map f) (x:xs) {HI}
+-- ∀ f::a->b . ∀ p::b->Bool . f x : (filter p . map f xs) = (filter p . map f) (x:xs) {.}
+-- ∀ f::a->b . ∀ p::b->Bool . f x : (filter p . map f xs) = filter p (map f (x:xs)) {MA1}
+-- ∀ f::a->b . ∀ p::b->Bool . f x : (filter p . map f xs) = filter p (f x : map f xs) {F0}
+-- ∀ f::a->b . ∀ p::b->Bool . f x : (filter p . map f xs) = foldr (\y ys -> if p y then y : ys else ys) [] (f x : map f xs) {CASO 1}
+-- ∀ f::a->b . ∀ p::b->Bool . f x : (filter p . map f xs) = f x : foldr (\y ys -> if p y then y : ys else ys) [] (map f xs) {MA1}
+-- ∀ f::a->b . ∀ p::b->Bool . f x : (filter p . map f xs) = f x : (filter p (map f xs)) {.}
+-- ∀ f::a->b . ∀ p::b->Bool . f x : (filter p . map f xs) = f x : (filter p . map f xs) {queda demostrada la igualdad}
 
 -- Caso 2: (p . f) x = False
 
--- ∀ f::a->b . ∀ p::b->Bool . filter (p . f) xs = filter p . map f xs {HI}
--- ∀ f::a->b . ∀ p::b->Bool . filter p . map f xs = filter p . map f xs {queda demostrada la igualdad}
+-- ∀ f::a->b . ∀ p::b->Bool . filter (p . f) xs = (filter p . map f) (x:xs) {HI}
+-- ∀ f::a->b . ∀ p::b->Bool . (filter p . map f) xs = (filter p . map f) (x:xs) {.}
+-- ∀ f::a->b . ∀ p::b->Bool . (filter p . map f) xs = filter p (map f (x:xs)) {MA1}
+-- ∀ f::a->b . ∀ p::b->Bool . (filter p . map f) xs = filter p (f x : map f xs) {F0}
+-- ∀ f::a->b . ∀ p::b->Bool . (filter p . map f) xs = foldr (\y ys -> if p y then y : ys else ys) [] (f x : map f xs) {CASO 2}
+-- ∀ f::a->b . ∀ p::b->Bool . (filter p . map f) xs = foldr (\y ys -> if p y then y : ys else ys) [] (map f xs) {MA1}
+-- ∀ f::a->b . ∀ p::b->Bool . (filter p . map f) xs = filter p (map f xs) {.}
+-- ∀ f::a->b . ∀ p::b->Bool . (filter p . map f) xs = (filter p . map f) xs {queda demostrada la igualdad}
 
 -- vi. ∀ f::a->b . ∀ e::a . ∀ xs::[xs] . (elem e xs = True) ⇒ (elem (f e) (map f xs) = True) (asumiendo Eq a y Eq b)
 
