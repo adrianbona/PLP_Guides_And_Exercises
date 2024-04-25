@@ -642,6 +642,7 @@ intersect xs ys = filter (\e -> elem e ys) xs --{I0}
 
 -- ∀ e::a . elem e [] = elem e (nub []) {N0}
 -- ∀ e::a . elem e [] = elem e [] {E0}
+-- ∀ e::a . foldr (\y b -> b || y == e) False [] = foldr (\y b -> b || y == e) False [] {FR0}
 -- ∀ e::a . False = False {queda demostrada la igualdad}
 
 -- Hipótesis inductiva: P(xs) = ∀ e::a . elem e xs = elem e (nub xs)
@@ -649,31 +650,33 @@ intersect xs ys = filter (\e -> elem e ys) xs --{I0}
 
 -- ∀ e::a . elem e (x:xs) = elem e (nub (x:xs)) {E0}
 -- ∀ e::a . foldr (\y b -> b || y == e) False (x:xs) = elem e (nub (x:xs)) {FR1}
--- ∀ e::a . (x == e || foldr (\y b -> b || y == e) False xs) = elem e (nub (x:xs)) {E0}
--- ∀ e::a . (x == e || elem e xs) = elem e (nub (x:xs)) {HI}
--- ∀ e::a . (x == e || elem e (nub xs)) = elem e (nub (x:xs)) {partimos en casos}
+-- ∀ e::a . (foldr (\y b -> b || y == e) False xs || x == e) = elem e (nub (x:xs)) {E0}
+-- ∀ e::a . (elem e xs || x == e) = elem e (nub (x:xs)) {HI}
+-- ∀ e::a . (elem e (nub xs) || x == e) = elem e (nub (x:xs)) {partimos en casos}
 
 -- Caso 1: x == e
 
--- (True || elem e (nub xs)) = elem e (nub (x:xs)) {lógica}
--- True = elem e (nub (x:xs)) {N1}
--- True = elem e (x: nub (filter (\y -> x /= y) xs)) {E0}
--- True = foldr (\y b -> b || y == e) False (x: nub (filter (\y -> x /= y) xs)) {FR1}
--- True = (x == e || foldr (\y b -> b || y == e) False (nub (filter (\y -> x /= y) xs)) {CASO 1}
--- True = (True || foldr (\y b -> b || y == e) False (nub (filter (\y -> x /= y) xs)) {lógica}
--- True = True {queda demostrada la igualdad}
+-- ∀ e::a . (elem e (nub xs) || x == e) = elem e (nub (x:xs)) {CASO 1}
+-- ∀ e::a . (elem e (nub xs) || True) = elem e (nub (x:xs)) {lógica}
+-- ∀ e::a . True = elem e (nub (x:xs)) {N1}
+-- ∀ e::a . True = elem e (x: nub (filter (\y -> x /= y) xs)) {E0}
+-- ∀ e::a . True = foldr (\y b -> b || y == e) False (x: nub (filter (\y -> x /= y) xs)) {FR1}
+-- ∀ e::a . True = (foldr (\y b -> b || y == e) False (nub (filter (\y -> x /= y) xs) || x == e) {CASO 1}
+-- ∀ e::a . True = (foldr (\y b -> b || y == e) False (nub (filter (\y -> x /= y) xs) || True) {lógica}
+-- ∀ e::a . True = True {queda demostrada la igualdad}
 
 -- Caso 2: x /= e
 
--- (False || elem e (nub xs)) = elem e (nub (x:xs)) {lógica}
--- elem e (nub xs) = elem e (nub (x:xs)) {E0}
--- elem e (nub xs) = foldr (\y b -> b || y == e) False (nub (x:xs)) {N0}
--- elem e (nub xs) = foldr (\y b -> b || y == e) False (x: nub (filter (\y -> x /= y) xs)) {FR1}
--- elem e (nub xs) = (x == e || foldr (\y b -> b || y == e) False (nub (filter (\y -> x /= y) xs)) {CASO 2}
--- elem e (nub xs) = (False || foldr (\y b -> b || y == e) False (nub (filter (\y -> x /= y) xs)) {lógica}
--- elem e (nub xs) = foldr (\y b -> b || y == e) False (nub (filter (\y -> x /= y) xs) {E0}
--- elem e (nub xs) = elem e (nub (filter (\y -> x /= y) xs) {N1} //POLÉMICO
--- elem e (nub xs) = elem e (nub xs) {queda demostrada la igualdad}
+-- ∀ e::a . (elem e (nub xs) || x == e) = elem e (nub (x:xs)) {CASO 2}
+-- ∀ e::a . (elem e (nub xs) || False) = elem e (nub (x:xs)) {lógica}
+-- ∀ e::a . elem e (nub xs) = elem e (nub (x:xs)) {N1}
+-- ∀ e::a . elem e (nub xs) = elem e (x: nub (filter (\y -> x /= y) xs)) {E0}
+-- ∀ e::a . elem e (nub xs) = foldr (\y b -> b || y == e) False (x: nub (filter (\y -> x /= y) xs)) {FR1}
+-- ∀ e::a . elem e (nub xs) = (foldr (\y b -> b || y == e) False (nub (filter (\y -> x /= y) xs) || x == e) {CASO 2}
+-- ∀ e::a . elem e (nub xs) = (foldr (\y b -> b || y == e) False (nub (filter (\y -> x /= y) xs) || False) {lógica}
+-- ∀ e::a . elem e (nub xs) = foldr (\y b -> b || y == e) False (nub (filter (\y -> x /= y) xs) {E0}
+-- ∀ e::a . elem e (nub xs) = elem e (nub (filter (\y -> x /= y) xs) {N1}
+-- ∀ e::a . elem e (nub xs) = elem e (nub xs) {queda demostrada la igualdad}
 
 -- ii. Eq a => ∀ xs::[a] . ∀ ys::[a] . ∀ e::a . elem e (union xs ys) = (elem e xs) || (elem e ys)
 
