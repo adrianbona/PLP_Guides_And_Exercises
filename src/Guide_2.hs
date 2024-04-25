@@ -3,6 +3,7 @@ module Guide_2 (
   espejar,
   asociarI,
   asociarD,
+  reverseFR,
   _zip,
   _zip',
   nub,
@@ -192,8 +193,8 @@ asociarD ((x,y),z) = (x,(y,z)) --{AD}
 -- (:) :: a -> [a] -> [a]
 -- x : xs = foldr (:) [x] xs {:}
 
--- reverseFR :: [a] -> [a]
--- reverseFR = foldr (:) [] {RFR0}
+reverseFR :: [a] -> [a]
+reverseFR = foldr (\x xs -> xs ++ [x]) [] --{RFR0}
 
 -- i. ∀ xs::[a] . length (duplicar xs) = 2 * length xs
 
@@ -334,15 +335,41 @@ asociarD ((x,y),z) = (x,(y,z)) --{AD}
 -- ∀ y::a . head (reverse (ponerAlFinal y (x:xs))) = y {P0}
 -- ∀ y::a . head (reverse (foldr (:) (y:[]) (x:xs))) = y {FR1}
 -- ∀ y::a . head (reverse (x:(foldr (:) (y:[]) xs))) = y {P0}
--- ∀ y::a . head (reverse (x:(ponerAlFinal y xs))) = y {R0}
--- ∀ y::a . head (foldl (flip (:) [] (x : ponerAlFinal y xs)) = y {FL1}
--- ∀ y::a . head (foldl (flip (:) [x] (ponerAlFinal y xs)) = y {R0}
-
--- NO ALCANZA CON R0
-
--- ∀ y::a . head (reverse (ponerAlFinal y xs) ++ [x]) = y {H0}
+-- ∀ y::a . head (reverse (x:(ponerAlFinal y xs))) = y {RFR0}
+-- ∀ y::a . head (foldr (\x xs -> xs ++ [x]) [] (x:(ponerAlFinal y xs))) = y {FR1}
+-- ∀ y::a . head (foldr (\x xs -> xs ++ [x]) [] (ponerAlFinal y xs) ++ [x]) = y {RFR0}
+-- ∀ y::a . head (reverse (ponerAlFinal y xs) ++ [x]) = y {LEMA}
 -- ∀ y::a . head (reverse (ponerAlFinal y xs)) = y {HI}
 -- ∀ y::a . y = y {queda demostrada la igualdad}
+
+-- Lema Auxiliar: ∀ xs::[a] . ∀ x::a . length xs > 0 ⇒ head (xs ++ ys) = head xs
+
+-- Predicado unario: P(xs) = ∀ x::a . length xs > 0 ⇒ head (xs ++ ys) = head xs
+
+-- Caso base: P([]) =
+
+-- ∀ x::a . length [] > 0 ⇒ head ([] ++ ys) = head [] {L0}
+-- ∀ x::a . 0 > 0 ⇒ head ([] ++ ys) = head [] {lógica}
+-- ∀ x::a . False ⇒ head ([] ++ ys) = head [] {queda demostrada la implicación}
+
+-- Hipótesis inductiva: P(xs) = ∀ x::a . length xs > 0 ⇒ head (xs ++ ys) = head xs
+-- Paso inductivo: P(x:xs) = ∀ x::a . length (x:xs) > 0 ⇒ head ((x:xs) ++ ys) = head (x:xs)
+
+-- ∀ x::a . length (x:xs) > 0 ⇒ head ((x:xs) ++ ys) = head (x:xs) {L1}
+-- ∀ x::a . 1 + length xs > 0 ⇒ head ((x:xs) ++ ys) = head (x:xs) {H0}
+-- ∀ x::a . 1 + length xs > 0 ⇒ head ((x:xs) ++ ys) = x {abrirmos en casos}
+
+-- Caso 1: xs = []
+
+-- ∀ x::a . 1 + length [] > 0 ⇒ head ((x:[]) ++ ys) = x {L0}
+-- ∀ x::a . 1 + 0 > 0 ⇒ head ((x:[]) ++ ys) = x {:}
+-- ∀ x::a . 1 + 0 > 0 ⇒ head (([x]) ++ ys) = x {aritmética}
+-- ∀ x::a . 1 > 0 ⇒ head (([x]) ++ ys) = x {++}
+-- ∀ x::a . 1 > 0 ⇒ head (foldr (:) ys [x]) = x {FR1}
+-- ∀ x::a . 1 > 0 ⇒ head (x : foldr (:) ys []) = x {++}
+-- ∀ x::a . 1 > 0 ⇒ head (x : foldr (:) ys []) = x {H0}
+-- ∀ x::a . 1 > 0 ⇒ x = x {lógica}
+-- ∀ x::a . True ⇒ x = x {queda demostrada la implicación}
 
 -- Ejercicio 4
 
