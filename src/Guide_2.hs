@@ -157,6 +157,8 @@ asociarD ((x,y),z) = (x,(y,z)) --{AD}
 
 -- (++) :: [a] -> [a] -> [a]
 -- xs ++ ys = foldr (:) ys xs {++}
+-- xs ++ [] = xs {++AUX1}
+-- [] ++ ys = ys {++AUX2}
 
 -- ponerAlFinal :: a -> [a] -> [a]
 -- ponerAlFinal x = foldr (:) (x:[]) {P0}
@@ -390,19 +392,48 @@ reverseFR = foldr (\x xs -> xs ++ [x]) [] --{RFR0}
 -- Hipótesis inductiva: P(xs) = reverse . reverse xs = id xs
 -- Paso inductivo: P(x:xs) = reverse . reverse (x:xs) = id (x:xs)
 
--- Utilizamos un lema que reescribe reverse utilizando foldr
-
 -- reverse . reverse (x:xs) = id (x:xs) {.}
--- reverse (reverse (x:xs)) = id (x:xs) {R0}
--- reverse (foldr (:) [] (x:xs)) = id (x:xs) {FR1}
--- reverse (x : foldr (:) [] xs) = id (x:xs) {R0}
--- reverse (x : reverse xs) = id (x:xs) {R0}
--- foldr (:) [] (x : reverse xs) = id (x:xs) {FR1}
--- x : foldr (:) [] (reverse xs) = id (x:xs) {R0}
--- x : reverse (reverse xs) = id (x:xs) {.}
--- x : (reverse . reverse xs) = id (x:xs) {HI}
--- x : id xs = id (x:xs) {ID}
+-- reverse (reverse (x:xs)) = id (x:xs) {RFR0}
+-- reverse (foldr (\x xs -> xs ++ [x]) [] (x:xs)) = id (x:xs) {FR1}
+-- reverse (foldr (\x xs -> xs ++ [x]) [] (xs) ++ [x]) = id (x:xs) {RFR0}
+-- reverse (reverse xs ++ [x]) = id (x:xs) {LEMA}
+-- reverse [x] ++ reverse (reverse xs) = id (x:xs) {R0}
+-- foldl (flip (:)) [] [x] ++ reverse (reverse xs) = id (x:xs) {FL1}
+-- (foldl flip (:) (flip (:) [] x) []) ++ reverse (reverse xs) = id (x:xs) {FL1}
+-- (flip (:) [] x) ++ reverse (reverse xs) = id (x:xs) {F}
+-- (x:[]) ++ reverse (reverse xs) = id (x:xs) {:}
+-- [x] ++ reverse (reverse xs) = id (x:xs) {HI}
+-- [x] ++ xs = id (x:xs) {++}
+-- foldr (:) xs [x] = id (x:xs) {FR1}
+-- x : foldr (:) xs [] = id (x:xs) {FR0}
+-- x:xs = id (x:xs) {ID}
 -- x:xs = x:xs {queda demostrada la igualdad}
+
+-- Lema Auxiliar: ∀ xs::[a] . ∀ ys::[a] . reverse (xs ++ ys) = reverse ys ++ reverse xs
+
+-- Predicado unario: P(xs) = ∀ ys::[a] . reverse (xs ++ ys) = reverse ys ++ reverse xs
+
+-- Caso base: P([]) =
+
+-- ∀ ys::[a] . reverse ([] ++ ys) = reverse ys ++ reverse [] {++AUX2}
+-- ∀ ys::[a] . reverse ys = reverse ys ++ [] {++AUX1}
+-- ∀ ys::[a] . reverse ys = reverse ys {queda demostrada la igualdad}
+
+-- Hipótesis inductiva: P(xs) = ∀ ys::[a] . reverse (xs ++ ys) = reverse ys ++ reverse xs
+-- Paso inductivo: P(x:xs) = ∀ ys::[a] . reverse ((x:xs) ++ ys) = reverse ys ++ reverse (x:xs)
+
+-- ∀ ys::[a] . reverse ((x:xs) ++ ys) = reverse ys ++ reverse (x:xs) {++}
+-- ∀ ys::[a] . reverse (foldr (:) ys (x:xs)) = reverse ys ++ reverse (x:xs) {FR1}
+-- ∀ ys::[a] . reverse ((:) x (foldr (:) ys xs)) = reverse ys ++ reverse (x:xs) {++}
+-- ∀ ys::[a] . reverse (x : foldr (:) ys xs) = reverse ys ++ reverse (x:xs) {++}
+-- ∀ ys::[a] . reverse (x : (xs ++ ys)) = reverse ys ++ reverse (x:xs) {RFR0}
+-- ∀ ys::[a] . foldr (\y xs -> xs ++ [y]) [] (x : (xs ++ ys)) = reverse ys ++ reverse (x:xs) {FR1}
+-- ∀ ys::[a] . (foldr (\y xs -> xs ++ [y]) [] (xs ++ ys)) ++ [x] = reverse ys ++ reverse (x:xs) {RFR0}
+-- ∀ ys::[a] . (reverse (ys ++ xs)) ++ [x] = reverse ys ++ reverse (x:xs) {HI}
+-- ∀ ys::[a] . reverse ys ++ reverse xs ++ [x] = reverse ys ++ reverse (x:xs) {RFR0}
+-- ∀ ys::[a] . reverse ys ++ reverse xs ++ [x] = reverse ys ++ (foldr (\y xs -> xs ++ [y]) [] (x:xs)) {FR1}
+-- ∀ ys::[a] . reverse ys ++ reverse xs ++ [x] = reverse ys ++ (foldr (\y xs -> xs ++ [y]) [] (xs)) ++ [x] {RFR0}
+-- ∀ ys::[a] . reverse ys ++ reverse xs ++ [x] = reverse ys ++ reverse xs ++ [x] {queda demostrada la igualdad}
 
 -- ii. append = (++)
 
