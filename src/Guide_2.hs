@@ -675,7 +675,7 @@ intersect xs ys = filter (\e -> elem e ys) xs --{I0}
 -- ∀ e::a . elem e (nub xs) = (foldr (\y b -> b || y == e) False (nub (filter (\y -> x /= y) xs) || x == e) {CASO 2}
 -- ∀ e::a . elem e (nub xs) = (foldr (\y b -> b || y == e) False (nub (filter (\y -> x /= y) xs) || False) {lógica}
 -- ∀ e::a . elem e (nub xs) = foldr (\y b -> b || y == e) False (nub (filter (\y -> x /= y) xs) {E0}
--- ∀ e::a . elem e (nub xs) = elem e (nub (filter (\y -> x /= y) xs) {N1}
+-- ∀ e::a . elem e (nub xs) = elem e (nub (filter (\y -> x /= y) xs) {N1???}
 -- ∀ e::a . elem e (nub xs) = elem e (nub xs) {queda demostrada la igualdad}
 
 -- ii. Eq a => ∀ xs::[a] . ∀ ys::[a] . ∀ e::a . elem e (union xs ys) = (elem e xs) || (elem e ys)
@@ -685,34 +685,32 @@ intersect xs ys = filter (\e -> elem e ys) xs --{I0}
 -- Caso base: P([]) =
 
 -- ∀ ys::[a] . ∀ e::a . elem e (union [] ys) = (elem e []) || (elem e ys) {U0}
--- ∀ ys::[a] . ∀ e::a . elem e (nub ([] ++ ys)) = (elem e []) || (elem e ys) {++}
+-- ∀ ys::[a] . ∀ e::a . elem e (nub ([] ++ ys)) = (elem e []) || (elem e ys) {++AUX2}
 -- ∀ ys::[a] . ∀ e::a . elem e (nub ys) = (elem e []) || (elem e ys) {E0}
+-- ∀ ys::[a] . ∀ e::a . elem e (nub ys) = (foldr (\y b -> b || y == e) False []) || (elem e ys) {FR0}
 -- ∀ ys::[a] . ∀ e::a . elem e (nub ys) = False || (elem e ys) {lógica}
--- ∀ ys::[a] . ∀ e::a . elem e (nub ys) = elem e ys {LEMA_NUB}
+-- ∀ ys::[a] . ∀ e::a . elem e (nub ys) = elem e ys {i}
 -- ∀ ys::[a] . ∀ e::a . True {queda demostrada la igualdad}
-
 
 -- Hipótesis inductiva: P(xs) = ∀ ys::[a] . ∀ e::a . elem e (union xs ys) = (elem e xs) || (elem e ys)
 -- Paso inductivo: P(x:xs) = ∀ ys::[a] . ∀ e::a . elem e (union (x:xs) ys) = (elem e (x:xs)) || (elem e ys)
 
--- ∀ ys::[a] . ∀ e::a . elem e (union (x:xs) ys) = (elem e (x:xs)) || (elem e ys)
-
--- Lema Nub: ∀ ys::[a] . ∀ e::a . elem e (nub ys) = elem e ys
-
--- Predicado unario: P(ys) = ∀ e::a . elem e (nub ys) = elem e ys
-
--- Caso base: P([]) =
-
--- ∀ e::a . elem e (nub []) = elem e [] {N0}
--- ∀ e::a . elem e [] = elem e [] {E0}
--- ∀ e::a . False = False {queda demostrada la igualdad}
-
--- Hipótesis inductiva: P(ys) = ∀ e::a . elem e (nub ys) = elem e ys
--- Paso inductivo: P(y:ys) = ∀ e::a . elem e (nub (y:ys)) = elem e (y:ys)
-
--- ∀ e::a . elem e (nub (y:ys)) = elem e (y:ys) {N1}
--- ∀ e::a . elem e (y : nub (filter (\y' -> y /= y') ys)) = elem e (y:ys) {E0}
--- ∀ e::a . e == y || elem e (nub (filter (\y' -> y /= y') ys) = elem e (y:ys) {HI}
+-- ∀ ys::[a] . ∀ e::a . elem e (union (x:xs) ys) = (elem e (x:xs)) || (elem e ys) {U0}
+-- ∀ ys::[a] . ∀ e::a . elem e (nub ((x:xs) ++ ys)) = (elem e (x:xs)) || (elem e ys) {++}
+-- ∀ ys::[a] . ∀ e::a . elem e (nub (foldr (:) ys (x:xs))) = (elem e (x:xs)) || (elem e ys) {FR1}
+-- ∀ ys::[a] . ∀ e::a . elem e (nub ((:) x (foldr (:) ys xs)) = (elem e (x:xs)) || (elem e ys) {:}
+-- ∀ ys::[a] . ∀ e::a . elem e (nub (x : foldr (:) ys xs)) = (elem e (x:xs)) || (elem e ys) {++}
+-- ∀ ys::[a] . ∀ e::a . elem e (nub (x:(xs ++ ys))) = (elem e (x:xs)) || (elem e ys) {N1}
+-- ∀ ys::[a] . ∀ e::a . elem e (x : nub (filter (\y -> x /= y) (xs ++ ys))) = (elem e (x:xs)) || (elem e ys) {E0}
+-- ∀ ys::[a] . ∀ e::a . foldr (\y b -> b || y == e) False (x : nub (filter (\y -> x /= y) (xs ++ ys))) = (elem e (x:xs)) || (elem e ys) {FR1}
+-- ∀ ys::[a] . ∀ e::a . (foldr (\y b -> b || y == e) False (nub (filter (\y -> x /= y) (xs ++ ys)) || x == e) = (elem e (x:xs)) || (elem e ys) {E0}
+-- ∀ ys::[a] . ∀ e::a . elem e (nub (filter (\y -> x /= y) (xs ++ ys)) || x == e = (elem e (x:xs)) || (elem e ys) {N1}
+-- ∀ ys::[a] . ∀ e::a . elem e (nub (xs ++ ys)) || x == e = (elem e (x:xs)) || (elem e ys) {U0}
+-- ∀ ys::[a] . ∀ e::a . elem e (union xs ys) || x == e = (elem e (x:xs)) || (elem e ys) {HI}
+-- ∀ ys::[a] . ∀ e::a . elem e xs || elem e ys || x == e = (elem e (x:xs)) || (elem e ys) {E0}
+-- ∀ ys::[a] . ∀ e::a . elem e xs || elem e ys || x == e = (foldr (\y b -> b || y == e) False (x:xs)) || elem e ys) {FR1}
+-- ∀ ys::[a] . ∀ e::a . elem e xs || elem e ys || x == e = (foldr (\y b -> b || y == e) False xs || x == e) || elem e ys) {E0}
+-- ∀ ys::[a] . ∀ e::a . elem e xs || elem e ys || x == e = elem e xs || x == e || elem e ys {queda demostrada la igualdad}
 
 -- iii. Eq a => ∀ xs::[a] . ∀ ys::[a] . ∀ e::a . elem e (intersect xs ys) = (elem e xs) && (elem e ys)
 
@@ -720,22 +718,11 @@ intersect xs ys = filter (\e -> elem e ys) xs --{I0}
 
 -- iv. Eq a => ∀ xs::[a] . ∀ ys::[a] . length (union xs ys) = length xs + length ys
 
+-- Predicado unario: P(xs) = ∀ ys::[a] . length (union xs ys) = length xs + length ys
 
 -- v. Eq a => ∀ xs::[a] . ∀ ys::[a] . length (union xs ys) ≤ length xs + length ys
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+-- Predicado unario: P(xs) = ∀ ys::[a] . length (union xs ys) ≤ length xs + length ys
 
 
 
