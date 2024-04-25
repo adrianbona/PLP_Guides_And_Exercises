@@ -163,7 +163,7 @@ asociarD ((x,y),z) = (x,(y,z)) --{AD}
 -- reverse :: [a] -> [a]
 -- reverse = foldl (flip (:)) [] {R0}
 
--- Agregadas y utilizadas en demostraciones posteriores
+-- Agregadas y utilizadas en demostraciones posteriores:
 
 -- map :: (a -> b) -> [a] -> [b]
 -- map f = foldr ((:) . f) [] {M0}
@@ -195,8 +195,6 @@ asociarD ((x,y),z) = (x,(y,z)) --{AD}
 -- reverseFR :: [a] -> [a]
 -- reverseFR = foldr (:) [] {RFR0}
 
--- Demostrar las siguientes propiedades
-
 -- i. ∀ xs::[a] . length (duplicar xs) = 2 * length xs
 
 -- Predicado unario: P(xs) = length (duplicar xs) = 2 * length xs
@@ -204,6 +202,7 @@ asociarD ((x,y),z) = (x,(y,z)) --{AD}
 -- Caso base: P([]) =
 -- length (duplicar []) = 2 * length [] {D0}
 -- length [] = 2 * length [] {L0}
+-- 0 = 2 * 0 {aritmética}
 -- 0 = 0 {queda demostrada la igualdad}
 
 -- Hipótesis inductiva: P(xs) = length (duplicar xs) = 2 * length xs
@@ -224,15 +223,17 @@ asociarD ((x,y),z) = (x,(y,z)) --{AD}
 -- Caso base: P([]) =
 -- ∀ ys::[a] . length (append [] ys) = length [] + length ys {A0}
 -- ∀ ys::[a] . length ys = length [] + length ys {L0}
+-- ∀ ys::[a] . length ys = 0 + length ys {aritmética}
 -- ∀ ys::[a] . length ys = length ys {queda demostrada la igualdad}
 
--- Hipótesis inductiva: P(xs) = ∀ xs::[a] . ∀ ys::[a] . length (append xs ys) = length xs + length ys
+-- Hipótesis inductiva: P(xs) = ∀ ys::[a] . length (append xs ys) = length xs + length ys
 -- Paso inductivo: P(x:xs) = ∀ ys::[a] . length (append (x:xs) ys) = length (x:xs) + length ys
 
 -- ∀ ys::[a] . length (append (x:xs) ys) = length (x:xs) + length ys {A1}
 -- ∀ ys::[a] . length (x : append xs ys) = length (x:xs) + length ys {L1}
 -- ∀ ys::[a] . 1 + length (append xs ys) = length (x:xs) + length ys {L1}
 -- ∀ ys::[a] . 1 + length (append xs ys) = 1 + length xs + length ys {HI}
+-- ∀ ys::[a] . 1 + length xs + length ys = 1 + length xs + length ys {aritmética}
 -- ∀ ys::[a] . length xs + length ys = length xs + length ys {queda demostrada la igualdad}
 
 -- iii. ∀ xs::[a] . ∀ f::(a->b) . length (map f xs) = length xs
@@ -240,17 +241,17 @@ asociarD ((x,y),z) = (x,(y,z)) --{AD}
 -- Predicado unario: P(xs) = ∀ f::(a->b) . length (map f xs) = length xs
 
 -- Caso base: P([]) =
--- ∀ f::(a->b) . length (map f []) = length [] {M0}
+-- ∀ f::(a->b) . length (map f []) = length [] {MA0}
 -- ∀ f::(a->b) . length [] = length [] {L0}
 -- 0 = 0 {queda demostrada la igualdad}
 
--- Hipótesis inductiva: P(xs) = ∀ xs::[a] . ∀ f::(a->b) . length (map f xs) = length xs
+-- Hipótesis inductiva: P(xs) = ∀ f::(a->b) . length (map f xs) = length xs
 -- Paso inductivo: P(x:xs) = ∀ f::(a->b) . length (map f (x:xs)) = length (x:xs)
 
 -- ∀ f::(a->b) . length (map f (x:xs)) = length (x:xs) {M0}
--- ∀ f::(a->b) . length ((:) (f x) (map f xs)) = length (x:xs) {L1}
+-- ∀ f::(a->b) . length ((f x) : (map f xs)) = length (x:xs) {L1}
 -- ∀ f::(a->b) . 1 + length (map f xs) = length (x:xs) {HI}
--- ∀ f::(a->b) . 1 + length xs = length (x:xs) {L1}
+-- 1 + length xs = length (x:xs) {L1}
 -- 1 + length xs = 1 + length xs {aritmética}
 -- length xs = length xs {queda demostrada la igualdad}
 
@@ -260,7 +261,9 @@ asociarD ((x,y),z) = (x,(y,z)) --{AD}
 
 -- Caso base: P([]) =
 -- ∀ p::a->Bool . ∀ e::a . (elem e (filter p []) = True) ⇒ (elem e [] = True) {F0}
--- ∀ p::a->Bool . ∀ e::a . (elem e [] = True) ⇒ (elem e [] = True) {E0}
+-- ∀ p::a->Bool . ∀ e::a . (elem e (foldr (\x xs -> if p x then x : xs else xs) []) = True) ⇒ (elem e [] = True) {FR0}
+-- ∀ p::a->Bool . ∀ e::a . (elem e []) = True ⇒ (elem e [] = True) {queda demostrada la implicación}
+
 -- ∀ p::a->Bool . ∀ e::a . False ⇒ (elem e [] = True) {queda demostrada la implicación}
 
 -- Hipótesis inductiva: P(xs) = ∀ xs::[a] . ∀ p::a->Bool . ∀ e::a . (elem e (filter p xs) = True) ⇒ (elem e xs = True)
