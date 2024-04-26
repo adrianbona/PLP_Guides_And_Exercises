@@ -922,7 +922,141 @@ intersect xs ys = filter (\e -> elem e ys) xs --{I0}
 
 -- Ejercicio 10
 
+-- inorder :: AB a -> [a]
+-- inorder = foldAB [] (\ri x rd -> ri ++ (x:rd)) {IO0}
+
+-- elemAB :: Eq a => a -> AB a -> Bool
+-- elemAB e = foldAB False (\ri x rd -> (e == x) || ri || rd) {EAB0}
+
+-- elem :: Eq a => [a] -> Bool
+-- elem e = foldr (\x rec -> (e == x) || rec) False {E0}
+
+-- Demostrar Eq a => ∀ e::a . ∀ x::AB a . elemAB e x = elem e (inorder x)
+
+-- Predicado unario: P(x) = ∀ e::a . elemAB e x = elem e (inorder x)
+
+-- Caso base: P(Empty) =
+
+-- ∀ e::a . elemAB e Empty = elem e . inorder Empty {EAB0}
+-- ∀ e::a . foldAB False (\ri x rd -> (e == x) || ri || rd) Empty = elem e. inorder Empty {FAB0}
+-- ∀ e::a . False = elem e. inorder Empty {IO0}
+-- ∀ e::a . False = elem e (foldAB [] (\ri x rd -> ri ++ (x:rd)) Empty) {FAB0}
+-- ∀ e::a . False = elem e [] {E0}
+-- ∀ e::a . False = foldr (\x rec -> (e == x) || rec) False [] {FR0}
+-- ∀ e::a . False = False {queda demostrada la igualdad}
+
+-- Hipótesis inductiva:
+-- ∀ izq::AB a . P(izq) = ∀ e::a . elemAB e izq = elem e (inorder izq)
+-- ∀ der::AB a . P(der) = ∀ e::a . elemAB e der = elem e (inorder der)
+
+-- Paso inductivo: P(Bin izq root der) = ∀ e::a . elemAB e (Bin izq root der) = elem e (inorder (Bin izq root der))
+
+-- ∀ e::a . elemAB e (Bin izq root der) = elem e (inorder (Bin izq root der)) {EAB0}
+-- ∀ e::a . foldAB False (\ri x rd -> (e == x) || ri || rd) (Bin izq root der) = elem e (inorder (Bin izq root der)) {FAB1}
+-- ∀ e::a . (foldAB False (\ri x rd -> (e == x) || ri || rd) izq || e == root || foldAB False (\ri x rd -> (e == x) || ri || rd) der) = elem e (inorder (Bin izq root der)) {EAB0}
+-- ∀ e::a . elemAB e izq || e == root || elemAB e der = elem e (inorder (Bin izq root der)) {HI}
+-- ∀ e::a . elem e (inorder izq) || e == root || elem e (inorder der) = elem e (inorder (Bin izq root der)) {IO0}
+-- ∀ e::a . elem e (inorder izq) || e == root || elem e (inorder der) = elem e (foldAB [] (\ri x rd -> ri ++ (x:rd)) (Bin izq root der)) {FAB1}
+-- ∀ e::a . elem e (inorder izq) || e == root || elem e (inorder der) = elem e (foldAB [] (\ri x rd -> ri ++ (x:rd)) izq ++ (root:foldAB [] (\ri x rd -> ri ++ (x:rd)) der) {IO0}
+-- ∀ e::a . elem e (inorder izq) || e == root || elem e (inorder der) = elem e (inorder izq ++ (root:inorder der)) {E0}
+-- ∀ e::a . elem e (inorder izq) || e == root || elem e (inorder der) = foldr (\x rec -> (e == x) || rec) False (inorder izq ++ (root:inorder der)) {Ejercicio 7}
+-- ∀ e::a . elem e (inorder izq) || e == root || elem e (inorder der) = foldr (\x rec -> (e == x) || rec) (foldr (\x rec -> (e == x) || rec) False (root:inorder der)) (inorder izq) {FR1}
+-- ∀ e::a . elem e (inorder izq) || e == root || elem e (inorder der) = foldr (\x rec -> (e == x) || rec) (e == root || (foldr (\x rec -> (e == x) || rec) False (inorder der))) (inorder izq) {E0}
+-- ∀ e::a . elem e (inorder izq) || e == root || elem e (inorder der) = foldr (\x rec -> (e == x) || rec) (e == root || elem e (inorder der)) (inorder izq) {E0}
+-- ∀ e::a . elem e (inorder izq) || e == root || elem e (inorder der) = e == root || elem e (inorder der) || foldr (\x rec -> (e == x) || rec) False (inorder izq) {E0}
+-- ∀ e::a . elem e (inorder izq) || e == root || elem e (inorder der) = e == root || elem e (inorder der) || elem e (inorder izq) {queda demostrada la igualdad}
+
 -- Ejercicio 11
+
+-- data Polinomio a = X --CASO BASE
+--                  | Cte a -- CASO BASE
+--                  | Suma (Polinomio a) (Polinomio a) -- Caso Recursivo
+--                  | Prod (Polinomio a) (Polinomio a) -- Caso Recursivo
+
+-- evaluar :: Num a => a -> Polinomio a -> a
+-- evaluar x = foldPolinomio id x (+) (*) {EVAL0}
+
+-- foldPolinomio :: (a -> b) -> b -> (b -> b -> b) -> (b -> b -> b) -> Polinomio a -> b
+-- foldPolinomio _ z _ _ X = z {FPX0}
+-- foldPolinomio f _ _ _ (Cte x) = f x {FPC0}
+-- foldPolinomio f z s p (Suma x y) = s (foldPolinomio f z s p x) (foldPolinomio f z s p y) {FPS0}
+-- foldPolinomio f z s p (Prod x y) = p (foldPolinomio f z s p x) (foldPolinomio f z s p y) {FPP0}
+
+-- derivado :: Num a => Polinomio a -> Polinomio a
+-- derivado poli = case poli of
+--                  X -> Cte 1
+--                  Cte _ -> Cte 0
+--                  Suma p q -> Suma (derivado p) (derivado q)
+--                  Prod p q -> Suma (Prod (derivado p) q) (Prod (derivado q) p)
+
+-- sinConstantesNegativas :: Num a => Polinomio a -> Polinomio a
+-- sinConstantesNegativas = foldPoli True (>=0) (&&) (&&) {SCN0}
+
+-- esRaiz :: Num a => a -> Polinomio a -> Bool
+-- esRaiz n p = evaluar n p == 0 {ER0}
+
+-- i. Num a => ∀ p::Polinomio a . ∀ q::Polinomio a . ∀ r::a . esRaiz r p ⇒ esRaiz r (Prod p q)
+
+-- Predicado unario: P(p) = ∀ r::a . esRaiz r p ⇒ esRaiz r (Prod p q)
+
+-- Caso base: P(X) = ∀ r::a . esRaiz r X ⇒ esRaiz r (Prod X q)
+
+-- ∀ r::a . esRaiz r X ⇒ esRaiz r (Prod X q) {ER0}
+-- ∀ r::a . evaluar r X == 0 ⇒ esRaiz r (Prod X q) {EVAL0}
+-- ∀ r::a . foldPolinomio id r (+) (*) X == 0 ⇒ esRaiz r (Prod X q) {FPX0}
+-- ∀ r::a . r == 0 ⇒ esRaiz r (Prod X q) {ER0}
+-- ∀ r::a . r == 0 ⇒ evaluar r (Prod X q) == 0 {EVAL0}
+-- ∀ r::a . r == 0 ⇒ (foldPolinomio id r (+) (*) (Prod X q)) == 0 {FPP0}
+-- ∀ r::a . r == 0 ⇒ (foldPolinomio id r (+) (*) X) * (foldPolinomio id r (+) (*) q) == 0 {FPX0}
+-- ∀ r::a . r == 0 ⇒ r * (foldPolinomio id r (+) (*) q) == 0
+
+-- O bien r == 0 o bien r != 0
+
+-- Caso 1: r == 0
+
+-- r == 0 ⇒ 0 * (foldPolinomio id r (+) (*) q) == 0 {remplazamos r por 0}
+-- 0 == 0 ⇒ 0 * (foldPolinomio id 0 (+) (*) q) == 0 {aritmética}
+-- True ⇒ True {queda demostrada la implicación}
+
+-- Caso 2: r != 0
+
+-- r == 0 ⇒ 0 * (foldPolinomio id r (+) (*) q) == 0 {CASO 2}
+-- False ⇒ 0 * (foldPolinomio id r (+) (*) q) == 0 {queda demostrada la implicación}
+
+-- Caso Base: P(Cte x) = ∀ r::a . esRaiz r (Cte x) ⇒ esRaiz r (Prod (Cte x) q)
+
+-- ∀ r::a . esRaiz r (Cte x) ⇒ esRaiz r (Prod (Cte x) q {ER0}
+-- ∀ r::a . evaluar r (Cte x) == 0 ⇒ esRaiz r (Prod (Cte x) q) {EVAL0}
+-- ∀ r::a . foldPolinomio id r (+) (*) (Cte x) == 0 ⇒ esRaiz r (Prod (Cte x) q) {FPC0}
+-- ∀ r::a . id x == 0 ⇒ esRaiz r (Prod (Cte x) q) {ID0}
+-- ∀ r::a . x == 0 ⇒ esRaiz r (Prod (Cte x) q) {ER0}
+-- ∀ r::a . x == 0 ⇒ evaluar r (Prod (Cte x) q) == 0 {EVAL0}
+-- ∀ r::a . x == 0 ⇒ (foldPolinomio id r (+) (*) (Prod (Cte x) q)) == 0 {FPP0}
+-- ∀ r::a . x == 0 ⇒ (foldPolinomio id r (+) (*) (Cte x)) * (foldPolinomio id r (+) (*) q) == 0 {FPC0}
+-- ∀ r::a . x == 0 ⇒ id x * (foldPolinomio id r (+) (*) q) == 0 {ID0}
+-- ∀ r::a . x == 0 ⇒ x * (foldPolinomio id r (+) (*) q) == 0
+
+-- O bien x == 0 o bien x != 0
+
+-- Caso 1: x == 0
+
+-- ∀ r::a . x == 0 ⇒ x * (foldPolinomio id r (+) (*) q) == 0 {remplazamos x por 0}
+-- ∀ r::a . 0 == 0 ⇒ 0 * (foldPolinomio id r (+) (*) q) == 0 {aritmética}
+-- True ⇒ True {queda demostrada la implicación}
+
+-- Caso 2: x != 0
+
+-- ∀ r::a . x == 0 ⇒ x * (foldPolinomio id r (+) (*) q) == 0 {CASO 2}
+-- False ⇒ x * (foldPolinomio id r (+) (*) q) == 0 {queda demostrada la implicación}
+
+-- Caso Base: P(Suma p q) = ∀ r::a . esRaiz r (Suma p q) ⇒ esRaiz r (Prod (Suma p q) q)
+
+-- Caso Base: P(Prod p q) = ∀ r::a . esRaiz r (Prod p q) ⇒ esRaiz r (Prod (Prod p q) q)
+
+-- ii. Num a => ∀ p::Polinomio a . sinConstantesNegativas p ⇒ sinConstantesNegativas (derivado p)
+
+
+
 
 
 
