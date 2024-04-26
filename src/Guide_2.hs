@@ -804,9 +804,59 @@ intersect xs ys = filter (\e -> elem e ys) xs --{I0}
 -- 1 + length (nub xs) ≤ 1 + length xs {aritmética}
 -- length (nub xs) ≤ length xs {queda demostrada la desigualdad por HI}
 
+-- Ejercicio 7
 
+-- i. ∀ f::a->b->b . ∀ z::b . ∀ xs, ys::[a] . foldr f z (xs ++ ys) = foldr f (foldr f z ys) xs
 
+-- Predicado unario: P(xs) = ∀ f::a->b->b . ∀ z::b . ∀ ys::[a] . foldr f z (xs ++ ys) = foldr f (foldr f z ys) xs
 
+-- Caso base: P([]) =
+
+-- ∀ f::a->b->b . ∀ z::b . ∀ ys::[a] . foldr f z ([] ++ ys) = foldr f (foldr f z ys) [] {++AUX2}
+-- ∀ f::a->b->b . ∀ z::b . ∀ ys::[a] . foldr f z ys = foldr f (foldr f z ys) [] {FR0}
+-- ∀ f::a->b->b . ∀ z::b . ∀ ys::[a] . foldr f z ys = foldr f z ys {queda demostrada la igualdad}
+
+-- Hipótesis inductiva: P(xs) = ∀ f::a->b->b . ∀ z::b . ∀ ys::[a] . foldr f z (xs ++ ys) = foldr f (foldr f z ys) xs
+-- Paso inductivo: P(x:xs) = ∀ f::a->b->b . ∀ z::b . ∀ ys::[a] . foldr f z ((x:xs) ++ ys) = foldr f (foldr f z ys) (x:xs)
+
+-- ∀ f::a->b->b . ∀ z::b . ∀ ys::[a] . foldr f z ((x:xs) ++ ys) = foldr f (foldr f z ys) (x:xs) {++}
+-- ∀ f::a->b->b . ∀ z::b . ∀ ys::[a] . foldr f z (foldr (:) ys x:xs) = foldr f (foldr f z ys) (x:xs) {FR1}
+-- ∀ f::a->b->b . ∀ z::b . ∀ ys::[a] . foldr f z ((:) x foldr (:) ys xs) = foldr f (foldr f z ys) (x:xs) {:}
+-- ∀ f::a->b->b . ∀ z::b . ∀ ys::[a] . foldr f z (x : foldr (:) ys xs) = foldr f (foldr f z ys) (x:xs) {++}
+-- ∀ f::a->b->b . ∀ z::b . ∀ ys::[a] . foldr f z (x : xs ++ ys) = foldr f (foldr f z ys) (x:xs) {FR1}
+-- ∀ f::a->b->b . ∀ z::b . ∀ ys::[a] . f x (foldr f z (xs ++ ys)) = foldr f (foldr f z ys) (x:xs) {HI}
+-- ∀ f::a->b->b . ∀ z::b . ∀ ys::[a] . f x (foldr f (foldr f z ys) xs) = foldr f (foldr f z ys) (x:xs) {FR1}
+-- ∀ f::a->b->b . ∀ z::b . ∀ ys::[a] . f x (foldr f (foldr f z ys) xs) = f x (foldr f (foldr f z ys) xs) {queda demostrada la igualdad}
+
+-- ii. ∀ f::b->a->b . ∀ z::b . ∀ xs, ys::[a] . foldl f z (xs ++ ys) = foldl f (foldl f z xs) ys
+
+-- Predicado unario: P(xs) = ∀ f::b->a->b . ∀ z::b . ∀ ys::[a] . foldl f z (xs ++ ys) = foldl f (foldl f z xs) ys
+
+-- Caso base: P([]) =
+
+-- ∀ f::b->a->b . ∀ z::b . ∀ ys::[a] . foldl f z ([] ++ ys) = foldl f (foldl f z []) ys {++AUX2}
+-- ∀ f::b->a->b . ∀ z::b . ∀ ys::[a] . foldl f z ys = foldl f (foldl f z []) ys {FL0}
+-- ∀ f::b->a->b . ∀ z::b . ∀ ys::[a] . foldl f z ys = foldl f z ys {queda demostrada la igualdad}
+
+-- Hipótesis inductiva: P(xs) = ∀ f::b->a->b . ∀ z::b . ∀ ys::[a] . foldl f z (xs ++ ys) = foldl f (foldl f z xs) ys
+-- Paso inductivo: P(x:xs) = ∀ f::b->a->b . ∀ z::b . ∀ ys::[a] . foldl f z ((x:xs) ++ ys) = foldl f (foldl f z (x:xs)) ys
+
+-- ∀ f::b->a->b . ∀ z::b . ∀ ys::[a] . foldl f z ((x:xs) ++ ys) = foldl f (foldl f z (x:xs)) ys {++}
+-- ∀ f::b->a->b . ∀ z::b . ∀ ys::[a] . foldl f z (foldr (:) ys x:xs) = foldl f (foldl f z (x:xs)) ys {FR1}
+-- ∀ f::b->a->b . ∀ z::b . ∀ ys::[a] . foldl f z ((:) x foldr (:) ys xs) = foldl f (foldl f z (x:xs)) ys {:}
+-- ∀ f::b->a->b . ∀ z::b . ∀ ys::[a] . foldl f z (x : foldr (:) ys xs) = foldl f (foldl f z (x:xs)) ys {++}
+-- ∀ f::b->a->b . ∀ z::b . ∀ ys::[a] . foldl f z (x : xs ++ ys) = foldl f (foldl f z (x:xs)) ys {FL1}
+-- ∀ f::b->a->b . ∀ z::b . ∀ ys::[a] . foldl f (f z x) (xs ++ ys) = foldl f (foldl f z (x:xs)) ys {HI}
+-- ∀ f::b->a->b . ∀ z::b . ∀ ys::[a] . foldl f (foldl f (f z x) xs) ys = foldl f (foldl f z (x:xs)) ys {FL1}
+-- ∀ f::b->a->b . ∀ z::b . ∀ ys::[a] . foldl f (foldl f (f z x) xs) ys = foldl f (foldl f (f z x) xs) ys {queda demostrada la igualdad}
+
+-- Ejercicio 8
+
+-- Ejercicio 9
+
+-- Ejercicio 10
+
+-- Ejercicio 11
 
 
 
