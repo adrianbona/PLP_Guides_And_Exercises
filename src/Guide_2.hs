@@ -754,41 +754,55 @@ intersect xs ys = filter (\e -> elem e ys) xs --{I0}
 
 -- iv. Eq a => ∀ xs::[a] . ∀ ys::[a] . length (union xs ys) = length xs + length ys
 
--- Predicado unario: P(xs) = ∀ ys::[a] . length (union xs ys) = length xs + length ys
+-- Es falso, ya que la longitud de la unión de dos listas no necesariamente es la suma de las longitudes de las listas.
+-- Por ejemplo, si xs = [1,2,3] e ys = [3,4,5], entonces la longitud de la unión de xs e ys es 5, mientras que
+-- la suma de las longitudes de xs e ys es 6.
 
 -- v. Eq a => ∀ xs::[a] . ∀ ys::[a] . length (union xs ys) ≤ length xs + length ys
 
 -- Predicado unario: P(xs) = ∀ ys::[a] . length (union xs ys) ≤ length xs + length ys
 
+-- Caso base: P([]) =
 
+-- ∀ ys::[a] . length (union [] ys) ≤ length [] + length ys {U0}
+-- ∀ ys::[a] . length (nub ([] ++ ys)) ≤ length [] + length ys {++AUX2}
+-- ∀ ys::[a] . length (nub ys) ≤ length [] + length ys {L0}
+-- ∀ ys::[a] . length (nub ys) ≤ length 0 + length ys {aritmética}
+-- ∀ ys::[a] . length (nub ys) ≤ length ys {queda demostrada la desigualdad por LEMA}
 
+-- Hipótesis inductiva: P(xs) = ∀ ys::[a] . length (union xs ys) ≤ length xs + length ys
+-- Paso inductivo: P(x:xs) = ∀ ys::[a] . length (union (x:xs) ys) ≤ length (x:xs) + length ys
 
+-- ∀ ys::[a] . length (union (x:xs) ys) ≤ length (x:xs) + length ys {U0}
+-- ∀ ys::[a] . length (nub ((x:xs) ++ ys)) ≤ length (x:xs) + length ys {++}
+-- ∀ ys::[a] . length (nub (foldr (:) ys (x:xs))) ≤ length (x:xs) + length ys {FR1}
+-- ∀ ys::[a] . length (nub ((:) x (foldr (:) ys xs)) ≤ length (x:xs) + length ys {:}
+-- ∀ ys::[a] . length (nub (x : foldr (:) ys xs)) ≤ length (x:xs) + length ys {++}
+-- ∀ ys::[a] . length (nub (x:(xs ++ ys))) ≤ length (x:xs) + length ys {N1}
+-- ∀ ys::[a] . length (x : nub (filter (\y -> x /= y) (xs ++ ys))) ≤ length (x:xs) + length ys {L0}
+-- ∀ ys::[a] . 1 + length (nub (filter (\y -> x /= y) (xs ++ ys))) ≤ 1 + length xs + length ys {aritmética}
+-- ∀ ys::[a] . length (nub (filter (\y -> x /= y) (xs ++ ys))) ≤ length xs + length ys {N1}
+-- ∀ ys::[a] . length (nub (xs ++ ys)) ≤ length xs + length ys {U0}
+-- ∀ ys::[a] . length (union xs ys) ≤ length xs + length ys {queda demostrada la desigualdad por HI}
 
+-- Lema auxiliar: ∀ xs::[a] . length (nub xs) ≤ length xs
 
+-- Predicado unario: P(xs) = length (nub xs) ≤ length xs
 
+-- Caso base: P([]) =
 
+-- length (nub []) ≤ length [] {N0}
+-- length [] ≤ length [] {L0}
+-- 0 ≤ 0 {queda demostrada la desigualdad}
 
+-- Hipótesis inductiva: P(xs) = length (nub xs) ≤ length xs
+-- Paso inductivo: P(x:xs) = length (nub (x:xs)) ≤ length (x:xs)
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+-- length (nub (x:xs)) ≤ length (x:xs) {N1}
+-- length (x : nub (filter (\y -> x /= y) xs)) ≤ length (x:xs) {L1}
+-- 1 + length (nub (filter (\y -> x /= y) xs) ≤ length (x:xs) {L1}
+-- 1 + length (nub xs) ≤ 1 + length xs {aritmética}
+-- length (nub xs) ≤ length xs {queda demostrada la desigualdad por HI}
 
 
 
