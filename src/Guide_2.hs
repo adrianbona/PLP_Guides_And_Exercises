@@ -852,7 +852,73 @@ intersect xs ys = filter (\e -> elem e ys) xs --{I0}
 
 -- Ejercicio 8
 
+-- Demostrar que la función potencia funciona correctamente mediante inducción en el exponente
+
+-- potencia :: Integer -> Integer -> Integer
+-- potencia x y = foldNat (\_ accu -> x * accu) 1 y {POT0}
+
+-- foldNat :: (Integer -> b -> b) -> b -> Integer -> b
+-- foldNat _ z 0 = z {FN0}
+-- foldNat f z n = f n (foldNat f z (n - 1)) {FN1}
+
+-- potencia xy = x^y
+
+-- Predicado unario: P(y) = ∀ x::Int . potencia x y = x^y
+
+-- Caso base: P(0) =
+
+-- ∀ x::Int . potencia x 0 = x^0 {POT0}
+-- ∀ x::Int . foldNat (\_ accu -> x * accu) 1 0 = x^0 {FN0}
+-- ∀ x::Int . 1 = x^0 {aritmética}
+-- ∀ x::Int . 1 = 1 {queda demostrada la igualdad}
+
+-- Hipótesis inductiva: P(y) = ∀ x::Int . potencia x y = x^y
+-- Paso inductivo: P(y+1) = ∀ x::Int . potencia x (y+1) = x^(y+1)
+
+-- ∀ x::Int . potencia x (y+1) = x^(y+1) {POT0}
+-- ∀ x::Int . foldNat (\_ accu -> x * accu) 1 (y+1) = x^(y+1) {FN1}
+-- ∀ x::Int . x * foldNat (\_ accu -> x * accu) 1 y = x^(y+1) {HI}
+-- ∀ x::Int . x * x^y = x^(y+1) {aritmética}
+-- ∀ x::Int . x^(y+1) = x^(y+1) {queda demostrada la igualdad}
+
 -- Ejercicio 9
+
+-- data AB a = Empty | Bin (AB a) a (AB a)
+
+-- foldAB :: (b -> a -> b -> b) -> b -> AB a -> b
+-- foldAB _ z Empty = z {FAB0}
+-- foldAB f z (Bin izq root der) = f (foldAB f z izq) root (foldAB f z der) {FAB1}
+
+-- altura :: AB a -> Int
+-- altura = foldAB (\izq _ der -> 1 + max izq der) 0 {AAB0}
+
+-- cantNodos :: AB a -> Int
+-- cantNodos = foldAB (\izq _ der -> 1 + izq + der) 0 {CNAB0}
+
+-- ∀ x::AB a . altura x ≤ cantNodos x
+
+-- Predicado unario: P(x) = altura x ≤ cantNodos x
+
+-- Caso base: P(Empty) =
+
+-- altura Empty ≤ cantNodos Empty {AAB0}
+-- foldAB (\izq _ der -> 1 + max izq der) 0 Empty ≤ cantNodos Empty {FAB0}
+-- 0 ≤ cantNodos Empty {CNAB0}
+-- 0 ≤ foldAB (\izq _ der -> 1 + izq + der) 0 Empty {FAB0}
+-- 0 ≤ 0 {queda demostrada la desigualdad}
+
+-- Hipótesis inductiva: P(izq) = altura izq ≤ cantNodos izq y P(der) = altura der ≤ cantNodos der
+-- Paso inductivo: P(Bin izq root der) = altura (Bin izq root der) ≤ cantNodos (Bin izq root der)
+
+-- altura (Bin izq root der) ≤ cantNodos (Bin izq root der) {AAB0}
+-- foldAB (\izq _ der -> 1 + max izq der) 0 (Bin izq root der) ≤ cantNodos (Bin izq root der) {FAB1}
+-- 1 + max (foldAB (\izq _ der -> 1 + max izq der) 0 izq) (foldAB (\izq _ der -> 1 + max izq der) 0 der) ≤ cantNodos (Bin izq root der) {AAB0}
+-- 1 + max (altura izq) (altura der) ≤ cantNodos (Bin izq root der) {CNAB0}
+-- 1 + max (altura izq) (altura der) ≤ foldAB (\izq _ der -> 1 + izq + der) 0 (Bin izq root der) {FAB1}
+-- 1 + max (altura izq) (altura der) ≤ 1 + foldAB (\izq _ der -> 1 + izq + der) 0 izq + foldAB (\izq _ der -> 1 + izq + der) 0 der {CNAB0}
+-- 1 + max (altura izq) (altura der) ≤ 1 + cantNodos izq + cantNodos der {aritmética}
+-- max (altura izq) (altura der) ≤ cantNodos izq + cantNodos der {HI}
+-- max (altura izq) (altura der) ≤ altura izq + altura der ≤ cantNodos izq + cantNodos der {queda demostrada la desigualdad}
 
 -- Ejercicio 10
 
