@@ -1,0 +1,64 @@
+module Guide_3 (
+) where
+
+-- Ejercicio 6
+
+-- Demostrar en deducción natural que las siguientes fórmulas son teoremas sin usar principios
+-- de razonamiento clásicos salvo que se indique lo contrario
+
+
+-- i. Modus ponens relativizado: (P ⇒ Q ⇒ R) ⇒ (P ⇒ Q) ⇒ P ⇒ R
+
+----------------------------- ax      ------------------------------- ax
+-- P ⇒ Q ⇒ R, P ⇒ Q, P ⊢ P ⇒ Q        P ⇒ Q ⇒ R, P ⇒ Q, P ⊢ P ⇒ Q ⇒ R
+--------------------------------------------------------------------- ⇒e
+-- P ⇒ Q ⇒ R, P ⇒ Q, P ⊢ R
+--------------------------- ⇒i
+-- P ⇒ Q ⇒ R, P ⇒ Q ⊢ P ⇒ R
+------------------------------ ⇒i
+-- P ⇒ Q ⇒ R ⊢ (P ⇒ Q) ⇒ P ⇒ R
+-------------------------------- ⇒i
+-- ⊢ (P ⇒ Q ⇒ R) ⇒ (P ⇒ Q) ⇒ P ⇒ R
+
+
+-- ii. Reducción al absurdo: (P ⇒ ⊥) ⇒ ¬P
+
+--------------ax       ---------------ax
+-- P ⇒ ⊥, P ⊢ P        P ⇒ ⊥, P ⊢ P ⇒ ⊥
+-------------------------------------- ⇒e
+-- P ⇒ ⊥, P ⊢ ⊥
+------------ ¬i
+-- P ⇒ ⊥ ⊢ ¬P
+---------------- ⇒i
+-- ⊢ (P ⇒ ⊥) ⇒ ¬P
+
+
+-- iii. Introducción de la doble negación: P ⇒ ¬¬P
+
+------------ax      ---------ax
+-- P, ¬P ⊢ P        P, ¬P ⊢ ¬P
+------------ ⊥e
+-- P, ¬P ⊢ ⊥
+------------ ¬i
+-- P ⊢ ¬¬P
+----------- ⇒i
+-- ⊢ P ⇒ ¬¬P
+
+
+-- iv. Eliminación de la triple negación: ¬¬¬P ⇒ ¬P
+
+-- v. Contraposición: (P ⇒ Q) ⇒ (¬Q ⇒ ¬P)
+
+-- vi. Adjunción: ((P ∧ Q) ⇒ R) ⇔ (P ⇒ Q ⇒ R)
+
+-- vii. de Morgan (I): ¬(P ∨ Q) ⇔ (¬P ∧ ¬Q)
+
+-- viii. de Morgan (II): ¬(P ∧ Q) ⇔ (¬P ∨ ¬Q) (Para la dirección ⇒ es necesario usar principios de razonamiento clásicos)
+
+-- ix. Conmutatividad (∧): (P ∧ Q) ⇒ (Q ∧ P)
+
+-- x. Asociatividad (∧): ((P ∧Q)∧R) ⇔ (P ∧(Q∧R))
+
+-- xi. Conmutatividad (∨): (P ∨ Q) ⇒ (Q ∨ P)
+
+-- xii. Asociatividad (∨): ((P ∨Q)∨R) ⇔ (P ∨(Q∨R))

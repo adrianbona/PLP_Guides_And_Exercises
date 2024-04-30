@@ -6,6 +6,8 @@ import Guide_1 ()
 
 import Guide_2 ()
 
+import Guide_3 ()
+
 import Guide_Solved ()
 
 main :: IO ()
