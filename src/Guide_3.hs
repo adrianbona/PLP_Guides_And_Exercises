@@ -3,8 +3,8 @@ module Guide_3 (
 
 -- Ejercicio 6
 
--- Demostrar en deducción natural que las siguientes fórmulas son teoremas sin usar principios
--- de razonamiento clásicos salvo que se indique lo contrario
+-- Demostrar en deducción natural que las siguientes fórmulas son teoremas
+-- sin usar principios de razonamiento clásicos salvo que se indique lo contrario
 
 
 -- i. Modus ponens relativizado: (P ⇒ Q ⇒ R) ⇒ (P ⇒ Q) ⇒ P ⇒ R
@@ -47,18 +47,103 @@ module Guide_3 (
 
 -- iv. Eliminación de la triple negación: ¬¬¬P ⇒ ¬P
 
+-------------------ax     ----------------ax
+-- ¬¬¬P, P, ¬P ⊢ P        ¬¬¬P, P, ¬P ⊢ ¬P
+----------------------------------------- ⊥e
+-- ¬¬¬P, P, ¬P ⊢ ⊥
+------------------ ¬i
+-- ¬¬¬P ⊢ ¬P
+-------------- ⇒i
+-- ⊢ ¬¬¬P ⇒ ¬P
+
+
 -- v. Contraposición: (P ⇒ Q) ⇒ (¬Q ⇒ ¬P)
+
+-----------------------ax      --------------------ax
+-- P ⇒ Q, ¬Q, P, ¬P ⊢ P        P ⇒ Q, ¬Q, P, ¬P ⊢ ¬P
+----------------------------------------- ⊥e
+-- P ⇒ Q, ¬Q, P, ¬P ⊢ ⊥
+---------------------- ¬i
+-- P ⇒ Q, ¬Q ⊢ ¬P
+------------------- ⇒i
+-- P ⇒ Q ⊢ ¬Q ⇒ ¬P
+------------------------ ⇒i
+-- ⊢ (P ⇒ Q) ⇒ (¬Q ⇒ ¬P)
+
 
 -- vi. Adjunción: ((P ∧ Q) ⇒ R) ⇔ (P ⇒ Q ⇒ R)
 
+-- Adjunción (ida): ((P ∧ Q) ⇒ R) ⇒ (P ⇒ Q ⇒ R)
+-- Adjunción (vuelta): (P ⇒ Q ⇒ R) ⇒ ((P ∧ Q) ⇒ R)
+
+
 -- vii. de Morgan (I): ¬(P ∨ Q) ⇔ (¬P ∧ ¬Q)
+
+-- de Morgan (ida): ¬(P ∨ Q) ⇒ (¬P ∧ ¬Q)
+-- de Morgan (vuelta): (¬P ∧ ¬Q) ⇒ ¬(P ∨ Q)
+
 
 -- viii. de Morgan (II): ¬(P ∧ Q) ⇔ (¬P ∨ ¬Q) (Para la dirección ⇒ es necesario usar principios de razonamiento clásicos)
 
+-- de Morgan (ida): ¬(P ∧ Q) ⇒ (¬P ∨ ¬Q)
+-- de Morgan (vuelta): (¬P ∨ ¬Q) ⇒ ¬(P ∧ Q)
+
+
 -- ix. Conmutatividad (∧): (P ∧ Q) ⇒ (Q ∧ P)
 
--- x. Asociatividad (∧): ((P ∧Q)∧R) ⇔ (P ∧(Q∧R))
+
+-- x. Asociatividad (∧): ((P ∧ Q) ∧ R) ⇔ (P ∧ (Q ∧ R))
+
+-- Asociatividad (∧) (ida): ((P ∧ Q) ∧ R) ⇒ (P ∧ (Q ∧ R))
+-- Asociatividad (∧) (vuelta): (P ∧ (Q ∧ R)) ⇒ ((P ∧ Q) ∧ R)
+
 
 -- xi. Conmutatividad (∨): (P ∨ Q) ⇒ (Q ∨ P)
 
--- xii. Asociatividad (∨): ((P ∨Q)∨R) ⇔ (P ∨(Q∨R))
+
+-- xii. Asociatividad (∨): ((P ∨ Q) ∨ R) ⇔ (P ∨ (Q ∨ R))
+
+-- Asociatividad (∨) (ida): ((P ∨ Q) ∨ R) ⇒ (P ∨ (Q ∨ R))
+-- Asociatividad (∨) (vuelta): (P ∨ (Q ∨ R)) ⇒ ((P ∨ Q) ∨ R)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
