@@ -260,7 +260,17 @@ module Guide_3 (
 -- xii. Asociatividad (∨): ((P ∨ Q) ∨ R) ⇔ (P ∨ (Q ∨ R))
 
 -- Asociatividad (∨) (ida): ((P ∨ Q) ∨ R) ⇒ (P ∨ (Q ∨ R))
+
+-- (P ∨ Q) ∨ R ⊢ P ∨ (Q ∨ R)
+--------------------------- ⇒i
+-- ⊢ (P ∨ Q) ∨ R ⇒ P ∨ (Q ∨ R)
+
+
 -- Asociatividad (∨) (vuelta): (P ∨ (Q ∨ R)) ⇒ ((P ∨ Q) ∨ R)
+
+-- P ∨ (Q ∨ R) ⊢ (P ∨ Q) ∨ R
+------------------------------- ⇒i
+-- ⊢ (P ∨ (Q ∨ R)) ⇒ ((P ∨ Q) ∨ R)
 
 
 
