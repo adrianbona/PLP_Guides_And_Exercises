@@ -290,7 +290,31 @@ module Guide_3 (
 -- ⊢ (P ∨ (Q ∨ R)) ⇒ ((P ∨ Q) ∨ R)
 
 
+-- Ejercicio 7
 
+-- i. Absurdo clásico: (¬τ ⇒ ⊥) ⇒ τ
+
+------------------- ax    ------------ ax
+-- ¬τ ⇒ ⊥, ¬τ ⊢ ¬τ ⇒ ⊥    ¬τ ⇒ ⊥, ¬τ ⊢ ¬τ
+--------------------------------------- ⇒e
+-- ¬τ ⇒ ⊥, ¬τ ⊢ ⊥
+------------- PBC
+-- ¬τ ⇒ ⊥ ⊢ τ
+-------------- ⇒i
+-- ⊢ (¬τ ⇒ ⊥) ⇒ τ
+
+
+-- ii. Ley de Peirce: ((τ ⇒ ρ) ⇒ τ ) ⇒ τ
+
+-- iii. Tercero excluido: τ ∨ ¬τ
+
+-- iv. Consecuencia milagrosa: (¬τ ⇒ τ ) ⇒ τ
+
+-- v. Contraposición clásica: (¬ρ ⇒ ¬τ ) ⇒ (τ ⇒ ρ)
+
+-- vi. Análisis de casos: (τ ⇒ ρ) ⇒ (¬τ ⇒ ρ) ⇒ ρ
+
+-- vii. Implicación vs. disyunción: (τ ⇒ ρ) ⇔ (¬τ ∨ ρ)
 
 
 
