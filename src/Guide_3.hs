@@ -201,10 +201,24 @@ module Guide_3 (
 
 -- ix. Conmutatividad (∧): (P ∧ Q) ⇒ (Q ∧ P)
 
+-- P ∧ Q ⊢ P ∧ Q    P ∧ Q ⊢ P ∧ Q
+------------ ∧e1    --------- ∧e2
+-- P ∧ Q ⊢ P        P ∧ Q ⊢ Q
+-------------------------- ∧i
+-- P ∧ Q ⊢ Q ∧ P
+-------------------- ⇒i
+-- ⊢ (P ∧ Q) ⇒ (Q ∧ P)
+
 
 -- x. Asociatividad (∧): ((P ∧ Q) ∧ R) ⇔ (P ∧ (Q ∧ R))
 
 -- Asociatividad (∧) (ida): ((P ∧ Q) ∧ R) ⇒ (P ∧ (Q ∧ R))
+
+-- (P ∧ Q) ∧ R ⊢ P ∧ (Q ∧ R)
+------------------------------- ⇒i
+-- ⊢ ((P ∧ Q) ∧ R) ⇒ (P ∧ (Q ∧ R))
+
+
 -- Asociatividad (∧) (vuelta): (P ∧ (Q ∧ R)) ⇒ ((P ∧ Q) ∧ R)
 
 
@@ -215,10 +229,6 @@ module Guide_3 (
 
 -- Asociatividad (∨) (ida): ((P ∨ Q) ∨ R) ⇒ (P ∨ (Q ∨ R))
 -- Asociatividad (∨) (vuelta): (P ∨ (Q ∨ R)) ⇒ ((P ∨ Q) ∨ R)
-
-
-
-
 
 
 
