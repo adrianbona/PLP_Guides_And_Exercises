@@ -378,7 +378,139 @@ module Guide_3 (
 
 -- vi. Análisis de casos: (τ ⇒ ρ) ⇒ (¬τ ⇒ ρ) ⇒ ρ
 
+--------------------- ?
+-- τ ⇒ ρ, ¬τ ⇒ ρ, τ ⊢ ⊥
+-------------------- ¬i    ------------------- ax
+-- τ ⇒ ρ, ¬τ ⇒ ρ ⊢ ¬τ      τ ⇒ ρ, ¬τ ⇒ ρ ⊢ ¬τ ⇒ ρ
+------------------------------------------------ ⇒e
+-- τ ⇒ ρ, ¬τ ⇒ ρ ⊢ ρ
+-------------------- ⇒i
+-- τ ⇒ ρ ⊢ (¬τ ⇒ ρ) ⇒ ρ
+------------------------ ⇒i
+-- ⊢ (τ ⇒ ρ) ⇒ (¬τ ⇒ ρ) ⇒ ρ
+
+
 -- vii. Implicación vs. disyunción: (τ ⇒ ρ) ⇔ (¬τ ∨ ρ)
+
+-- Implicación vs. disyunción (ida): (τ ⇒ ρ) ⇔ (¬τ ∨ ρ)
+
+------------- ?
+-- τ ⇒ ρ, τ ⊢ ⊥
+------------ ¬i
+-- τ ⇒ ρ ⊢ ¬τ
+------------- ∨i1
+-- τ ⇒ ρ ⊢ ¬τ ∨ ρ
+-------------------- ⇒i
+-- ⊢ (τ ⇒ ρ) ⇒ (¬τ ∨ ρ)
+
+
+-- Implicación vs. disyunción (vuelta): (¬τ ∨ ρ) ⇒ (τ ⇒ ρ)
+
+--------------ax    ------------ IVSD
+-- ¬τ ∨ ρ, τ ⊢ τ    ¬τ ∨ ρ, τ ⊢ τ ⇒ ρ
+-------------- ⇒e
+-- ¬τ ∨ ρ, τ ⊢ ρ
+-------------- ⇒i
+-- ¬τ ∨ ρ ⊢ τ ⇒ ρ
+-------------------- ⇒i
+-- ⊢ (¬τ ∨ ρ) ⇒ (τ ⇒ ρ)
+
+
+-- Ejercicio 10
+
+-- i. ((P ⇒ Q) ⇒ Q) ⇒ ((Q ⇒ P) ⇒ P)
+
+-- ii. (P ⇒ Q) ⇒ ((¬P ⇒ Q) ⇒ Q)
+
+-- Ejercicio 11
+
+-- i. (P ⇒ (P ⇒ Q)) ⇒ (P ⇒ Q)
+
+-- ii. (R ⇒ ¬Q) ⇒ ((R ∧ Q) ⇒ P)
+
+-- iii. ((P ⇒ Q) ⇒ (R ⇒ ¬Q)) ⇒ ¬(R ∧ Q)
+
+-- Ejercicio 17
+
+-- Probar que los siguientes secuentes son válidos sin usar principios de razonamiento clásicos
+
+-- i. (P ∧ Q) ∧ R, S ∧ T ⊢ Q ∧ S
+
+-- ii. (P ∧ Q) ∧ R ⊢ P ∧ (Q ∧ R)
+
+-- iii. P ⇒ (P ⇒ Q), P ⊢ Q
+
+-- iv. Q ⇒ (P ⇒ R), ¬R, Q ⊢ ¬P
+
+-- v. ⊢ (P ∧ Q) ⇒ P
+
+-- vi. P ⇒ ¬Q, Q ⊢ ¬P
+
+-- vii. P ⇒ Q ⊢ (P ∧ R) ⇒ (Q ∧ R)
+
+-- viii. Q ⇒ R ⊢ (P ∨ Q) ⇒ (P ∨ R)
+
+-- ix. (P ∨ Q) ∨ R ⊢ P ∨ (Q ∨ R)
+
+-- x. P ∧ (Q ∨ R) ⊢ (P ∧ Q) ∨ (P ∧ R)
+
+-- xi. (P ∧ Q) ∨ (P ∧ R) ⊢ P ∧ (Q ∨ R)
+
+-- xii. ¬P ∨ Q ⊢ P ⇒ Q
+
+-- xiii. P ⇒ Q, P ⇒ ¬Q ⊢ ¬P
+
+-- xiv. P ⇒ (Q ⇒ R), P, ¬R ⊢ ¬Q
+
+-- Ejercicio 18
+
+-- i. (P ∧ ¬Q) ⇒ R, ¬R, P ⊢ Q
+
+-- ii. ¬P ⇒ Q ⊢ ¬Q ⇒ P
+
+-- iii. P ∨ Q ⊢ R ⇒ (P ∨ Q) ∧ R
+
+-- iv. (P ∨ (Q ⇒ P)) ∧ Q ⊢ P
+
+-- v. P ⇒ Q, R ⇒ S ⊢ (P ∧ R) ⇒ (Q ∧ S)
+
+-- vi. P ⇒ Q ⊢ ((P ∧ Q) ⇒ P) ∧ (P ⇒ (P ∧ Q))
+
+-- vii. P ⇒ (Q ∧ R) ⊢ (P ⇒ Q) ∧ (P ⇒ R)
+
+-- viii. (P ⇒ Q) ∧ (P ⇒ R) ⊢ P ⇒ (Q ∧ R)
+
+-- ix. P ∨ (P ∧ Q) ⊢ P
+
+-- x. P ⇒ (Q ∨ R), Q ⇒ S, R ⇒ S ⊢ P ⇒ S
+
+-- xi. (P ∧ Q) ∨ (P ∧ R) ⊢ P ∧ (Q ∨ R)
+
+-- Ejercicio 19
+
+-- i. ¬P ⇒ ¬Q ⊢ Q ⇒ P
+
+-- ii. ¬P ∨ ¬Q ⊢ ¬(P ∧ Q)
+
+-- iii. ¬P, P ∨ Q ⊢ Q
+
+-- iv. P ∨ Q, ¬Q ∨ R ⊢ P ∨ R
+
+-- v. P ∧ ¬P ⊢ ¬(R ⇒ Q) ∧ (R ⇒ Q)
+
+-- vi. ¬(¬P ∨ Q) ⊢ P
+
+-- vii. ⊢ ¬P ⇒ (P ⇒ (P ⇒ Q))
+
+-- viii. P ∧ Q ⊢ ¬(¬P ∨ ¬Q)
+
+-- ix. ⊢ (P ⇒ Q) ∨ (Q ⇒ R)
+
+
+
+
+
+
 
 
 
