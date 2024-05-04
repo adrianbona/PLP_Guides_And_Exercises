@@ -650,8 +650,6 @@ module Guide_3 (
 -- P ∧ (Q ∨ R) ⊢ (P ∧ Q) ∨ (P ∧ R)
 
 
--- P ∧ (Q ∨ R) ⊢ (P ∧ Q) ∨ (P ∧ R)
-
 -- xi. (P ∧ Q) ∨ (P ∧ R) ⊢ P ∧ (Q ∨ R)
 
 -- xii. ¬P ∨ Q ⊢ P ⇒ Q
