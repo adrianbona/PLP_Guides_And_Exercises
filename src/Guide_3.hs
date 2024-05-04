@@ -547,6 +547,8 @@ module Guide_3 (
 
 -- ii. (P ∧ Q) ∧ R ⊢ P ∧ (Q ∧ R)
 
+-- Probado por asociatividad (Ejercicio 6 - Item x - IDA)
+
 -- iii. P ⇒ (P ⇒ Q), P ⊢ Q
 
 -- iv. Q ⇒ (P ⇒ R), ¬R, Q ⊢ ¬P
