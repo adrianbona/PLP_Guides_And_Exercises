@@ -1,7 +1,7 @@
 module Guide_3 (
 ) where
 
--- Ejercicio Extra
+-- Ejercicios Extra
 
 -- Mostrar que (Q ⇒ R) ⇒ ((¬Q ⇒ ¬P) ⇒(P ⇒R)) es un teorema
 
@@ -17,6 +17,50 @@ module Guide_3 (
 -- Q ⇒ R, ¬Q ⇒ ¬P ⊢ P ⇒ R
 --------------------------------- ⇒i
 -- ⊢ (Q ⇒ R) ⇒ ((¬Q ⇒ ¬P) ⇒ (P ⇒ R))
+
+-- Mostrar que las reglas ¬¬e, PBC y LEM son equivalentes:
+
+-- ¬¬e ⇒ PBC - Utilizando la regla ¬¬e y demás reglas clásicas intentamos demostrar PBC
+
+-- Γ, ¬τ ⊢ ⊥
+--------- ¬i
+-- Γ ⊢ ¬¬τ
+------ ¬¬e
+-- Γ ⊢ τ
+
+
+-- PBC ⇒ LEM - Utilizando la regla PBC y demás reglas clásicas intentamos demostrar PBC
+
+--                                                             ------------------ ax
+--                                                             Γ, ¬(τ ∨ ¬τ), ¬τ ⊢ ¬τ
+--                             ------------------------- ax    --------------------- ∨i2
+--                             Γ, ¬(τ ∨ ¬τ), ¬τ ⊢ ¬(τ ∨ ¬τ)    Γ, ¬(τ ∨ ¬τ), ¬τ ⊢ τ ∨ ¬τ
+--                             ------------------------------------------------------ ¬e
+--                             Γ, ¬(τ ∨ ¬τ), ¬τ ⊢ ⊥
+--                             ---------------- PBC
+--                             Γ, ¬(τ ∨ ¬τ) ⊢ τ
+------------------------ ax    ------------ ∨i1
+-- Γ, ¬(τ ∨ ¬τ) ⊢ ¬(τ ∨ ¬τ)    Γ, ¬(τ ∨ ¬τ) ⊢ τ ∨ ¬τ
+------------------------------------------------- ¬e
+-- Γ, ¬(τ ∨ ¬τ) ⊢ ⊥
+--------------- PBC
+-- Γ ⊢ τ ∨ ¬τ
+
+
+-- LEM ⇒ ¬¬e - Utilizando la regla LEM y demás reglas clásicas intentamos demostrar ¬¬e
+
+-- Γ ⊢ ¬¬τ
+
+--                                         ---- ax
+--                                         Γ ⊢ ¬¬τ
+--                           ------- ax    --------- w
+--                           Γ, ¬τ ⊢ ¬τ    Γ, ¬τ ⊢ ¬¬τ
+--                           ---------------------- ¬e
+--                           Γ, ¬τ ⊢ ⊥
+--------- LEM    ----- ax    ------ ⊥e
+-- Γ ⊢ τ ∨ ¬τ    Γ, τ ⊢ τ    Γ, ¬τ ⊢ τ
+----------------------------------- ∨e
+-- Γ ⊢ τ
 
 
 -- Ejercicio 6
