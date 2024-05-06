@@ -1,6 +1,24 @@
 module Guide_3 (
 ) where
 
+-- Ejercicio Extra
+
+-- Mostrar que (Q ⇒ R) ⇒ ((¬Q ⇒ ¬P) ⇒(P ⇒R)) es un teorema
+
+--                              ------------------------ ax
+--                              Q ⇒ R, ¬Q ⇒ ¬P, P ⊢ ¬Q ⇒ ¬P
+--                              ------------ CONTRAPOSICIÓN    ------------------ ax
+--                              Q ⇒ R, ¬Q ⇒ ¬P, P ⊢ P ⇒ Q      Q ⇒ R, ¬Q ⇒ ¬P, P ⊢ P
+------------------------- ax    ------------------------------------------------- ⇒e
+-- Q ⇒ R, ¬Q ⇒ ¬P, P ⊢ Q ⇒ R    Q ⇒ R, ¬Q ⇒ ¬P, P ⊢ Q
+-------------------------------------------------- ⇒e
+-- Q ⇒ R, ¬Q ⇒ ¬P, P ⊢ R
+---------------------- ⇒i
+-- Q ⇒ R, ¬Q ⇒ ¬P ⊢ P ⇒ R
+--------------------------------- ⇒i
+-- ⊢ (Q ⇒ R) ⇒ ((¬Q ⇒ ¬P) ⇒ (P ⇒ R))
+
+
 -- Ejercicio 6
 
 -- Demostrar en deducción natural que las siguientes fórmulas son teoremas
