@@ -236,23 +236,73 @@ module Guide_4 (
 
 -- Ejercicio 16
 
--- i (λx : Bool. x) true
+-- i) (λx : Bool. x) true
 
--- ii λx : Nat. pred(succ(x))
-
--- iii λx : Nat. pred(succ(y))
-
--- iv (λx : Bool. pred(isZero(x))) true
-
--- v (λf : Nat → Bool. f zero) (λx : Nat. isZero(x))
-
--- vi (λf : Nat → Bool. x) (λx : Nat. isZero(x))
-
--- vii (λf : Nat → Bool. f pred(zero)) (λx : Nat. isZero(x))
-
--- viii µy : Nat. succ(y)
+-- (λx : Bool. x) true
+-- x{x := true}
+-- true
 
 
+-- ii) λx : Nat. pred(succ(x))
+
+-- λx : Nat. pred(succ(x))
+-- pred(succ(x)){x := x}
+-- x{x := x}
+-- x
+
+
+-- iii) λx : Nat. pred(succ(y))
+
+-- λx : Nat. pred(succ(y))
+-- pred(succ(y)){x := x}
+-- y{x := x}
+-- y
+
+
+-- iv) (λx : Bool. pred(isZero(x))) true
+
+-- (λx : Bool. pred(isZero(x))) true
+-- pred(isZero(x)){x := true}
+-- NO REDUCE
+
+
+-- v) (λf : Nat → Bool. f zero) (λx : Nat. isZero(x))
+
+-- (λf : Nat → Bool. f zero) (λx : Nat. isZero(x))
+-- (f zero){f := (λx : Nat. isZero(x))}
+-- f{f := (λx : Nat. isZero(x))} zero{f := (λx : Nat. isZero(x))}
+-- (λx : Nat. isZero(x)) zero{f := (λx : Nat. isZero(x))}
+-- (λx : Nat. isZero(x)) zero
+-- isZero(x){x := zero}
+-- isZero(zero)
+-- true
+
+
+-- vi) (λf : Nat → Bool. x) (λx : Nat. isZero(x))
+
+-- (λf : Nat → Bool. x) (λx : Nat. isZero(x))
+-- x{f := (λx : Nat. isZero(x))}
+-- x
+
+
+-- vii) (λf : Nat → Bool. f pred(zero)) (λx : Nat. isZero(x))
+
+-- (λf : Nat → Bool. f pred(zero)) (λx : Nat. isZero(x))
+-- (f pred(zero)){f := (λx : Nat. isZero(x))}
+-- f{f := (λx : Nat. isZero(x))} pred(zero){f := (λx : Nat. isZero(x))}
+-- (λx : Nat. isZero(x)) pred(zero){f := (λx : Nat. isZero(x))}
+-- (λx : Nat. isZero(x)) pred(zero)
+-- isZero(x){x := pred(zero)}
+-- isZero(pred(zero))
+-- NO REDUCE
+
+
+-- viii) µy : Nat. succ(y)
+
+-- µy : Nat. succ(y)
+-- succ(y){y := µy : Nat. succ(y)}
+-- succ(µy : Nat. succ(y))
+-- NO REDUCE
 
 
 
