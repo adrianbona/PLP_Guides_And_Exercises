@@ -121,17 +121,103 @@ module Guide_4 (
 
 -- ρ representa el tipo Bool, π representa el tipo Nat, σ representa el tipo Bool ⇒ Nat
 
------------- axv            ------------- ax-zero
--- x : σ ⊢ x : σ            y : Bool ⊢ zero : Nat
---------------------- ⇒i    ------------------------ ⇒i
--- ⊢ (λx : σ. x) : σ ⇒ σ    ⊢ (λy : Bool. zero) : ρ ⇒ π
----------------------------------------------------- ⇒e
+-- τ representa el tipo Bool ⇒ Nat
+-- σ representa varios tipos, contradicción
+
+---------------- axv        ------------- ax-zero
+-- x : σ ⊢ x : τ ⇒ σ        y : Bool ⊢ zero : Nat
+------------------------    -----------------------
+-- ⊢ (λx : σ. x) : τ ⇒ σ    ⊢ (λy : Bool. zero) : τ
+------------------------------------------------ ⇒e
 -- ⊢ (λx : σ. x)(λy : Bool. zero) : σ
 
 
 -- c) y : τ ⊢ if (λx: σ. x) then y else succ(zero) : σ
+
+-- τ representa el tipo Nat
+-- σ representa el tipo Bool y Nat, contradicción
+
+--------------------- axv                      ---------- ax-zero
+-- y : τ, x: σ ⊢ x : Bool                      y : τ ⊢ zero : Nat
+----------------------- ⇒i    --------- axv    ------------------- succ
+-- y : τ ⊢ λx: σ. x : Bool    y : τ ⊢ y : σ    y : τ ⊢ succ(zero) : σ
+-------------------------------------------------------------------- if
+-- y : τ ⊢ if (λx: σ. x) then y else succ(zero) : σ
+
+
 -- d) x: σ ⊢ x y : τ
+
+-- σ representa el tipo ρ ⇒ τ
+
+--------------- axv    -------- axv
+-- x: σ ⊢ x : ρ ⇒ τ    x: σ ⊢ y : ρ
+-------------------------------- ⇒e
+-- x: σ ⊢ x y : τ
+
+
 -- e) x: σ, y : τ ⊢ x y : τ
+
+-- σ representa el tipo τ ⇒ τ, τ puede ser cualquier tipo
+
+---------------------- axv    --------------- axv
+-- x: σ, y : τ ⊢ x : ρ ⇒ τ    x: σ, y : τ ⊢ y : ρ
+---------------------------------------------- ⇒e
+-- x: σ, y : τ ⊢ x y : τ
+
+
 -- f) x: σ ⊢ x true : τ
+
+-- σ representa el tipo Bool ⇒ τ
+
+------------------ axv    ---------- ax-true
+-- x: σ ⊢ x : Bool ⇒ τ    x: σ ⊢ true : Bool
+----------------------------------------- ⇒e
+-- x: σ ⊢ x true : τ
+
+
 -- g) x: σ ⊢ x true : σ
+
+-- σ representa el tipo Bool ⇒ σ (referencia circular no tipa)
+
+------------------ axv    ---------- ax-true
+-- x: σ ⊢ x : Bool ⇒ σ    x: σ ⊢ true : Bool
+----------------------------------------- ⇒e
+-- x: σ ⊢ x true : σ
+
+
 -- h) x: σ ⊢ x x : τ
+
+-- σ representa el tipo σ ⇒ τ (referencia circular no tipa)
+
+--------------- axv    -------- axv
+-- x: σ ⊢ x : σ ⇒ τ    x: σ ⊢ x : σ
+-------------------------------- ⇒e
+-- x: σ ⊢ x x : τ
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
