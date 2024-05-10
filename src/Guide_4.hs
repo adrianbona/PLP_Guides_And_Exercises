@@ -101,3 +101,37 @@ module Guide_4 (
 -- ⊢ if true then false else false : Bool               ⊢ zero : σ    ⊢ succ(zero) : σ
 ----------------------------------------------------------------------------------- if
 -- ⊢ if (if true then false else false) then zero else succ(zero) : σ
+
+
+-- Ejercicio 10
+
+-- a) x: σ ⊢ isZero(succ(x)) : τ
+
+-- σ representa el tipo Nat, τ representa el tipo Bool
+
+----------- axv
+-- x: σ ⊢ x : Nat
+---------------- succ
+-- x: σ ⊢ succ(x) : Nat
+---------------------- isZero
+-- x: σ ⊢ isZero(succ(x)) : τ
+
+
+-- b) ⊢ (λx: σ. x)(λy : Bool. zero) : σ
+
+-- ρ representa el tipo Bool, π representa el tipo Nat, σ representa el tipo Bool ⇒ Nat
+
+------------ axv            ------------- ax-zero
+-- x : σ ⊢ x : σ            y : Bool ⊢ zero : Nat
+--------------------- ⇒i    ------------------------ ⇒i
+-- ⊢ (λx : σ. x) : σ ⇒ σ    ⊢ (λy : Bool. zero) : ρ ⇒ π
+---------------------------------------------------- ⇒e
+-- ⊢ (λx : σ. x)(λy : Bool. zero) : σ
+
+
+-- c) y : τ ⊢ if (λx: σ. x) then y else succ(zero) : σ
+-- d) x: σ ⊢ x y : τ
+-- e) x: σ, y : τ ⊢ x y : τ
+-- f) x: σ ⊢ x true : τ
+-- g) x: σ ⊢ x true : σ
+-- h) x: σ ⊢ x x : τ
