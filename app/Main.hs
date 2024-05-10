@@ -8,6 +8,8 @@ import Guide_2 ()
 
 import Guide_3 ()
 
+import Guide_4 ()
+
 import Guide_Solved ()
 
 main :: IO ()
