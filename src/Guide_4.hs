@@ -202,7 +202,6 @@ module Guide_4 (
 -- El término M reduce a tipo τ y sabemos que la variable x reduce a tipo σ
 -- Γ, x : σ ⊢ M : τ
 
-
 -- El término N reduce a tipo σ
 -- Γ ⊢ N : σ
 
@@ -210,6 +209,22 @@ module Guide_4 (
 -- Γ ⊢ M{x := N} : τ
 
 
+-- Ejercicio 13
+
+-- a) (λy : σ. x (λx: τ. x)){x := (λy : ρ. x y)}
+
+-- (λy : σ. x (λx: τ. x)){x := (λy : ρ. x y)}
+-- (λy : σ. x (λz: τ. z)){x := (λw : ρ. v w)}
+-- λy : σ. (x (λz: τ. z)){x := (λw : ρ. v w)}
+-- (x (λz: τ. z)){x := (λw : ρ. v w)}
+-- x{x := (λw : ρ. v w)}(λz: τ. z){x := (λw : ρ. v w)}
+-- (λw : ρ. v w)(λz: τ. z){x := (λw : ρ. v w)}
+-- (λw : ρ. v w)(λz: τ. z)
+
+
+-- b) (y (λv : σ. x v)){x := (λy : τ. v y)}
+
+-- (y (λv : σ. x v)){x := (λy : τ. v y)}
 
 
 
