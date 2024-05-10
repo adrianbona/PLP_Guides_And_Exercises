@@ -17,7 +17,7 @@ module Guide_4 (
 
 --                                                                        --------------------------------- ax-v
 --                                                                        x : Nat, y : Bool, z : Bool ⊢ z : Bool
---                                                                        --------------------------------------------- ⇒i
+--                                                                        --------------------------------------------- ⇒i    ----------------------- ax-true
 --                                                                        x : Nat, y : Bool ⊢ (λz : Bool. z) : Bool ⇒ Bool    x : Nat, y : Bool ⊢ true : Bool
 -------------------------- ax-true    ----------------------- ax-false    -------------------------------------------------------------------------------- ⇒e
 -- x : Nat, y : Bool ⊢ true : Bool    x : Nat, y : Bool ⊢ false : Bool    x : Nat, y : Bool ⊢ (λz : Bool. z) true : Bool
@@ -109,7 +109,7 @@ module Guide_4 (
 
 -- σ representa el tipo Nat, τ representa el tipo Bool
 
------------ axv
+------------ ax-v
 -- x: σ ⊢ x : Nat
 ---------------- succ
 -- x: σ ⊢ succ(x) : Nat
@@ -124,7 +124,7 @@ module Guide_4 (
 -- τ representa el tipo Bool ⇒ Nat
 -- σ representa varios tipos, contradicción
 
----------------- axv        ------------- ax-zero
+--------------- ax-v        ------------- ax-zero
 -- x : σ ⊢ x : τ ⇒ σ        y : Bool ⊢ zero : Nat
 ------------------------    -----------------------
 -- ⊢ (λx : σ. x) : τ ⇒ σ    ⊢ (λy : Bool. zero) : τ
@@ -137,11 +137,11 @@ module Guide_4 (
 -- τ representa el tipo Nat
 -- σ representa el tipo Bool y Nat, contradicción
 
---------------------- axv                      ---------- ax-zero
+-------------------- ax-v                      ---------- ax-zero
 -- y : τ, x: σ ⊢ x : Bool                      y : τ ⊢ zero : Nat
------------------------ ⇒i    --------- axv    ------------------- succ
+----------------------- ⇒i    -------- ax-v    ----------------- succ
 -- y : τ ⊢ λx: σ. x : Bool    y : τ ⊢ y : σ    y : τ ⊢ succ(zero) : σ
--------------------------------------------------------------------- if
+------------------------------------------------------------------ if
 -- y : τ ⊢ if (λx: σ. x) then y else succ(zero) : σ
 
 
@@ -149,7 +149,7 @@ module Guide_4 (
 
 -- σ representa el tipo ρ ⇒ τ
 
---------------- axv    -------- axv
+-------------- ax-v    ------- ax-v
 -- x: σ ⊢ x : ρ ⇒ τ    x: σ ⊢ y : ρ
 -------------------------------- ⇒e
 -- x: σ ⊢ x y : τ
@@ -159,7 +159,7 @@ module Guide_4 (
 
 -- σ representa el tipo τ ⇒ τ, τ puede ser cualquier tipo
 
----------------------- axv    --------------- axv
+--------------------- ax-v    -------------- ax-v
 -- x: σ, y : τ ⊢ x : ρ ⇒ τ    x: σ, y : τ ⊢ y : ρ
 ---------------------------------------------- ⇒e
 -- x: σ, y : τ ⊢ x y : τ
@@ -169,7 +169,7 @@ module Guide_4 (
 
 -- σ representa el tipo Bool ⇒ τ
 
------------------- axv    ---------- ax-true
+----------------- ax-v    ---------- ax-true
 -- x: σ ⊢ x : Bool ⇒ τ    x: σ ⊢ true : Bool
 ----------------------------------------- ⇒e
 -- x: σ ⊢ x true : τ
@@ -179,7 +179,7 @@ module Guide_4 (
 
 -- σ representa el tipo Bool ⇒ σ (referencia circular no tipa)
 
------------------- axv    ---------- ax-true
+----------------- ax-v    ---------- ax-true
 -- x: σ ⊢ x : Bool ⇒ σ    x: σ ⊢ true : Bool
 ----------------------------------------- ⇒e
 -- x: σ ⊢ x true : σ
@@ -189,14 +189,10 @@ module Guide_4 (
 
 -- σ representa el tipo σ ⇒ τ (referencia circular no tipa)
 
---------------- axv    -------- axv
+-------------- ax-v    ------- ax-v
 -- x: σ ⊢ x : σ ⇒ τ    x: σ ⊢ x : σ
 -------------------------------- ⇒e
 -- x: σ ⊢ x x : τ
-
-
-
-
 
 
 
