@@ -29,7 +29,7 @@ module Guide_4 (
 
 --                                         ---- ax-zero
 --                                         ⊢ zero : Nat
-------------------- XXX    ---- ax-zero    ---------- ax-succ
+------------------- XXX    ---- ax-zero    ------------- succ
 -- ⊢ λx: Bool. x : Bool    ⊢ zero : Nat    ⊢ succ(zero) : Nat
 ---------------------------------------------------------- if
 -- ⊢ if λx: Bool. x then zero else succ(zero) : Nat
@@ -43,3 +43,61 @@ module Guide_4 (
 -- x : Bool → Nat, y : Bool ⊢ x y : Nat
 
 
+-- Ejercicio 7
+
+-- TIPADO VÁLIDO EN REGLA MODIFICADA
+
+--------------- ax-v
+-- x : Nat ⊢ x : Nat
+------------- succ
+-- ⊢ succ(x) : Nat
+---------------------------------- ⇒i2
+-- ⊢ (λx : Bool. succ(x)) : Bool ⇒ Nat
+
+
+-- TIPADO INVÁLIDO EN REGLA ORIGINAL
+
+---------------- ax-v
+-- x : Bool ⊢ x : Nat
+---------------------- succ
+-- x : Bool ⊢ succ(x) : Nat
+----------------------------------- ⇒i
+-- ⊢ (λx : Bool. succ(x)) : Bool ⇒ Nat
+
+
+-- Ejercicio 8
+
+-- Determinar qué tipo representa σ en cada uno de los siguientes juicios de tipado
+
+-- a) ⊢ succ(zero) : σ
+
+-- σ representa el tipo Nat
+
+----- ax-zero
+-- ⊢ zero : σ
+-------------- succ
+-- ⊢ succ(zero) : σ
+
+
+-- b) ⊢ isZero(succ(zero)) : σ
+
+-- σ representa el tipo Bool
+
+------- ax-zero
+-- ⊢ zero : Nat
+---------------- succ
+-- ⊢ succ(zero) : Nat
+-------------------- isZero
+-- ⊢ isZero(succ(zero)) : σ
+
+
+-- c) ⊢ if (if true then false else false) then zero else succ(zero) : σ
+
+-- σ representa el tipo Nat
+
+-------- ax-true    ----- ax-false    ----- ax-false                  -- ax-zero
+-- ⊢ true : Bool    ⊢ false : Bool    ⊢ false : Bool                  ⊢ zero : σ
+------------------------------------------------- if    -- ax-zero    ----------- succ
+-- ⊢ if true then false else false : Bool               ⊢ zero : σ    ⊢ succ(zero) : σ
+----------------------------------------------------------------------------------- if
+-- ⊢ if (if true then false else false) then zero else succ(zero) : σ
