@@ -234,6 +234,26 @@ module Guide_4 (
 -- y(λu : σ. (λy : τ. v y)z)
 
 
+-- Ejercicio 16
+
+-- i (λx : Bool. x) true
+
+-- ii λx : Nat. pred(succ(x))
+
+-- iii λx : Nat. pred(succ(y))
+
+-- iv (λx : Bool. pred(isZero(x))) true
+
+-- v (λf : Nat → Bool. f zero) (λx : Nat. isZero(x))
+
+-- vi (λf : Nat → Bool. x) (λx : Nat. isZero(x))
+
+-- vii (λf : Nat → Bool. f pred(zero)) (λx : Nat. isZero(x))
+
+-- viii µy : Nat. succ(y)
+
+
+
 
 
 
