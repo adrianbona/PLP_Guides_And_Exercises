@@ -195,8 +195,19 @@ module Guide_4 (
 -- x: σ ⊢ x x : τ
 
 
+-- Ejercicio 12
+
+-- Demostrar que si valen Γ, x : σ ⊢ M : τ y Γ ⊢ N : σ entonces vale Γ ⊢ M{x := N} : τ.
+
+-- El término M reduce a tipo τ y sabemos que la variable x reduce a tipo σ
+-- Γ, x : σ ⊢ M : τ
 
 
+-- El término N reduce a tipo σ
+-- Γ ⊢ N : σ
+
+-- Queremos ver que el término M con la variable x sustituída por N sigue reduciendo a tipo τ
+-- Γ ⊢ M{x := N} : τ
 
 
 
