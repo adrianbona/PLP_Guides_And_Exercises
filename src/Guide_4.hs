@@ -236,6 +236,8 @@ module Guide_4 (
 
 -- Ejercicio 16
 
+-- Un programa no puede contener variables libres
+
 -- i) (λx : Bool. x) true
 
 -- (λx : Bool. x) true
@@ -250,6 +252,8 @@ module Guide_4 (
 -- x{x := x}
 -- x
 
+-- NO ES UN PROGRAMA, CONTIENE VARIABLES LIBRES
+
 
 -- iii) λx : Nat. pred(succ(y))
 
@@ -258,12 +262,15 @@ module Guide_4 (
 -- y{x := x}
 -- y
 
+-- NO ES UN PROGRAMA, CONTIENE VARIABLES LIBRES
+
 
 -- iv) (λx : Bool. pred(isZero(x))) true
 
 -- (λx : Bool. pred(isZero(x))) true
 -- pred(isZero(x)){x := true}
--- NO REDUCE
+
+-- NO REDUCE POR TIPADO
 
 
 -- v) (λf : Nat → Bool. f zero) (λx : Nat. isZero(x))
@@ -284,6 +291,8 @@ module Guide_4 (
 -- x{f := (λx : Nat. isZero(x))}
 -- x
 
+-- NO ES UN PROGRAMA, CONTIENE VARIABLES LIBRES
+
 
 -- vii) (λf : Nat → Bool. f pred(zero)) (λx : Nat. isZero(x))
 
@@ -294,6 +303,7 @@ module Guide_4 (
 -- (λx : Nat. isZero(x)) pred(zero)
 -- isZero(x){x := pred(zero)}
 -- isZero(pred(zero))
+
 -- NO REDUCE
 
 
@@ -302,7 +312,17 @@ module Guide_4 (
 -- µy : Nat. succ(y)
 -- succ(y){y := µy : Nat. succ(y)}
 -- succ(µy : Nat. succ(y))
--- NO REDUCE
+
+-- NO REDUCE, CICLA INFINITAMENTE
+
+
+-- Ejercicio 20
+
+-- Extensión de cálculo-lambda tipado con pares:
+-- σ ::= . . . | σ × σ
+-- M ::= . . . | ⟨M, M⟩ | π1(M) | π2(M)
+
+-- a) Definir reglas de tipado para los nuevos constructores de términos
 
 
 
