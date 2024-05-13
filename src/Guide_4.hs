@@ -103,6 +103,17 @@ module Guide_4 (
 -- ⊢ if (if true then false else false) then zero else succ(zero) : σ
 
 
+-- Ejercicio 9
+
+-- a) σ → τ → σ
+
+-- b) (σ → τ → ρ) → (σ → τ ) → σ → ρ
+
+-- c) (σ → τ → ρ) → τ → σ → ρ
+
+-- d) (τ → ρ) → (σ → τ ) → σ → ρ
+
+
 -- Ejercicio 10
 
 -- a) x: σ ⊢ isZero(succ(x)) : τ
@@ -322,7 +333,36 @@ module Guide_4 (
 -- σ ::= . . . | σ × σ
 -- M ::= . . . | ⟨M, M⟩ | π1(M) | π2(M)
 
+
 -- a) Definir reglas de tipado para los nuevos constructores de términos
+
+------- ax-v    ---- ax-v
+-- Γ ⊢ M : σ    Γ ⊢ M : τ
+------------------ ax-par
+-- Γ ⊢ ⟨M, N⟩ : ⟨σ, τ⟩
+
+------- ax-v
+-- Γ ⊢ M : σ
+------- ax-par-1
+-- Γ ⊢ π1(M) : σ
+
+------- ax-v
+-- Γ ⊢ M : σ
+------- ax-par-2
+-- Γ ⊢ π2(M) : σ
+
+
+-- b) Usando las reglas de tipado anteriores, exhibir habitantes de los siguientes tipos:
+
+-- i) Constructor de pares: σ → τ → (σ × τ)
+
+-- ii) Proyecciones: (σ × τ) → σ y (σ × τ) → τ
+
+-- iii) Conmutatividad: (σ × τ) → (τ × σ)
+
+-- iv) Asociatividad: ((σ × τ) × ρ) → (σ × (τ × ρ)) y (σ × (τ × ρ)) → ((σ × τ) × ρ)
+
+-- v) Currificación: ((σ × τ) → ρ) → (σ → τ → ρ) y (σ → τ → ρ) → ((σ × τ) → ρ)
 
 
 
