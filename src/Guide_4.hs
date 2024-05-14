@@ -35,12 +35,12 @@ module Guide_4 (
 -- ⊢ if λx: Bool. x then zero else succ(zero) : Nat
 
 
--- d) x : Bool → Nat, y : Bool ⊢ x y : Nat
+-- d) x : Bool ⇒ Nat, y : Bool ⊢ x y : Nat
 
 --------------------------------------- ax-v    ------------------------------ ax-v
--- x : Bool → Nat, y : Bool ⊢ x : Bool → Nat    x : Bool → Nat, y : Bool ⊢ y : Bool
+-- x : Bool ⇒ Nat, y : Bool ⊢ x : Bool ⇒ Nat    x : Bool ⇒ Nat, y : Bool ⊢ y : Bool
 -------------------------------------------------------------------------------- ⇒e
--- x : Bool → Nat, y : Bool ⊢ x y : Nat
+-- x : Bool ⇒ Nat, y : Bool ⊢ x y : Nat
 
 
 -- Ejercicio 7
@@ -118,17 +118,28 @@ module Guide_4 (
 -- ⊢ λx: σ. λy: τ. x : σ ⇒ τ ⇒ σ
 
 
--- b) (σ → τ → ρ) → (σ → τ) → σ → ρ
+-- b) (σ ⇒ τ ⇒ ρ) ⇒ (σ ⇒ τ) ⇒ σ ⇒ ρ
 
 -- Combinador S
 -- M = λf : σ ⇒ τ ⇒ ρ . λg : σ ⇒ τ . λx : σ . f x (g x)
 
--------------------------------------------------- ⇒i
--- ⊢ λf : σ ⇒ τ ⇒ ρ . λg : σ ⇒ τ . λx : σ . f x (g x)
+--------------------------------------------- ax-v    ---------------------------------- ax-v    -------------------------------------- ax-v    ---------------------------------- ax-v
+-- f : σ ⇒ τ ⇒ ρ, g : σ ⇒ τ, x : σ ⊢ f : σ ⇒ τ ⇒ ρ    f : σ ⇒ τ ⇒ ρ, g : σ ⇒ τ, x : σ ⊢ x : σ    f : σ ⇒ τ ⇒ ρ, g : σ ⇒ τ, x : σ ⊢ g : σ ⇒ τ    f : σ ⇒ τ ⇒ ρ, g : σ ⇒ τ, x : σ ⊢ x : σ
+------------------------------------------------------------------------------------------ ⇒e    ----------------------------------------------------------------------------------- ⇒e
+-- f : σ ⇒ τ ⇒ ρ, g : σ ⇒ τ, x : σ ⊢ f x : τ ⇒ ρ                                                 f : σ ⇒ τ ⇒ ρ, g : σ ⇒ τ, x : σ ⊢ g x : τ
+--------------------------------------------------------------------------------------------------------------------------------------- ⇒e
+-- f : σ ⇒ τ ⇒ ρ, g : σ ⇒ τ, x : σ ⊢ (f x) (g x) : ρ
+----------------------------------------------------- ⇒i
+-- f : σ ⇒ τ ⇒ ρ, g : σ ⇒ τ ⊢ λx : σ . f x (g x) : σ ⇒ ρ
+--------------------------------------------------------------------- ⇒i
+-- f : (σ ⇒ τ ⇒ ρ) ⊢ λg : (σ ⇒ τ) . λx : σ . f x (g x) : (σ ⇒ τ) ⇒ σ ⇒ ρ
+--------------------------------------------------------------------- ⇒i
+-- ⊢ λf : (σ ⇒ τ ⇒ ρ) . λg : (σ ⇒ τ) . λx : σ . f x (g x)
 
--- c) (σ → τ → ρ) → τ → σ → ρ
 
--- d) (τ → ρ) → (σ → τ) → σ → ρ
+-- c) (σ ⇒ τ ⇒ ρ) ⇒ τ ⇒ σ ⇒ ρ
+
+-- d) (τ ⇒ ρ) ⇒ (σ ⇒ τ) ⇒ σ ⇒ ρ
 
 
 -- Ejercicio 10
@@ -301,9 +312,9 @@ module Guide_4 (
 -- NO REDUCE POR TIPADO
 
 
--- v) (λf : Nat → Bool. f zero) (λx : Nat. isZero(x))
+-- v) (λf : Nat ⇒ Bool. f zero) (λx : Nat. isZero(x))
 
--- (λf : Nat → Bool. f zero) (λx : Nat. isZero(x))
+-- (λf : Nat ⇒ Bool. f zero) (λx : Nat. isZero(x))
 -- (f zero){f := (λx : Nat. isZero(x))}
 -- f{f := (λx : Nat. isZero(x))} zero{f := (λx : Nat. isZero(x))}
 -- (λx : Nat. isZero(x)) zero{f := (λx : Nat. isZero(x))}
@@ -313,18 +324,18 @@ module Guide_4 (
 -- true
 
 
--- vi) (λf : Nat → Bool. x) (λx : Nat. isZero(x))
+-- vi) (λf : Nat ⇒ Bool. x) (λx : Nat. isZero(x))
 
--- (λf : Nat → Bool. x) (λx : Nat. isZero(x))
+-- (λf : Nat ⇒ Bool. x) (λx : Nat. isZero(x))
 -- x{f := (λx : Nat. isZero(x))}
 -- x
 
 -- NO ES UN PROGRAMA, CONTIENE VARIABLES LIBRES
 
 
--- vii) (λf : Nat → Bool. f pred(zero)) (λx : Nat. isZero(x))
+-- vii) (λf : Nat ⇒ Bool. f pred(zero)) (λx : Nat. isZero(x))
 
--- (λf : Nat → Bool. f pred(zero)) (λx : Nat. isZero(x))
+-- (λf : Nat ⇒ Bool. f pred(zero)) (λx : Nat. isZero(x))
 -- (f pred(zero)){f := (λx : Nat. isZero(x))}
 -- f{f := (λx : Nat. isZero(x))} pred(zero){f := (λx : Nat. isZero(x))}
 -- (λx : Nat. isZero(x)) pred(zero){f := (λx : Nat. isZero(x))}
@@ -371,15 +382,15 @@ module Guide_4 (
 
 -- b) Usando las reglas de tipado anteriores, exhibir habitantes de los siguientes tipos:
 
--- i) Constructor de pares: σ → τ → (σ × τ)
+-- i) Constructor de pares: σ ⇒ τ ⇒ (σ × τ)
 
--- ii) Proyecciones: (σ × τ) → σ y (σ × τ) → τ
+-- ii) Proyecciones: (σ × τ) ⇒ σ y (σ × τ) ⇒ τ
 
--- iii) Conmutatividad: (σ × τ) → (τ × σ)
+-- iii) Conmutatividad: (σ × τ) ⇒ (τ × σ)
 
--- iv) Asociatividad: ((σ × τ) × ρ) → (σ × (τ × ρ)) y (σ × (τ × ρ)) → ((σ × τ) × ρ)
+-- iv) Asociatividad: ((σ × τ) × ρ) ⇒ (σ × (τ × ρ)) y (σ × (τ × ρ)) ⇒ ((σ × τ) × ρ)
 
--- v) Currificación: ((σ × τ) → ρ) → (σ → τ → ρ) y (σ → τ → ρ) → ((σ × τ) → ρ)
+-- v) Currificación: ((σ × τ) ⇒ ρ) ⇒ (σ ⇒ τ ⇒ ρ) y (σ ⇒ τ ⇒ ρ) ⇒ ((σ × τ) ⇒ ρ)
 
 
 
