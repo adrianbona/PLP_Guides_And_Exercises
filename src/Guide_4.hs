@@ -108,7 +108,7 @@ module Guide_4 (
 -- a) σ ⇒ τ ⇒ σ
 
 -- La función const, que toma dos argumentos y devuelve el primero
--- M = λx : σ. λy : τ. x
+-- M = λx . λy . x
 
 ---------------- ax-v
 -- x: σ, y: τ ⊢ x : σ
@@ -121,7 +121,7 @@ module Guide_4 (
 -- b) (σ ⇒ τ ⇒ ρ) ⇒ (σ ⇒ τ) ⇒ σ ⇒ ρ
 
 -- Combinador S
--- M = λf : σ ⇒ τ ⇒ ρ . λg : σ ⇒ τ . λx : σ . f x (g x)
+-- M = λf . λg . λx . f x (g x)
 
 --------------------------------------------- ax-v    ---------------------------------- ax-v    -------------------------------------- ax-v    ---------------------------------- ax-v
 -- f : σ ⇒ τ ⇒ ρ, g : σ ⇒ τ, x : σ ⊢ f : σ ⇒ τ ⇒ ρ    f : σ ⇒ τ ⇒ ρ, g : σ ⇒ τ, x : σ ⊢ x : σ    f : σ ⇒ τ ⇒ ρ, g : σ ⇒ τ, x : σ ⊢ g : σ ⇒ τ    f : σ ⇒ τ ⇒ ρ, g : σ ⇒ τ, x : σ ⊢ x : σ
@@ -140,6 +140,7 @@ module Guide_4 (
 -- c) (σ ⇒ τ ⇒ ρ) ⇒ τ ⇒ σ ⇒ ρ
 
 -- Flip, que toma una función de dos argumentos y devuelve una función que toma los argumentos en orden inverso
+-- M = λf . λy . λx . f x y
 
 ----------------------------------------- ax-v    ------------------------------ ax-v
 -- f : σ ⇒ τ ⇒ ρ, y : τ, x : σ ⊢ f : σ ⇒ τ ⇒ ρ    f : σ ⇒ τ ⇒ ρ, y : τ, x : σ ⊢ x : σ
@@ -158,6 +159,8 @@ module Guide_4 (
 -- d) (τ ⇒ ρ) ⇒ (σ ⇒ τ) ⇒ σ ⇒ ρ
 
 -- Composición de funciones, que toma dos funciones y devuelve una función que es la composición de ambas
+-- M = λf . λg . λx . f (g x)
+
 
 --                                            ---------------------------------- ax-v    ------------------------------ ax-v
 --                                            f : τ ⇒ ρ, g : σ ⇒ τ, x : σ ⊢ g : σ ⇒ τ    f : τ ⇒ ρ, g : σ ⇒ τ, x : σ ⊢ x : σ
@@ -398,24 +401,57 @@ module Guide_4 (
 ------- ax-v    ---- ax-v
 -- Γ ⊢ M : σ    Γ ⊢ M : τ
 ------------------ ax-par
--- Γ ⊢ ⟨M, N⟩ : ⟨σ, τ⟩
+-- Γ ⊢ ⟨M, N⟩ : σ × τ
 
-------- ax-v
--- Γ ⊢ M : σ
+----------- ax-v
+-- Γ ⊢ M : σ × τ
 ------- ax-par-1
 -- Γ ⊢ π1(M) : σ
 
-------- ax-v
--- Γ ⊢ M : σ
+----------- ax-v
+-- Γ ⊢ M : σ × τ
 ------- ax-par-2
--- Γ ⊢ π2(M) : σ
+-- Γ ⊢ π2(M) : τ
 
 
 -- b) Usando las reglas de tipado anteriores, exhibir habitantes de los siguientes tipos:
 
 -- i) Constructor de pares: σ ⇒ τ ⇒ (σ × τ)
 
+-- Función que dado un par de valores devuelve el par
+
+-- M = λx : σ . λy : τ . ⟨x, y⟩ : σ × τ
+
+------------------ ax-v    --------------- ax-v
+-- x : σ, y : τ ⊢ x : σ    x : σ, y : τ ⊢ y : τ
+---------------------------------------- ax-par
+-- x : σ, y : τ ⊢ ⟨x, y⟩ : σ × τ
+------------------------------- ⇒i
+-- x : σ ⊢ λy : τ . ⟨x, y⟩ : σ × τ
+---------------------------------- ⇒i
+-- ⊢ λx : σ . λy : τ . ⟨x, y⟩ : σ × τ
+
+
 -- ii) Proyecciones: (σ × τ) ⇒ σ y (σ × τ) ⇒ τ
+
+--1- M = λx . π1(x)
+
+------------------- ax-v
+-- x : σ × τ ⊢ x : σ × τ
+--------------- ax-par-1
+-- x : σ × τ ⊢ π1(x) : σ
+------------------------------------ ⇒i
+-- ⊢ λx : (σ × τ) . π1(x) : (σ × τ) ⇒ σ
+
+
+--2- M = λx : (σ × τ) . π2(x) : (σ × τ) ⇒ τ
+
+------------------- ax-v
+-- x : σ × τ ⊢ x : σ × τ
+--------------- ax-par-2
+-- x : σ × τ ⊢ π2(x) : τ
+------------------------------------ ⇒i
+-- ⊢ λx : (σ × τ) . π2(x) : (σ × τ) ⇒ τ
 
 -- iii) Conmutatividad: (σ × τ) ⇒ (τ × σ)
 
