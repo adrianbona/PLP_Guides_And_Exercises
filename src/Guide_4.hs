@@ -481,9 +481,19 @@ module Guide_4 (
 --2- M = λf : (σ ⇒ τ ⇒ ρ) . λx : (σ × τ) . f π1(x) π2(x) : (σ ⇒ τ ⇒ ρ) ⇒ ((σ × τ) ⇒ ρ)
 
 
+-- c) Reglas de semántica operacional
 
+-- V ::= . . . | ⟨V, V⟩
 
+-- π1(⟨V1, V2⟩) ⇒ V1
+-- π2(⟨V1, V2⟩) ⇒ V2
 
+-- Reglas de congruencia, si M ⇒ N entonces:
+
+-- ⟨M, O⟩ ⇒ ⟨N, o⟩ --PL
+-- ⟨V, M⟩ ⇒ ⟨V, N⟩ --PR
+-- π1(M) ⇒ π1(N)   --π1
+-- π2(M) ⇒ π2(N)   --π2
 
 
 
