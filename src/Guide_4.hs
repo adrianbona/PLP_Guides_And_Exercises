@@ -1,6 +1,63 @@
 module Guide_4 (
 ) where
 
+-- Ejercicio Clase
+
+-- Sean M, N y P términos del cálculo lambda. Por inducción en la estructura de M, probar que:
+-- si x no aparece libre en P y x ̸= y, entonces: M{x := N}{y := P} = M{y := P}{x := N{y := P}}
+
+-- M ::= x | λx : σ.M | MM | true | false | if M then M else M
+
+-- Predicado unario: P(M) = x no aparece libre en P y x != y . M{x := N}{y := P} = M{y := P}{x := N{y := P}}
+
+-- Caso base P(x) =
+
+-- x{x := N}{y := P} = x{y := P}{x := N{y := P}}
+-- N{y := P} = x{y := P}{x := N{y := P}}
+-- N{y := P} = x{x := N{y := P}}
+-- N{y := P} = N{y := P}
+
+-- Caso base P(true) =
+
+-- true{x := N}{y := P} = true{y := P}{x := N{y := P}}
+-- true{y := P} = true{y := P}{x := N{y := P}}
+-- true = true{y := P}{x := N{y := P}}
+-- true = true{x := N{y := P}}
+-- true = true
+
+-- Caso base P(false) =
+
+-- false{x := N}{y := P} = false{y := P}{x := N{y := P}}
+-- false{y := P} = false{y := P}{x := N{y := P}}
+-- false = false{y := P}{x := N{y := P}}
+-- false = false{x := N{y := P}}
+-- false = false
+
+-- Hipótesis inductiva P(O) = x no aparece libre en P y x != y . O{x := N}{y := P} = O{y := P}{x := N{y := P}}
+
+-- Paso inductivo P(QR) = x no aparece libre en P y x != y . QR{x := N}{y := P} = QR{y := P}{x := N{y := P}}
+
+-- QR{x := N}{y := P} = QR{y := P}{x := N{y := P}}
+-- Q{x := N}{y := P}R{x := N}{y := P} = QR{y := P}{x := N{y := P}}
+-- Q{y := P}{x := N{y := P}}R{x := N}{y := P} = QR{y := P}{x := N{y := P}}
+-- Q{y := P}{x := N{y := P}}R{y := P}{x := N{y := P}} = QR{y := P}{x := N{y := P}}
+-- QR{y := P}{x := N{y := P}} = QR{y := P}{x := N{y := P}}
+
+-- Paso inductivo P(λx : σ . M) = x no aparece libre en P y x != y . (λx : σ . M){x := N}{y := P} = (λx : σ . M){y := P}{x := N{y := P}}
+
+--(λz : σ . M){x := N}{y := P} = (λz : σ . M){y := P}{x := N{y := P}}
+--λz : σ . M{x := N}{y := P} = (λz : σ . M){y := P}{x := N{y := P}}
+--λz : σ . M{y := P}{x := N{y := P}} = (λz : σ . M){y := P}{x := N{y := P}}
+--(λz : σ . M){y := P}{x := N{y := P}} = (λz : σ . M){y := P}{x := N{y := P}}
+
+-- Paso inductivo P(if Q then R else S) = x no aparece libre en P y x != y . (if Q then R else S){x := N}{y := P} = (if Q then R else S){y := P}{x := N{y := P}}
+
+-- (if Q then R else S){x := N}{y := P} = (if Q then R else S){y := P}{x := N{y := P}}
+-- if Q{x := N}{y := P} then R{x := N}{y := P} else S{x := N}{y := P} = (if Q then R else S){y := P}{x := N{y := P}}
+-- if Q{y := P}{x := N{y := P}} then R{y := P}{x := N{y := P}} else S{y := P}{x := N{y := P}} = (if Q then R else S){y := P}{x := N{y := P}}
+-- (if Q then R else S){y := P}{x := N{y := P}} = (if Q then R else S){y := P}{x := N{y := P}}
+
+
 -- Ejercicio 6
 
 -- a) ⊢ if true then zero else succ(zero) : Nat
