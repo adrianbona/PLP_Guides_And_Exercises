@@ -1056,36 +1056,76 @@ intersect xs ys = filter (\e -> elem e ys) xs --{I0}
 -- ii. Num a => ∀ p::Polinomio a . sinConstantesNegativas p ⇒ sinConstantesNegativas (derivado p)
 
 
+-- Ejericio Extra
 
+-- elem :: Eq a => a -> [a] -> Bool
+-- elem e [] = False {EL0}
+-- elem e (x:xs) = e == x || elem e xs {EL1}
 
+-- maximum :: Ord a => [a] -> a
+-- maximum [x] = x {MAX0}
+-- maximum (x:xs) = if x < maximum xs then maximum xs else x {MAX1}
 
+-- Ord a => ∀ xs::[a] . ∀ e::a . elem e xs ⇒ e <= maximum xs
 
+-- Quiero ver que si a es un tipo ordenado, entonces para toda lista xs de elementos de tipo a y
+-- para todo elemento e de tipo a, si e se encuentra en xs, entonces e es menor o igual al máximo de xs
 
+-- (Ord a ⇒ (∀ xs::[a] . ∀ e::a . elem e xs ⇒ (e <= maximum xs)))
 
+-- Empecemos por ver que a puede ser un tipo ordenado o no. Abramos los casos y exploremos las posibilidades.
 
+-- Caso 1: a no es un tipo ordenado
 
+-- Si a no es un tipo ordenado, entonces no podemos comparar elementos de tipo a. Si el antecedente de la implicación
+-- es falso, entonces la implicación es verdadera. Por lo tanto, la implicación es verdadera si a no es un tipo ordenado.
 
+-- Caso 2: a es un tipo ordenado
 
+-- Si a es un tipo ordenado, entonces podemos comparar elementos de tipo a.
+-- Procedemos a probar que el consecuente sea verdadero.
 
+-- Predicado unario: P(xs) = ∀ e::a . elem e xs ⇒ e <= maximum xs
 
+-- Caso base: P([]) =
 
+-- ∀ e::a . elem e [] ⇒ e <= maximum [] {EL0}
+-- ∀ e::a . False ⇒ e <= maximum [] {queda demostrada la implicación}
 
+-- Hipótesis inductiva: P(xs) = ∀ e::a . elem e xs ⇒ e <= maximum xs
+-- Paso inductivo: P(x:xs) = ∀ e::a . elem e (x:xs) ⇒ e <= maximum (x:xs)
 
+-- ∀ e::a . elem e (x:xs) ⇒ e <= maximum (x:xs) {EL1}
+-- ∀ e::a . e == x || elem e xs ⇒ e <= maximum (x:xs) {abrimos en dos casos}
 
+-- Caso 1: e == x
 
+-- ∀ e::a . e == x || elem e xs ⇒ e <= maximum (x:xs) {CASO 1}
+-- ∀ e::a . true || elem e xs ⇒ e <= maximum (x:xs) {lógica}
+-- ∀ e::a . true ⇒ e <= maximum (x:xs) {MAX1}
+-- ∀ e::a . true ⇒ e <= (if x < maximum xs then maximum xs else x) {abrimos en dos casos}
 
+-- Caso 1.1: x < maximum xs
 
+-- ∀ e::a . true ⇒ e <= (if x < maximum xs then maximum xs else x) {CASO 1.1}
+-- ∀ e::a . true ⇒ e <= maximum xs {HI}
 
+-- Caso 1.2: x >= maximum xs
 
+-- ∀ e::a . true ⇒ e <= (if x < maximum xs then maximum xs else x) {CASO 1.2}
+-- ∀ e::a . true ⇒ e <= x {CASO 1}
+-- ∀ e::a . true ⇒ x == x {lógica}
 
+-- Caso 2: e != x
 
+-- ∀ e::a . e == x || elem e xs ⇒ e <= maximum (x:xs) {CASO 2}
+-- ∀ e::a . false || elem e xs ⇒ e <= maximum (x:xs) {lógica}
+-- ∀ e::a . elem e xs ⇒ e <= maximum (x:xs) {HI}
+-- ∀ e::a . elem e xs ⇒ e <= maximum xs ⇒ e <= maximum (x:xs)
 
-
-
-
-
-
-
+-- Sabemos que e se encuentra en xs y también sabemos que e es menor o igual al máximo de xs y que e es distinto de x.
+-- Si x es el máximo de xs, entonces e es menor a x, vale la implicación. Si x no es el máximo de xs, entonces e es
+-- menor o igual al máximo de xs, sigue valiendo la implicación. Por lo tanto, la implicación es verdadera.
 
 
 
