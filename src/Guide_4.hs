@@ -1,7 +1,7 @@
 module Guide_4 (
 ) where
 
--- Ejercicio Clase
+-- Ejercicio Extra 2
 
 -- Sean M, N y P términos del cálculo lambda. Por inducción en la estructura de M, probar que:
 -- si x no aparece libre en P y x ̸= y, entonces: M{x := N}{y := P} = M{y := P}{x := N{y := P}}
@@ -56,6 +56,33 @@ module Guide_4 (
 -- if Q{x := N}{y := P} then R{x := N}{y := P} else S{x := N}{y := P} = (if Q then R else S){y := P}{x := N{y := P}}
 -- if Q{y := P}{x := N{y := P}} then R{y := P}{x := N{y := P}} else S{y := P}{x := N{y := P}} = (if Q then R else S){y := P}{x := N{y := P}}
 -- (if Q then R else S){y := P}{x := N{y := P}} = (if Q then R else S){y := P}{x := N{y := P}}
+
+
+-- Ejercicio Extra 4
+
+-- ((λx : Bool . λy : Bool . if x then true else y) false) true
+
+-- ((λx : Bool . λy : Bool . if x then true else y) false) true {µ,β}
+-- (λy : Bool . if x then true else y){x := false} true {SUSTITUCIÓN}
+-- (λy : Bool . if false then true else y) true {µ,β}
+-- (if false then true else y){y := true} {SUSTITUCIÓN}
+-- if false then true else true {iff}
+-- true
+
+
+-- (λx : Bool . λy : Bool → Bool . y(yx)) ((λz : Bool . true) false) (λw : Bool . w)
+
+-- (λx : Bool . λy : Bool → Bool . y(yx)) ((λz : Bool . true) false) (λw : Bool . w) {ν,µ,β}
+-- (λx : Bool . λy : Bool → Bool . y(yx)) (true{z := false}) (λw : Bool . w) {SUSTITUCIÓN}
+-- (λx : Bool . λy : Bool → Bool . y(yx)) true (λw : Bool . w) {µ,β}
+-- (λy : Bool ⇒ Bool . y(yx)){x := true} (λw : Bool . w) {SUSTITUCIÓN}
+-- (λy : Bool ⇒ Bool . y(y true)) (λw : Bool . w) {µ,β}
+-- y(y true){y := λw : Bool . w} {µ,β}
+-- (λw : Bool . w) ((λy : Bool . y) true) {ν,µ,β}
+-- (λw : Bool . w) y{y := true} {SUSTITUCIÓN}
+-- (λw : Bool . w) true {µ,β}
+-- w{w := true} {SUSTITUCIÓN}
+-- true
 
 
 -- Ejercicio 6
