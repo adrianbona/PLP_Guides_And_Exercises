@@ -140,6 +140,41 @@ module Guide_4 (
 -- x : Bool ⊢ if x then x else (λy : Bool . y) : Bool ⇒ Bool
 
 
+-- Ejericio Extra 9
+
+-- b) Escribir la reducción a un paso de los siguientes términos:
+
+-- isZero(succ(pred(succ(zero)))) {isZero_c, succ_c, pred}
+-- isZero(succ(zero)) {isZero_n}
+-- false
+
+-- isZero(pred(succ(pred(zero)))) {no reducible}
+
+
+-- c) Demostrar los siguientes juicios de tipado, o explicar por qué no son válidos:
+
+--------------- ax-v
+-- x : Nat ⊢ x : Nat
+--------------------- succ
+-- x : Nat ⊢ succ(x) : Nat
+-------------------------------- ⇒e    ---- ax-zero
+-- ⊢ λx : Nat . succ(x) : Nat ⇒ Nat    ⊢ zero : Nat
+------------------------------------------------ ⇒e
+-- ⊢ (λx : Nat . succ(x)) zero : Nat
+
+
+---------------- ax-zero
+-- x : Bool ⊢ zero : Nat
+------------------------- succ
+-- x : Bool ⊢ succ(zero) : Nat
+
+
+----------------- ax-v    -------------- XXX    ------------- ax-zero
+-- x : Bool ⊢ x : Bool    x : Bool ⊢ x : Nat    x : Bool ⊢ zero : Nat
+------------------------------------------------------------------ if
+-- x : Bool ⊢ if x then x else zero : Nat
+
+
 -- Ejercicio 6
 
 -- a) ⊢ if true then zero else succ(zero) : Nat
