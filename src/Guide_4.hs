@@ -85,6 +85,61 @@ module Guide_4 (
 -- true
 
 
+-- Ejercicio Extra 5
+
+-- a) ⊢ (λx : Bool . if x then x else x) true : Bool
+
+----------------- ax-v    -------------- ax-v    -------------- ax-v
+-- x : Bool ⊢ x : Bool    x : Bool ⊢ x : Bool    x : Bool ⊢ x : Bool
+------------------------------------ if
+-- x : Bool ⊢ if x then x else x : Bool
+---------------------------------------------- ⇒i    ----- ax-true
+-- ⊢ λx : Bool . if x then x else x : Bool ⇒ Bool    ⊢ true : Bool
+--------------------------------------------------------------- ⇒e
+-- ⊢ (λx : Bool . if x then x else x) true : Bool
+
+
+-- b) ⊢ (λx : Bool . λy : Bool . if x then true else y) false : Bool ⇒ Bool
+
+--------------------------- ax-v    --------------------------- ax-v    ------------------------ ax-v
+-- x : Bool, y : Bool ⊢ x : Bool    x : Bool, y : Bool ⊢ true : Bool    x : Bool, y : Bool ⊢ y : Bool
+-------------------------------------------------------------------------------------------------- if
+-- x : Bool, y : Bool ⊢ if x then true else y : Bool
+---------------------------------------------------------- ⇒e
+-- x : Bool ⊢ λy : Bool . if x then true else y : Bool ⇒ Bool
+-------------------------------------------------------------------- ⇒e    ----- ax-false
+-- ⊢ λx : Bool . λy : Bool . if x then true else y : Bool ⇒ Bool ⇒ Bool    ⊢ false : Bool
+-------------------------------------------------------------------------------------- ⇒e
+-- ⊢ (λx : Bool . λy : Bool . if x then true else y) false : Bool ⇒ Bool
+
+
+-- c) x : Bool ⊢ true : Bool
+
+----------------- ax-true
+-- x : Bool ⊢ true : Bool
+
+
+-- d) ⊢ if x then x else z : Bool
+
+-- LOS TIPOS NO SON DERIVABLES DEL CONTEXTO
+
+-- ⊢ x : Bool    ⊢ x : Bool    ⊢ z : Bool
+-------------------------------------- if
+-- ⊢ if x then x else z : Bool
+
+
+-- e) x : Bool ⊢ if x then x else (λy : Bool . y) : Bool ⇒ Bool
+
+-- HAY UNA RAMA QUE NO TIPA CORRRECTAMENTE
+
+--                                                      ------------------------ ax-v
+--                                                      x : Bool, y : Bool ⊢ y : Bool
+----------------- ax-v    --------------------------    ---------------------------- ⇒e
+-- x : Bool ⊢ x : Bool    x : Bool ⊢ x : Bool ⇒ Bool    x : Bool ⊢ λy : Bool . y : Bool ⇒ Bool
+------------------------------------------------------------------------------------------- if
+-- x : Bool ⊢ if x then x else (λy : Bool . y) : Bool ⇒ Bool
+
+
 -- Ejercicio 6
 
 -- a) ⊢ if true then zero else succ(zero) : Nat
