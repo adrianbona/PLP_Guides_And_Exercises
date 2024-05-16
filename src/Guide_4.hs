@@ -664,10 +664,34 @@ module Guide_4 (
 
 -- Reglas de congruencia, si M ⇒ N entonces:
 
--- ⟨M, O⟩ ⇒ ⟨N, o⟩ --PL
--- ⟨V, M⟩ ⇒ ⟨V, N⟩ --PR
--- π1(M) ⇒ π1(N)   --π1
--- π2(M) ⇒ π2(N)   --π2
+-- ⟨M, O⟩ ⇒ ⟨N, O⟩ --E-PAR1
+-- ⟨V, M⟩ ⇒ ⟨V, N⟩ --E-PAR2
+-- π1(M) ⇒ π1(N)   --E-π1
+-- π2(M) ⇒ π2(N)   --E-π2
+
+
+-- Extra) Demostrar el siguiente juicio de tipado
+
+-------------- ax-true
+-- x : Bool ⊢ x : Bool
+-------------------------- ax-par-2    -------------- ax-true
+-- x : Bool ⊢ π2 (<Zero, x>) : Bool    x : Bool ⊢ true : Bool
+------------------------------------------------------ ax-par
+-- x : Bool ⊢ <π2 (<Zero, x>), true> : Bool × Bool
+----------------------------------------- ax-par-1
+-- x : Bool ⊢ π1 (<π2 (<Zero, x>), true>) : Bool
+
+
+-- Extra) Reducir la siguiente expresión
+
+-- π2((λx : Nat ✕ Nat . x)⟨π1(⟨zero, true⟩), (λx : Nat . succ(x)) zero⟩) {E-π2, E-PAR2, E-PAR1}
+-- π2((λx : Nat ✕ Nat . x)⟨zero, (λx : Nat . succ(x)) zero⟩) {E-π2, E-PAR2, E-PAR2, β}
+-- π2((λx : Nat ✕ Nat . x)⟨zero, succ(x){x := zero}⟩) {E-π2, E-PAR2, E-PAR2, SUSTITUCIÓN}
+-- π2((λx : Nat ✕ Nat . x)⟨zero, succ(zero)⟩) {E-π2, β}
+-- π2((x{x := ⟨zero, succ(zero)⟩})) {E-π2, SUSITUCIÓN}
+-- π2(⟨zero, succ(zero)⟩) {E-π2}
+-- succ(zero)
+
 
 
 
