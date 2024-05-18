@@ -21,6 +21,7 @@ module Guide_PreExam (
 -- ∀ x::Int . ∀ y::Int . ∀ z::Int . max (min x y) (min x z) = min x (max y z) {LEMA_1}
 -- ∀ x::Int . ∀ y::Int . ∀ z::Int . z + min x y = min (z+x) (z+y) {LEMA_2}
 
+
 -- ∀ t::AB a . altura t ≥ 0
 
 -- Predicado unario: P(t) = altura t ≥ 0
@@ -40,18 +41,46 @@ module Guide_PreExam (
 -- 1 + max (altura i) (altura d) ≥ 0 {aritmética}
 
 
-
-
-
-
-
-
-
 --  ∀ t::AB a . ∀ n::Int . n ≥ 0 ⇒ (altura (truncar t n) = min n (altura t))
 
+-- Predicado unario: P(t) = ∀ n::Int . n ≥ 0 ⇒ (altura (truncar t n) = min n (altura t))
 
+-- Caso base: P(Nil) = ∀ n::Int . n ≥ 0 ⇒ (altura (truncar Nil n) = min n (altura Nil))
 
+-- ∀ n::Int . n ≥ 0 ⇒ (altura (truncar Nil n) = min n (altura Nil)) {T0}
+-- ∀ n::Int . n ≥ 0 ⇒ (altura (Nil) = min n (altura Nil)) {A0}
+-- ∀ n::Int . n ≥ 0 ⇒ (0 = min n 0) {aritmética}
+-- ∀ n::Int . n ≥ 0 ⇒ (0 = 0) {queda demostrada la implicación}
 
+-- Hipótesis inductivas:
+--    P(i) = ∀ n::Int . n ≥ 0 ⇒ (altura (truncar i n) = min n (altura i))
+--    P(d) = ∀ n::Int . n ≥ 0 ⇒ (altura (truncar d n) = min n (altura d))
+
+-- Paso inductivo: P(Bin i r d) = ∀ n::Int . n ≥ 0 ⇒ (altura (truncar (Bin i r d) n) = min n (altura (Bin i r d)))
+
+-- Vamos a separar la demostración en tres partes: n = 0, n > 0 y n < 0
+
+-- Caso n < 0:
+
+-- Si n < 0 entonces n ≥ 0 es falso y la implicación es verdadera.
+
+-- Caso n = 0:
+
+-- altura (truncar (Bin i r d) 0) = min 0 (altura (Bin i r d)) {T1}
+-- altura (if n == 0 then Nil else Bin (truncar i (n-1)) r (truncar d (n-1))) = min 0 (altura (Bin i r d)) {CASO n = 0}
+-- altura (Nil) = min 0 (altura (Bin i r d)) {A0}
+-- foldAB 0 (\ri x rd -> 1 + max ri rd) Nil = min 0 (altura (Bin i r d)) {F0}
+-- 0 = min 0 (altura (Bin i r d)) {aritmética}
+-- 0 = 0 {queda demostrada la igualdad}
+
+-- Caso n > 0:
+
+-- altura (truncar (Bin i r d) n) = min n (altura (Bin i r d)) {A0}
+-- foldAB 0 (\ri x rd -> 1 + max ri rd) (truncar (Bin i r d) n) = min n (altura (Bin i r d)) {T1}
+-- foldAB 0 (\ri x rd -> 1 + max ri rd) (if n == 0 then Nil else Bin (truncar i (n-1)) r (truncar d (n-1))) = min n (altura (Bin i r d)) {CASO n > 0}
+-- foldAB 0 (\ri x rd -> 1 + max ri rd) (Bin (truncar i (n-1)) r (truncar d (n-1))) = min n (altura (Bin i r d)) {F1}
+-- 1 + max (foldAB 0 (\ri x rd -> 1 + max ri rd) (truncar i (n-1))) (foldAB 0 (\ri x rd -> 1 + max ri rd) (truncar d (n-1))) = min n (altura (Bin i r d)) {A0}
+-- 1 + max (altura (truncar i (n-1))) (altura (truncar d (n-1))) = min n (altura (Bin i r d))
 
 
 --33--33--33--33--33--33--33--33--33--33--33--33--33--33--33--33--33--33--33--33--33--33--33--33--33--33--33--33--33--33
