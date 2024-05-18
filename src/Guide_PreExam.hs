@@ -80,7 +80,18 @@ module Guide_PreExam (
 -- foldAB 0 (\ri x rd -> 1 + max ri rd) (if n == 0 then Nil else Bin (truncar i (n-1)) r (truncar d (n-1))) = min n (altura (Bin i r d)) {CASO n > 0}
 -- foldAB 0 (\ri x rd -> 1 + max ri rd) (Bin (truncar i (n-1)) r (truncar d (n-1))) = min n (altura (Bin i r d)) {F1}
 -- 1 + max (foldAB 0 (\ri x rd -> 1 + max ri rd) (truncar i (n-1))) (foldAB 0 (\ri x rd -> 1 + max ri rd) (truncar d (n-1))) = min n (altura (Bin i r d)) {A0}
--- 1 + max (altura (truncar i (n-1))) (altura (truncar d (n-1))) = min n (altura (Bin i r d))
+-- 1 + max (altura (truncar i (n-1))) (altura (truncar d (n-1))) = min n (altura (Bin i r d)) {A0}
+-- 1 + max (altura (truncar i (n-1))) (altura (truncar d (n-1))) = min n (foldAB 0 (\ri x rd -> 1 + max ri rd) (Bin i r d)) {F1}
+-- 1 + max (altura (truncar i (n-1))) (altura (truncar d (n-1))) = min n (1 + max (foldAB 0 (\ri x rd -> 1 + max ri rd) i) (foldAB 0 (\ri x rd -> 1 + max ri rd) d)) {A0}
+-- 1 + max (altura (truncar i (n-1))) (altura (truncar d (n-1))) = min n (1 + max (altura i) (altura d)) {LEMA_2}
+-- 1 + max (altura (truncar i (n-1))) (altura (truncar d (n-1))) = 1 + min (n-1) (max (altura i) (altura d)) {aritmética}
+-- max (altura (truncar i (n-1))) (altura (truncar d (n-1))) = min (n-1) (max (altura i) (altura d))
+
+-- Como estamos en el caso n > 0 entonces vale n-1 ≥ 0 y podemos reescribir de la siguiente forma sin perder generalidad:
+
+-- max (altura (truncar i n)) (altura (truncar d n)) = min n (max (altura i) (altura d)) {HI}
+-- max (min n (altura i) min n (altura d)) = min n (max (altura i) (altura d)) {LEMA_1}
+-- min n (max (altura i) (altura d)) = min n (max (altura i) (altura d)) {queda demostrada la igualdad y la implicación}
 
 
 --33--33--33--33--33--33--33--33--33--33--33--33--33--33--33--33--33--33--33--33--33--33--33--33--33--33--33--33--33--33
