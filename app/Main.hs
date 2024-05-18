@@ -12,6 +12,8 @@ import Guide_4 ()
 
 import Guide_5 ()
 
+import Guide_PreExam ()
+
 import Guide_Solved ()
 
 main :: IO ()
