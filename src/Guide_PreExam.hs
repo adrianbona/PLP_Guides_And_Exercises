@@ -4,6 +4,7 @@ module Guide_PreExam (
     foldNave,
     recNave,
     espejo,
+    truncar,
 ) where
 
 --11--11--11--11--11--11--11--11--11--11--11--11--11--11--11--11--11--11--11--11--11--11--11--11--11--11--11--11--11--11
@@ -30,6 +31,10 @@ recNave fMódulo fBase (Módulo c i d) = fMódulo (Módulo c i d) c (rec i) (rec
 
 espejo :: NaveEspacial -> NaveEspacial
 espejo = foldNave (\c i d -> Módulo c d i) Base
+
+truncar :: NaveEspacial -> Int -> NaveEspacial
+truncar (Base c) _ = Base c
+truncar (Módulo c i d) n = if n == 0 then Base c else Módulo c (truncar i (n-1)) (truncar d (n-1))
 
 
 --22--22--22--22--22--22--22--22--22--22--22--22--22--22--22--22--22--22--22--22--22--22--22--22--22--22--22--22--22--22
