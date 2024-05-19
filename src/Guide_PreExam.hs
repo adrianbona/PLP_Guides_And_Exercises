@@ -5,6 +5,7 @@ module Guide_PreExam (
     recNave,
     espejo,
     truncar,
+    esSubnavePropia,
 ) where
 
 --11--11--11--11--11--11--11--11--11--11--11--11--11--11--11--11--11--11--11--11--11--11--11--11--11--11--11--11--11--11
@@ -35,6 +36,17 @@ espejo = foldNave (\c i d -> Módulo c d i) Base
 truncar :: NaveEspacial -> Int -> NaveEspacial
 truncar (Base c) _ = Base c
 truncar (Módulo c i d) n = if n == 0 then Base c else Módulo c (truncar i (n-1)) (truncar d (n-1))
+
+--No se asegura de que no sean la misma nave
+esSubnavePropia :: NaveEspacial -> NaveEspacial -> Bool
+esSubnavePropia subNave nave =
+    recNave(\n c i d ->
+      case n of
+        Módulo c' i' d' -> rec i' || rec d' || n == subNave
+    )
+    (\c -> subNave == Base c)
+    nave
+        where rec = esSubnavePropia subNave
 
 
 --22--22--22--22--22--22--22--22--22--22--22--22--22--22--22--22--22--22--22--22--22--22--22--22--22--22--22--22--22--22
