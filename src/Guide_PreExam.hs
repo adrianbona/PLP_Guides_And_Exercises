@@ -1,5 +1,36 @@
 module Guide_PreExam (
+    Componente (..),
+    NaveEspacial (..),
+    foldNave,
+    recNave,
+    espejo,
 ) where
+
+--11--11--11--11--11--11--11--11--11--11--11--11--11--11--11--11--11--11--11--11--11--11--11--11--11--11--11--11--11--11
+
+data Componente = Contenedor | Motor | Escudo | Cañón deriving Eq
+data NaveEspacial = Módulo Componente NaveEspacial NaveEspacial | Base Componente deriving Eq
+
+instance Show Componente where
+    show Contenedor = "Contenedor"
+    show Motor = "Motor"
+    show Escudo = "Escudo"
+    show Cañón = "Cañón"
+
+instance Show NaveEspacial where
+    show = foldNave (\c i d -> "Módulo " ++ show c ++ " (" ++ i ++ ") (" ++ d ++ ")") (\c -> "Base " ++ show c)
+
+foldNave :: (Componente -> a -> a -> a) -> (Componente -> a) -> NaveEspacial -> a
+foldNave _ fBase (Base c) = fBase c
+foldNave fMódulo fBase (Módulo c i d) = fMódulo c (rec i) (rec d) where rec = foldNave fMódulo fBase
+
+recNave :: (NaveEspacial -> Componente -> a -> a -> a) -> (Componente -> a) -> NaveEspacial -> a
+recNave _ fBase (Base c) = fBase c
+recNave fMódulo fBase (Módulo c i d) = fMódulo (Módulo c i d) c (rec i) (rec d) where rec = recNave fMódulo fBase
+
+espejo :: NaveEspacial -> NaveEspacial
+espejo = foldNave (\c i d -> Módulo c d i) Base
+
 
 --22--22--22--22--22--22--22--22--22--22--22--22--22--22--22--22--22--22--22--22--22--22--22--22--22--22--22--22--22--22
 
