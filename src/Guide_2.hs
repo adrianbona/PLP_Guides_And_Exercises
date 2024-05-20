@@ -1128,6 +1128,37 @@ intersect xs ys = filter (\e -> elem e ys) xs --{I0}
 -- menor o igual al máximo de xs, sigue valiendo la implicación. Por lo tanto, la implicación es verdadera.
 
 
+-- Ejercicio introducción a la recursión
+
+-- sum :: Num a => [a] -> a
+-- sum [] = 0 {SUM0}
+-- sum (x:xs) = x + sum xs {SUM1}
+
+-- Demostrar que para todas xs, ys listas finitas vale que: sum (xs ++ ys) = sum xs + sum ys
+-- Queremos probar que ∀ xs::[a] . ∀ ys::[a] . sum (xs ++ ys) = sum xs + sum ys haciendo inducción en xs.
+
+-- Predicado unario: P(xs) = ∀ ys::[a] . sum (xs ++ ys) = sum xs + sum ys
+
+-- Caso base: P([]) =
+
+-- ∀ ys::[a] . sum ([] ++ ys) = sum [] + sum ys {++AUX2}
+-- ∀ ys::[a] . sum ys = sum [] + sum ys {SUM0}
+-- ∀ ys::[a] . sum ys = 0 + sum ys {aritmética}
+-- ∀ ys::[a] . sum ys = sum ys {queda demostrada la igualdad}
+
+-- Hipótesis inductiva: P(xs) = ∀ ys::[a] . sum (xs ++ ys) = sum xs + sum ys
+
+-- Paso inductivo: P(x:xs) = ∀ ys::[a] . sum ((x:xs) ++ ys) = sum (x:xs) + sum ys
+
+-- ∀ ys::[a] . sum ((x:xs) ++ ys) = sum (x:xs) + sum ys {++}
+-- ∀ ys::[a] . sum (foldr (:) ys (x:xs)) = sum (x:xs) + sum ys {foldr}
+-- ∀ ys::[a] . sum (x : foldr (:) ys xs) = sum (x:xs) + sum ys {SUM1}
+-- ∀ ys::[a] . x + sum (foldr (:) ys xs) = sum (x:xs) + sum ys {++}
+-- ∀ ys::[a] . x + sum (xs ++ ys) = sum (x:xs) + sum ys {HI}
+-- ∀ ys::[a] . x + sum xs + sum ys = sum (x:xs) + sum ys {SUM1}
+-- ∀ ys::[a] . x + sum xs + sum ys = x + sum xs + sum ys {queda demostrada la igualdad}
+
+
 
 
 
