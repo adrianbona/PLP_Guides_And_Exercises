@@ -968,6 +968,9 @@ intersect xs ys = filter (\e -> elem e ys) xs --{I0}
 
 -- Ejercicio 11
 
+
+-- Ejercicio 12
+
 -- data Polinomio a = X --CASO BASE
 --                  | Cte a -- CASO BASE
 --                  | Suma (Polinomio a) (Polinomio a) -- Caso Recursivo
