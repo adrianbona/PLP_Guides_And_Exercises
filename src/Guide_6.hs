@@ -86,6 +86,7 @@ module Guide_6 (
 -- xi. ∃X . B(Y,X(c))
 
 -- Es una fórmula formada por una cuantificación existencial que consta de un predicado binario.
+-- Sin embargo X es una variable y no un uns función con aridad.
 
 
 -- Ejercicio 3
