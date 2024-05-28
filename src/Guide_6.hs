@@ -86,17 +86,17 @@ module Guide_6 (
 -- xi. ∃X . B(Y,X(c))
 
 -- Es una fórmula formada por una cuantificación existencial que consta de un predicado binario.
--- Sin embargo X es una variable y no un uns función con aridad.
+-- Sin embargo X es una variable y no una función con aridad.
 
 
 -- Ejercicio 3
 
 -- Sea σ = ∃X . P(Y, Z) ∧ ∀Y . ¬Q(Y, X) ∨ P(Y, Z)
--- Reescribo σ como σ' = ∃X . (P(W, Z) ∧ ∀Y . (¬Q(Y, X) ∨ P(Y, Z))
+-- Reescribo como σ = ∃X . P(W, Z) ∧ ∀Y . ¬Q(Y, U) ∨ P(T, Z)
 
 -- i. Identificar todas las variables libres y ligadas
 
--- Variables libres: W, Z, variables ligadas: X, Y
+-- Variables libres: W, Z, T, U, variables ligadas: X, Y.
 
 
 -- ii. Calcular:
@@ -113,11 +113,11 @@ module Guide_6 (
 -- Ejericio 4
 
 -- Sea σ = ¬∀X . (∃Y . P(X, Y, Z)) ∧ ∀Z . P(X, Y, Z)
--- Reescribo σ como σ' = ¬∀X . ((∃Y . P(X, Y, W)) ∧ ∀Z . P(X, V, Z))
+-- Reescribo como σ = ¬∀X . (∃Y . P(X, Y, W)) ∧ ∀Z . P(U, V, Z)
 
 -- i. Identificar todas las variables libres y ligadas
 
--- Variables libres: V, W, variables ligadas: X, Y, Z
+-- Variables libres: U, V, W, variables ligadas: X, Y, Z.
 
 
 -- ii. Calcular
