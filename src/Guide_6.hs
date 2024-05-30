@@ -332,11 +332,37 @@ module Guide_6 (
 
 
 -- ii. Y y f(X)
+
+-- { Y ≟ f(X) } Elim { Y := f(X) } ⇒ ø
+-- MGU = { Y := f(X) }
+
+
 -- iii. f(g(c, Y), X)) y f(Z, g(Z, a))
+
+-- { f(g(c, Y), X) ≟ f(Z, g(Z, a)) }
+-- Decompose ⇒ { g(c, Y) ≟ Z, X ≟ g(Z, a) }
+-- Swap ⇒ { Z ≟ g(c, Y), X ≟ g(Z, a) }
+-- Elim { Z := g(c, Y) } ⇒ { X ≟ g(Z, a) }{ Z := g(c, Y) } = { X ≟ g(g(c, Y), a) }
+-- Elim { X := g(g(c, Y), a) } ⇒ ø
+-- MGU = { Z := g(c, Y), X := g(g(c, Y), a) }
+
+
 -- iv. f(a) y g(Y)
+
+-- { f(a) ≟ g(Y) } Clash ⇒ FALLA
+
+
 -- v. f(X) y X
+
+-- { f(X) ≟ X } Swap ⇒ { X ≟ f(X) } OccursCheck ⇒ FALLA
+
+
 -- vi. g(X, Y) y g(f(Y), f(X))
 
+-- { g(X, Y) ≟ g(f(Y), f(X)) }
+-- Decompose ⇒ { X ≟ f(Y), Y ≟ f(X) }
+-- Elim { X := f(Y) } ⇒ { Y ≟ f(X) }{ X := f(Y) } = { Y ≟ f(f(Y)) }
+-- OccursCheck ⇒ FALLA
 
 
 
