@@ -157,7 +157,57 @@ module Guide_6 (
 -- ¬∀X' . (∃Y' . P(X', Y', g(f(g(Y,Y)),Y))) ∧ ∀Z' . P(X, Y, Z')
 
 
+-- Ejercicio 5
 
+-- Para unir las expresiones que unifican entre si pruebo todas las combinaciones que partan de los mismos predicados.
+-- Las agrupo y pruebo cada unificación si alcanzo un conjunto vacío de términos o un fallo.
+
+-- P(f(X)) | P(a) | P(Y)
+-- P(X) | P(f(a)) | P(g(Z))
+
+-- i) P(f(X)) y P(X)
+
+-- { f(X) ≟ X } Swap ⇒ { X ≟ f(X) } OccursCheck ⇒ FALLA
+
+-- ii) P(f(X)) y P(f(a))
+
+-- { f(X) ≟ f(a) } Decompose ⇒ { X ≟ a } Elim { X := a } ⇒ ø
+
+-- iii) P(f(X)) y P(g(Z))
+
+-- { f(X) ≟ g(Z) } Clash ⇒ FALLA
+
+-- iv) P(a) y P(X)
+
+-- { a ≟ X } Elim { X := a } ⇒ ø
+
+-- v) P(a) y P(f(a))
+
+-- { a ≟ f(a) } OccursCheck ⇒ FALLA
+
+-- vi) P(a) y P(g(Z))
+
+-- { a ≟ g(Z) } Elim { g(Z) := a } ⇒ ø
+
+-- vii) P(Y) y P(X)
+
+-- { Y ≟ X } Elim { Y := X } ⇒ ø
+
+-- viii) P(Y) y P(f(a))
+
+-- { Y ≟ f(a) } Elim { Y := f(a) } ⇒ ø
+
+-- ix) P(Y) y P(g(Z))
+
+-- { Y ≟ g(Z) } Elim { Y := g(Z) } ⇒ ø
+
+
+-- Q(X,f(Y)) | Q(X,f(Z)) | Q(X,f(a))
+-- Q(f(Y),X) | Q(f(Y),f(X)) | Q(f(Y),Y)
+
+
+-- X | f(X)
+-- f(f(c)) | f(g(Y))
 
 
 
