@@ -365,5 +365,85 @@ module Guide_6 (
 -- OccursCheck ⇒ FALLA
 
 
+--Ejercicio 8
+
+-- i. MGU {T1 → T2 := Nat → Bool}
+
+-- { T1 → T2 := Nat → Bool } = { →(T1, T2) := →(Nat, Bool) }
+-- Decompose ⇒ { T1 ≟ Nat, T2 ≟ Bool }
+-- Elim { T1 := Nat } ⇒ { T2 ≟ Bool }
+-- Elim { T2 := Bool } ⇒ ø
+-- MGU = { T1 := Nat, T2 := Bool }
+
+
+-- ii. MGU {T1 → T2 := T3}
+
+-- {T1 → T2 := T3} = { →(T1, T2) := T3 }
+-- Swap ⇒ { T3 := →(T1, T2) }
+-- Elim { T3 := →(T1, T2) } ⇒ ø
+-- MGU = { T3 := →(T1, T2) }
+
+
+-- iii. MGU {T1 → T2 := T2}
+
+-- {T1 → T2 := T2} = { →(T1, T2) := T2 }
+-- Swap ⇒ { T2 := →(T1, T2) }
+-- OccursCheck ⇒ FALLA
+
+
+-- iv. MGU {(T2 → T1) → Bool := T2 → T3}
+
+-- {(T2 → T1) → Bool := T2 → T3} = { →(→(T2, T1), Bool) := →(T2, T3) }
+-- Decompose ⇒ { →(T2, T1) ≟ T2, Bool ≟ T3 }
+-- Swap ⇒ { T2 ≟ →(T2, T1), T3 ≟ Bool }
+-- Elim { T3 := Bool } ⇒ { T2 ≟ →(T2, T1) }
+-- OccursCheck ⇒ FALLA
+
+
+-- v. MGU {T2 → T1 → Bool := T2 → T3}
+
+-- {T2 → T1 → Bool := T2 → T3} = { →(T2, →(T1, Bool)) := →(T2, T3) }
+-- Decompose ⇒ { T2 ≟ T2, →(T1, Bool) ≟ T3 }
+-- Delete ⇒ { →(T1, Bool) ≟ T3 }
+-- Swap ⇒ { T3 ≟ →(T1, Bool) }
+-- Elim { T3 := →(T1, Bool) } ⇒ ø
+-- MGU = { T3 := →(T1, Bool) }
+
+
+-- vi. MGU {T1 → Bool := Nat → Bool, T1 := T2 → T3}
+
+-- {T1 → Bool := Nat → Bool, T1 := T2 → T3} = { →(T1, Bool) := →(Nat, Bool), T1 := →(T2, T3) }
+-- Decompose ⇒ { T1 ≟ Nat, Bool ≟ Bool, T1 ≟ →(T2, T3) }
+-- Delete ⇒ { T1 ≟ Nat, T1 ≟ →(T2, T3) }
+-- Elim { T1 := Nat } ⇒ { T1 ≟ →(T2, T3) }{ T1 := Nat } = { Nat ≟ →(T2, T3) }
+-- Clash ⇒ FALLA
+
+
+-- vii. MGU {T1 → Bool := Nat → Bool, T2 := T1 → T1}
+
+-- {T1 → Bool := Nat → Bool, T2 := T1 → T1} = { →(T1, Bool) := →(Nat, Bool), T2 := →(T1, T1) }
+-- Decompose ⇒ { T1 ≟ Nat, Bool ≟ Bool, T2 ≟ →(T1, T1) }
+-- Delete ⇒ { T1 ≟ Nat, T2 ≟ →(T1, T1) }
+-- Elim { T1 := Nat } ⇒ { T2 ≟ →(T1, T1) }{ T1 := Nat } = { T2 ≟ →(Nat, Nat) }
+-- Elim { T2 := →(Nat, Nat) } ⇒ ø
+-- MGU = { T1 := Nat, T2 := →(Nat, Nat) }
+
+
+-- viii. MGU {T1 → T2 := T3 → T4, T3 := T2 → T1}
+
+-- {T1 → T2 := T3 → T4, T3 := T2 → T1} = { →(T1, T2) := →(T3, T4), T3 := →(T2, T1) }
+-- Decompose ⇒ { T1 ≟ T3, T2 ≟ T4, T3 ≟ →(T2, T1) }
+-- Elim { T1 := T3 } ⇒ { T2 ≟ T4, T3 ≟ →(T2, T1) }{ T1 := T3 } = { T2 ≟ T4, T3 ≟ →(T2, T3) }
+-- Elim { T2 := T4 } ⇒ { T3 ≟ →(T4, T3) }
+-- OccursCheck ⇒ FALLA
+
+
+
+
+
+
+
+
+
 
 
