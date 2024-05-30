@@ -59,21 +59,21 @@ module Guide_6 (
 -- No es una fórmula ya que la gramática no permite un predicado binario con un predicado binario y una variable.
 
 
--- vi. B(X,Y) ⇒ ∃Z . S(Z,Y)
+-- vi. B(X, Y) ⇒ ∃Z . S(Z, Y)
 
 -- Es una fórmula formada por una implicación cuyo antecedente es un predicado binario y cuyo consecuente es una cuantificación existencial.
 
 
--- vii. S(X,Y) ⇒ S(Y,f(f(X)))
+-- vii. S(X, Y) ⇒ S(Y, f(f(X)))
 
 -- Es una fórmula formada por una implicación cuyo antecedente es un predicado binario y cuyo consecuente es también un predicado binario.
 
--- viii. B(X,Y) ⇒ f(X)
+-- viii. B(X, Y) ⇒ f(X)
 
 -- No es una fórmula ya que la gramática no permite una implicación cuyo consecuente sea un símbolo de función.
 
 
--- ix. S(X,f(Y)) ∧ B(X,Y)
+-- ix. S(X, f(Y)) ∧ B(X, Y)
 
 -- Es una fórmula formada por una conjunción cuyos términos son dos predicados binarios.
 
@@ -83,7 +83,7 @@ module Guide_6 (
 -- Es una fórmula formada por una cuantificación universal que consta de un predicado binario.
 
 
--- xi. ∃X . B(Y,X(c))
+-- xi. ∃X . B(Y, X(c))
 
 -- Es una fórmula formada por una cuantificación existencial que consta de un predicado binario.
 -- Sin embargo X es una variable y no una función con aridad.
@@ -173,6 +173,7 @@ module Guide_6 (
 -- ii) P(f(X)) y P(f(a))
 
 -- { f(X) ≟ f(a) } Decompose ⇒ { X ≟ a } Elim { X := a } ⇒ ø
+-- MGU = { X := a }
 
 
 -- iii) P(f(X)) y P(g(Z))
@@ -183,6 +184,7 @@ module Guide_6 (
 -- iv) P(a) y P(X)
 
 -- { a ≟ X } Elim { X := a } ⇒ ø
+-- MGU = { X := a }
 
 
 -- v) P(a) y P(f(a))
@@ -192,22 +194,26 @@ module Guide_6 (
 
 -- vi) P(a) y P(g(Z))
 
--- { a ≟ g(Z) } Elim { g(Z) := a } ⇒ ø
+-- { a ≟ g(Z) } Elim { a := g(Z) } ⇒ ø
+-- MGU = { a := g(Z) }
 
 
 -- vii) P(Y) y P(X)
 
 -- { Y ≟ X } Elim { Y := X } ⇒ ø
+-- MGU = { Y := X }
 
 
 -- viii) P(Y) y P(f(a))
 
 -- { Y ≟ f(a) } Elim { Y := f(a) } ⇒ ø
+-- MGU = { Y := f(a) }
 
 
 -- ix) P(Y) y P(g(Z))
 
 -- { Y ≟ g(Z) } Elim { Y := g(Z) } ⇒ ø
+-- MGU = { Y := g(Z) }
 
 
 -- Q(X,f(Y)) | Q(X,f(Z)) | Q(X,f(a))
@@ -216,6 +222,7 @@ module Guide_6 (
 -- i) Q(X,f(Y)) y Q(f(Y),X)
 
 -- { X ≟ f(Y), f(Y) ≟ X } Swap ⇒ { X ≟ f(Y), X ≟ f(Y) } Elim { X := f(Y) } ⇒ ø
+-- MGU = { X := f(Y) }
 
 
 -- ii) Q(X,f(Y)) y Q(f(Y),f(X))
@@ -235,42 +242,47 @@ module Guide_6 (
 
 -- { X ≟ f(Y), f(Z) ≟ X }
 -- Swap ⇒ { X ≟ f(Y), X ≟ f(Z) }
--- Elim { X := f(Y) } ⇒ { X ≟ f(Z) }{ X := f(Y) } ⇒ { f(Y) ≟ f(Z) }
+-- Elim { X := f(Y) } ⇒ { X ≟ f(Z) }{ X := f(Y) } = { f(Y) ≟ f(Z) }
 -- Decompose ⇒ { Y ≟ Z }
 -- Elim { Y := Z } ⇒ ø
+-- MGU = { X := f(Y), Y := Z }
 
 
 -- v) Q(X,f(Z)) y Q(f(Y),f(X))
 
 -- { X ≟ f(Y), f(Z) ≟ f(X) }
 -- Decompose ⇒ { X ≟ f(Y), Z ≟ X }
--- Elim { X := f(Y) } ⇒ { Z ≟ X }{ X := f(Y) } ⇒ { Z ≟ f(Y) }
+-- Elim { X := f(Y) } ⇒ { Z ≟ X }{ X := f(Y) } = { Z ≟ f(Y) }
 -- Elim { Z := f(Y) } ⇒ ø
+-- MGU = { X := f(Y), Z := f(Y) }
 
 
 -- vi) Q(X,f(Z)) y Q(f(Y),Y)
 
 -- { X ≟ f(Y), f(Z) ≟ Y }
 -- Swap ⇒ { X ≟ f(Y), Y ≟ f(Z) }
--- Elim { X := f(Y) } ⇒ { Y ≟ f(Z) }{ X := f(Y) } ⇒ { Y ≟ f(Z) }
+-- Elim { X := f(Y) } ⇒ { Y ≟ f(Z) }{ X := f(Y) } = { Y ≟ f(Z) }
 -- Elim { Y := f(Z) } ⇒ ø
+-- MGU = { X := f(Y), Y := f(Z) }
 
 
 -- vii) Q(X,f(a)) y Q(f(Y),X)
 
 -- { X ≟ f(Y), f(a) ≟ X }
 -- Swap ⇒ { X ≟ f(Y), X ≟ f(a) }
--- Elim { X := f(Y) } ⇒ { X ≟ f(a) }{ X := f(Y) } ⇒ { f(Y) ≟ f(a) }
+-- Elim { X := f(Y) } ⇒ { X ≟ f(a) }{ X := f(Y) } = { f(Y) ≟ f(a) }
 -- Decompose ⇒ { Y ≟ a }
 -- Elim { Y := a } ⇒ ø
+-- MGU = { X := f(Y), Y := a }
 
 
 -- viii) Q(X,f(a)) y Q(f(Y),f(X))
 
 -- { X ≟ f(Y), f(a) ≟ f(X) }
 -- Decompose ⇒ { X ≟ f(Y), a ≟ X }
--- Elim { X := f(Y) } ⇒ { a ≟ X }{ X := f(Y) } ⇒ { a ≟ f(Y) }
+-- Elim { X := f(Y) } ⇒ { a ≟ X }{ X := f(Y) } = { a ≟ f(Y) }
 -- Elim { a := f(Y) } ⇒ ø
+-- MGU = { X := f(Y), a := f(Y) }
 
 
 -- ix) Q(X,f(a)) y Q(f(Y),Y)
@@ -279,6 +291,7 @@ module Guide_6 (
 -- Swap ⇒ { X ≟ f(Y), Y ≟ f(a) }
 -- Elim { X := f(Y) } ⇒ { Y ≟ f(a) }
 -- Elim { Y := f(a) } ⇒ ø
+-- MGU = { X := f(Y), Y := f(a) }
 
 
 -- X | f(X)
@@ -287,26 +300,37 @@ module Guide_6 (
 -- i) X y f(f(a))
 
 -- { X ≟ f(f(a)) } Elim { X := f(f(a)) } ⇒ ø
+-- MGU = { X := f(f(a)) }
 
 
 -- ii) X y f(g(Y))
 
 -- { X ≟ f(g(Y)) } Elim { X := f(g(Y)) } ⇒ ø
+-- MGU = { X := f(g(Y)) }
 
 
 -- iii) f(X) y f(f(a))
 
 -- { f(X) ≟ f(f(a)) } Decompose ⇒ { X ≟ f(a) } Elim { X := f(a) } ⇒ ø
+-- MGU = { X := f(a) }
 
 
 -- iv) f(X) y f(g(Y))
 
 -- { f(X) ≟ f(g(Y)) } Decompose ⇒ { X ≟ g(Y) } Elim { X := g(Y) } ⇒ ø
+-- MGU = { X := g(Y) }
 
 
 -- Ejercicio 6
 
 -- i. f(X, X, Y) y f(a, b, Z)
+
+-- { f(X, X, Y) ≟ f(a, b, Z) }
+-- Decompose ⇒ { X ≟ a, X ≟ b, Y ≟ Z }
+-- Elim { X := a } ⇒ { X ≟ b, Y ≟ Z }{ X := a } = { a ≟ b, Y ≟ Z }
+-- Clash ⇒ FALLA
+
+
 -- ii. Y y f(X)
 -- iii. f(g(c, Y), X)) y f(Z, g(Z, a))
 -- iv. f(a) y g(Y)
