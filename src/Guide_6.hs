@@ -169,33 +169,41 @@ module Guide_6 (
 
 -- { f(X) ≟ X } Swap ⇒ { X ≟ f(X) } OccursCheck ⇒ FALLA
 
+
 -- ii) P(f(X)) y P(f(a))
 
 -- { f(X) ≟ f(a) } Decompose ⇒ { X ≟ a } Elim { X := a } ⇒ ø
+
 
 -- iii) P(f(X)) y P(g(Z))
 
 -- { f(X) ≟ g(Z) } Clash ⇒ FALLA
 
+
 -- iv) P(a) y P(X)
 
 -- { a ≟ X } Elim { X := a } ⇒ ø
+
 
 -- v) P(a) y P(f(a))
 
 -- { a ≟ f(a) } OccursCheck ⇒ FALLA
 
+
 -- vi) P(a) y P(g(Z))
 
 -- { a ≟ g(Z) } Elim { g(Z) := a } ⇒ ø
+
 
 -- vii) P(Y) y P(X)
 
 -- { Y ≟ X } Elim { Y := X } ⇒ ø
 
+
 -- viii) P(Y) y P(f(a))
 
 -- { Y ≟ f(a) } Elim { Y := f(a) } ⇒ ø
+
 
 -- ix) P(Y) y P(g(Z))
 
@@ -209,6 +217,7 @@ module Guide_6 (
 
 -- { X ≟ f(Y), f(Y) ≟ X } Swap ⇒ { X ≟ f(Y), X ≟ f(Y) } Elim { X := f(Y) } ⇒ ø
 
+
 -- ii) Q(X,f(Y)) y Q(f(Y),f(X))
 
 -- { X ≟ f(Y), f(Y) ≟ f(X) }
@@ -216,9 +225,11 @@ module Guide_6 (
 -- Elim { X := f(Y) } ⇒ { Y ≟ X }{ X := f(Y) } ⇒ { Y ≟ f(Y) }
 -- OccursCheck ⇒ FALLA
 
+
 -- iii) Q(X,f(Y)) y Q(f(Y),Y)
 
 -- { X ≟ f(Y), f(Y) ≟ Y } Swap ⇒ { X ≟ f(Y), Y ≟ f(Y) } OccursCheck ⇒ FALLA
+
 
 -- iv) Q(X,f(Z)) y Q(f(Y),X)
 
@@ -228,6 +239,7 @@ module Guide_6 (
 -- Decompose ⇒ { Y ≟ Z }
 -- Elim { Y := Z } ⇒ ø
 
+
 -- v) Q(X,f(Z)) y Q(f(Y),f(X))
 
 -- { X ≟ f(Y), f(Z) ≟ f(X) }
@@ -235,12 +247,14 @@ module Guide_6 (
 -- Elim { X := f(Y) } ⇒ { Z ≟ X }{ X := f(Y) } ⇒ { Z ≟ f(Y) }
 -- Elim { Z := f(Y) } ⇒ ø
 
+
 -- vi) Q(X,f(Z)) y Q(f(Y),Y)
 
 -- { X ≟ f(Y), f(Z) ≟ Y }
 -- Swap ⇒ { X ≟ f(Y), Y ≟ f(Z) }
 -- Elim { X := f(Y) } ⇒ { Y ≟ f(Z) }{ X := f(Y) } ⇒ { Y ≟ f(Z) }
 -- Elim { Y := f(Z) } ⇒ ø
+
 
 -- vii) Q(X,f(a)) y Q(f(Y),X)
 
@@ -250,12 +264,14 @@ module Guide_6 (
 -- Decompose ⇒ { Y ≟ a }
 -- Elim { Y := a } ⇒ ø
 
+
 -- viii) Q(X,f(a)) y Q(f(Y),f(X))
 
 -- { X ≟ f(Y), f(a) ≟ f(X) }
 -- Decompose ⇒ { X ≟ f(Y), a ≟ X }
 -- Elim { X := f(Y) } ⇒ { a ≟ X }{ X := f(Y) } ⇒ { a ≟ f(Y) }
 -- Elim { a := f(Y) } ⇒ ø
+
 
 -- ix) Q(X,f(a)) y Q(f(Y),Y)
 
@@ -264,12 +280,38 @@ module Guide_6 (
 -- Elim { X := f(Y) } ⇒ { Y ≟ f(a) }
 -- Elim { Y := f(a) } ⇒ ø
 
+
 -- X | f(X)
--- f(f(c)) | f(g(Y))
+-- f(f(a)) | f(g(Y))
+
+-- i) X y f(f(a))
+
+-- { X ≟ f(f(a)) } Elim { X := f(f(a)) } ⇒ ø
 
 
+-- ii) X y f(g(Y))
+
+-- { X ≟ f(g(Y)) } Elim { X := f(g(Y)) } ⇒ ø
 
 
+-- iii) f(X) y f(f(a))
+
+-- { f(X) ≟ f(f(a)) } Decompose ⇒ { X ≟ f(a) } Elim { X := f(a) } ⇒ ø
+
+
+-- iv) f(X) y f(g(Y))
+
+-- { f(X) ≟ f(g(Y)) } Decompose ⇒ { X ≟ g(Y) } Elim { X := g(Y) } ⇒ ø
+
+
+-- Ejercicio 6
+
+-- i. f(X, X, Y) y f(a, b, Z)
+-- ii. Y y f(X)
+-- iii. f(g(c, Y), X)) y f(Z, g(Z, a))
+-- iv. f(a) y g(Y)
+-- v. f(X) y X
+-- vi. g(X, Y) y g(f(Y), f(X))
 
 
 
