@@ -92,41 +92,70 @@ module Guide_6 (
 -- Ejercicio 3
 
 -- Sea σ = ∃X . P(Y, Z) ∧ ∀Y . ¬Q(Y, X) ∨ P(Y, Z)
--- Reescribo como σ = ∃X . P(W, Z) ∧ ∀Y . ¬Q(Y, U) ∨ P(T, Z)
+-- Reescribo como σ = ∃X' . P(Y, Z) ∧ ∀Y' . ¬Q(Y', X) ∨ P(Y, Z)
 
 -- i. Identificar todas las variables libres y ligadas
 
--- Variables libres: W, Z, T, U, variables ligadas: X, Y.
+-- Variables libres: Y, Z, X, Z, variables ligadas: X', Y'.
 
 
 -- ii. Calcular:
 
 -- σ[X := W]
 
+-- ∃X' . P(Y, Z) ∧ ∀Y' . ¬Q(Y', X) ∨ P(Y, Z)
+-- ∃X' . P(Y, Z) ∧ ∀Y' . ¬Q(Y', W) ∨ P(Y, Z)
+
+
 -- σ[Y := W]
+
+-- ∃X' . P(Y, Z) ∧ ∀Y' . ¬Q(Y', X) ∨ P(Y, Z)
+-- ∃X' . P(W, Z) ∧ ∀Y' . ¬Q(Y', X) ∨ P(W, Z)
+
 
 -- σ[Y := f(X)]
 
+-- ∃X' . P(Y, Z) ∧ ∀Y' . ¬Q(Y', X) ∨ P(Y, Z)
+-- ∃X' . P(f(X), Z) ∧ ∀Y' . ¬Q(Y', X) ∨ P(f(X), Z)
+
 -- σ[Z := g(Y, Z)]
+
+-- ∃X' . P(Y, Z) ∧ ∀Y' . ¬Q(Y', X) ∨ P(Y, Z)
+-- ∃X' . P(Y, g(Y, Z)) ∧ ∀Y' . ¬Q(Y', X) ∨ P(Y, g(Y, Z))
 
 
 -- Ejericio 4
 
 -- Sea σ = ¬∀X . (∃Y . P(X, Y, Z)) ∧ ∀Z . P(X, Y, Z)
--- Reescribo como σ = ¬∀X . (∃Y . P(X, Y, W)) ∧ ∀Z . P(U, V, Z)
+-- Reescribo como σ = ¬∀X' . (∃Y' . P(X', Y', Z)) ∧ ∀Z' . P(X, Y, Z')
 
 -- i. Identificar todas las variables libres y ligadas
 
--- Variables libres: U, V, W, variables ligadas: X, Y, Z.
+-- Variables libres: Z, X, Y, variables ligadas: X', Y', Z'.
 
 
 -- ii. Calcular
 
 -- σ[X := t] con t = g(f(g(Y,Y)),Y)
 
+-- ¬∀X' . (∃Y' . P(X', Y', Z)) ∧ ∀Z' . P(X, Y, Z')
+-- ¬∀X' . (∃Y' . P(X', Y', Z)) ∧ ∀Z' . P(t, Y, Z')
+-- ¬∀X' . (∃Y' . P(X', Y', Z)) ∧ ∀Z' . P(g(f(g(Y,Y)),Y), Y, Z')
+
+
 -- σ[Y := t] con t = g(f(g(Y,Y)),Y)
 
+-- ¬∀X' . (∃Y' . P(X', Y', Z)) ∧ ∀Z' . P(X, Y, Z')
+-- ¬∀X' . (∃Y' . P(X', Y', Z)) ∧ ∀Z' . P(X, t, Z')
+-- ¬∀X' . (∃Y' . P(X', Y', Z)) ∧ ∀Z' . P(X, g(f(g(Y,Y)),Y), Z')
+
+
 -- σ[Z := t] con t = g(f(g(Y,Y)),Y)
+
+-- ¬∀X' . (∃Y' . P(X', Y', Z)) ∧ ∀Z' . P(X, Y, Z')
+-- ¬∀X' . (∃Y' . P(X', Y', t)) ∧ ∀Z' . P(X, Y, Z')
+-- ¬∀X' . (∃Y' . P(X', Y', g(f(g(Y,Y)),Y))) ∧ ∀Z' . P(X, Y, Z')
+
 
 
 
