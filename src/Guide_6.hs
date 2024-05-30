@@ -205,6 +205,64 @@ module Guide_6 (
 -- Q(X,f(Y)) | Q(X,f(Z)) | Q(X,f(a))
 -- Q(f(Y),X) | Q(f(Y),f(X)) | Q(f(Y),Y)
 
+-- i) Q(X,f(Y)) y Q(f(Y),X)
+
+-- { X ≟ f(Y), f(Y) ≟ X } Swap ⇒ { X ≟ f(Y), X ≟ f(Y) } Elim { X := f(Y) } ⇒ ø
+
+-- ii) Q(X,f(Y)) y Q(f(Y),f(X))
+
+-- { X ≟ f(Y), f(Y) ≟ f(X) }
+-- Decompose ⇒ { X ≟ f(Y), Y ≟ X }
+-- Elim { X := f(Y) } ⇒ { Y ≟ X }{ X := f(Y) } ⇒ { Y ≟ f(Y) }
+-- OccursCheck ⇒ FALLA
+
+-- iii) Q(X,f(Y)) y Q(f(Y),Y)
+
+-- { X ≟ f(Y), f(Y) ≟ Y } Swap ⇒ { X ≟ f(Y), Y ≟ f(Y) } OccursCheck ⇒ FALLA
+
+-- iv) Q(X,f(Z)) y Q(f(Y),X)
+
+-- { X ≟ f(Y), f(Z) ≟ X }
+-- Swap ⇒ { X ≟ f(Y), X ≟ f(Z) }
+-- Elim { X := f(Y) } ⇒ { X ≟ f(Z) }{ X := f(Y) } ⇒ { f(Y) ≟ f(Z) }
+-- Decompose ⇒ { Y ≟ Z }
+-- Elim { Y := Z } ⇒ ø
+
+-- v) Q(X,f(Z)) y Q(f(Y),f(X))
+
+-- { X ≟ f(Y), f(Z) ≟ f(X) }
+-- Decompose ⇒ { X ≟ f(Y), Z ≟ X }
+-- Elim { X := f(Y) } ⇒ { Z ≟ X }{ X := f(Y) } ⇒ { Z ≟ f(Y) }
+-- Elim { Z := f(Y) } ⇒ ø
+
+-- vi) Q(X,f(Z)) y Q(f(Y),Y)
+
+-- { X ≟ f(Y), f(Z) ≟ Y }
+-- Swap ⇒ { X ≟ f(Y), Y ≟ f(Z) }
+-- Elim { X := f(Y) } ⇒ { Y ≟ f(Z) }{ X := f(Y) } ⇒ { Y ≟ f(Z) }
+-- Elim { Y := f(Z) } ⇒ ø
+
+-- vii) Q(X,f(a)) y Q(f(Y),X)
+
+-- { X ≟ f(Y), f(a) ≟ X }
+-- Swap ⇒ { X ≟ f(Y), X ≟ f(a) }
+-- Elim { X := f(Y) } ⇒ { X ≟ f(a) }{ X := f(Y) } ⇒ { f(Y) ≟ f(a) }
+-- Decompose ⇒ { Y ≟ a }
+-- Elim { Y := a } ⇒ ø
+
+-- viii) Q(X,f(a)) y Q(f(Y),f(X))
+
+-- { X ≟ f(Y), f(a) ≟ f(X) }
+-- Decompose ⇒ { X ≟ f(Y), a ≟ X }
+-- Elim { X := f(Y) } ⇒ { a ≟ X }{ X := f(Y) } ⇒ { a ≟ f(Y) }
+-- Elim { a := f(Y) } ⇒ ø
+
+-- ix) Q(X,f(a)) y Q(f(Y),Y)
+
+-- { X ≟ f(Y), f(a) ≟ Y }
+-- Swap ⇒ { X ≟ f(Y), Y ≟ f(a) }
+-- Elim { X := f(Y) } ⇒ { Y ≟ f(a) }
+-- Elim { Y := f(a) } ⇒ ø
 
 -- X | f(X)
 -- f(f(c)) | f(g(Y))
