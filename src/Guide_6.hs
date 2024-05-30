@@ -438,12 +438,32 @@ module Guide_6 (
 -- OccursCheck ⇒ FALLA
 
 
+-- Ejercicio 9
 
+-- i. Intercambio (∀): ∀X . ∀Y . P(X, Y) ⇐⇒ ∀Y . ∀X . P(X, Y)
 
+-- ii. Intercambio (∃): ∃X . ∃Y . P(X, Y) ⇐⇒ ∃Y . ∃X . P(X, Y)
 
+-- iii. Intercambio (∃/∀): ∃X . ∀Y . P(X, Y) ⇒ ∀Y . ∃X . P(X, Y)
 
+-- iv. Universal implica existencial: ∀X . P(X) ⇒ ∃X . P(X)
 
+-- v. Diagonal (∀): ∀X . ∀Y . P(X, Y ) =⇒ ∀X . P(X, X)
 
+-- vi. Diagonal (∃): ∃X . P(X, X) =⇒ ∃X . ∃Y . P(X, Y)
 
+-- vii. de Morgan (I): ¬∃X . P(X) ⇐⇒ ∀X . ¬P(X)
+
+-- viii. de Morgan (II): ¬∀X . P(X) ⇐⇒ ∃X . ¬P(X) (para la ida es necesario usar principios de razonamiento clásicos)
+
+-- ix. Universal/conjunción: ∀X . (P(X) ∧ Q(X)) ⇐⇒ (∀X . P(X) ∧ ∀X . Q(X))
+
+-- x. Universal/disyunción: ∀X . (P(X) ∨ σ) ⇐⇒ (∀X . P(X)) ∨ σ, asumiendo que X /∈ fv(σ)
+
+-- xi. Existencial/disyunción: ∃X . (P(X) ∨ Q(X)) ⇐⇒ (∃X . P(X) ∨ ∃X . Q(X))
+
+-- xii. Existencial/conjunción: ∃X . (P(X) ∧ σ) ⇐⇒ (∃X . P(X) ∧ σ), asumiendo que X /∈ fv(σ)
+
+-- xiii. Principio del bebedor: ∃X . (P(X) =⇒ ∀X.P(X)) (es necesario usar principios de razonamiento clásicos)
 
 
