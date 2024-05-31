@@ -536,9 +536,21 @@ module Guide_6 (
 -- ⊢ ∀X.P(X) ⇒ ∃X.P(X)
 
 
--- v. Diagonal (∀): ∀X . ∀Y . P(X, Y ) =⇒ ∀X . P(X, X)
+-- v. Diagonal (∀): ∀X . ∀Y . P(X, Y ) ⇒ ∀X . P(X, X)
 
--- vi. Diagonal (∃): ∃X . P(X, X) =⇒ ∃X . ∃Y . P(X, Y)
+--------------------------- ax
+-- ∀X.∀Y.P(X,Y) ⊢ ∀X.∀Y.P(X,Y)
+--------------------------- ∀e
+-- ∀X.∀Y.P(X,Y) ⊢ ∀Y.P(X,Y)
+------------------------ ∀e
+-- ∀X.∀Y.P(X,Y) ⊢ P(X,X)
+--------------------- ∀i
+-- ∀X.∀Y.P(X,Y) ⊢ ∀X.P(X,X)
+-------------------------- ⇒i
+-- ⊢ ∀X.∀Y.P(X,Y) ⇒ ∀X.P(X,X)
+
+
+-- vi. Diagonal (∃): ∃X . P(X, X) ⇒ ∃X . ∃Y . P(X, Y)
 
 -- vii. de Morgan (I): ¬∃X . P(X) ⇐⇒ ∀X . ¬P(X)
 
@@ -552,6 +564,8 @@ module Guide_6 (
 
 -- xii. Existencial/conjunción: ∃X . (P(X) ∧ σ) ⇐⇒ (∃X . P(X) ∧ σ), asumiendo que X /∈ fv(σ)
 
--- xiii. Principio del bebedor: ∃X . (P(X) =⇒ ∀X.P(X)) (es necesario usar principios de razonamiento clásicos)
+-- xiii. Principio del bebedor: ∃X . (P(X) ⇒ ∀X.P(X)) (es necesario usar principios de razonamiento clásicos)
+
+
 
 
