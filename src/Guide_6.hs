@@ -552,6 +552,18 @@ module Guide_6 (
 
 -- vi. Diagonal (∃): ∃X . P(X, X) ⇒ ∃X . ∃Y . P(X, Y)
 
+--                          ------------------------ ?
+--                          ∃X.P(X,X), P(X,X) ⊢ P(X,Y)
+--                          -------------------------- ∃i
+--                          ∃X.P(X,X), P(X,X) ⊢ ∃Y.P(X,Y)
+--                          ----------------------------- ∃i
+-- ∃X.P(X,X) ⊢ ∃X.P(X,X)    ∃X.P(X,X), P(X,X) ⊢ ∃X.∃Y.P(X,Y)
+--------------------------------------------------------- ∃e
+-- ∃X.P(X,X) ⊢ ∃X.∃Y.P(X,Y)
+-------------------------- ⇒i
+-- ⊢ ∃X.P(X,X) ⇒ ∃X.∃Y.P(X,Y)
+
+
 -- vii. de Morgan (I): ¬∃X . P(X) ⇐⇒ ∀X . ¬P(X)
 
 -- viii. de Morgan (II): ¬∀X . P(X) ⇐⇒ ∃X . ¬P(X) (para la ida es necesario usar principios de razonamiento clásicos)
