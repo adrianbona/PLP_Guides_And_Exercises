@@ -526,6 +526,16 @@ module Guide_6 (
 
 -- iv. Universal implica existencial: ∀X . P(X) ⇒ ∃X . P(X)
 
+----------------- ax
+-- ∀X.P(X) ⊢ ∀X.P(X)
+----------------- ∀e
+-- ∀X.P(X) ⊢ P(X)
+----------------- ∃i
+-- ∀X.P(X) ⊢ ∃X.P(X)
+------------------- ⇒i
+-- ⊢ ∀X.P(X) ⇒ ∃X.P(X)
+
+
 -- v. Diagonal (∀): ∀X . ∀Y . P(X, Y ) =⇒ ∀X . P(X, X)
 
 -- vi. Diagonal (∃): ∃X . P(X, X) =⇒ ∃X . ∃Y . P(X, Y)
