@@ -803,9 +803,31 @@ module Guide_6 (
 -- ⊢ (∀X.∀Y.R(X,f(Y))) ⇒ (∀X.R(X,f(f(X))))
 
 
+-- Ejercicio 16
 
-
-
+-- i. (∀X.P(X)) ⇒ P(a)
+-- ii. P(a) ⇒ ∃X.P(X)
+-- iii. (∀X.∀Y.(R(X,Y) ⇒ ¬R(Y,X))) ⇒ ∀X.¬R(X,X)
+-- iv. (∀X.∀Y.R(X,Y)) ⇒ ∀X.R(X,X)
+-- v. (∃X.P(X)) ⇒ (∀Y.Q(Y)) ⇒ ∀X.∀Y.P(X) ⇒ Q(Y)
+-- vi. (∀X.(P(X) ⇒ Q(X))) ∧ (∃X.P(X)) ⇒ ∃X.Q(X)
+-- vii. (¬∀X.(P(X) ∨ Q(X))) ⇒ ¬∀X.P(X)
+-- viii. (¬∀X.P(X)) ⇒ ¬∀X.(P(X) ∧ Q(X))
+-- ix. (∀X.(P(X) ∧ Q(X))) ⇒ ¬∃X.¬P(X)
+-- x. (∃X.(P(X) ⇒ Q(X))) ⇒ (∀X.P(X)) ⇒ ∃X.Q(X)
+-- xi. (∀X.(P(X) ⇒ Q(X))) ∧ (¬∃X.Q(X)) ⇒ ∀X.¬P(X)
+-- xii. (∀X.∃Y.(R(Y,X) ⇒ P(X))) ⇒ (∃X.∃Y.R(X,Y)) ⇒ ∃X.P(X)
+-- xiii. (∃X.(P(X) ∨ Q(X))) ⇒ (∀X.¬Q(X)) ⇒ ∃X.P(X)
+-- xiv. (¬∀X.∃Y.R(X,Y)) ⇒ ¬∀X.R(X,X)
+-- xv. (¬∃X.∀Y.R(Y,X) ⇒ ∃X.∃Y.¬R(X,Y))
+-- xvi. (∃X.(P(X) ∨ Q(X))) ⇒ ∃X.P(X) ∨ ∃X.Q(X)
+-- xvii. (∃X.(P(X) ∧ Q(X))) ⇒ ∃X.P(X) ∧ ∃X.Q(X)
+-- xviii. ¬(∀X.P(X) ∧ ∃X.¬P(X))
+-- xix. (∃X.(R(X, X) ∧ P(X))) ⇒ ¬∀X.P(X) ⇒ ¬∃Y.R(X,Y)
+-- xx. (∃X.P(X) ⇒ ∀X.Q(X)) ⇒ ∀Y.(P(Y) ⇒ Q(Y))
+-- xxi. (∃X.¬(P(X) ∨ Q(X))) ⇒ ¬∀X.P(X)
+-- xxii. ¬(∀X.(P(X) ∧ Q(X))) ∧ ∀X.P(X) ⇒ ¬∀X.Q(X)
+-- xxiii. (∀X.(R(X,X) ⇒ Q(X))) ∧ ∃X.∀Y.R(X,Y) ⇒ ∃X.Q(X)
 
 
 
