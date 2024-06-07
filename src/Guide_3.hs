@@ -437,6 +437,7 @@ module Guide_3 (
 
 
 -- vi. Análisis de casos: (τ ⇒ ρ) ⇒ (¬τ ⇒ ρ) ⇒ ρ
+
 -- AKA Principle of explosion
 
 --                                                                                        --------------------------- ax    ----------------------- ax
