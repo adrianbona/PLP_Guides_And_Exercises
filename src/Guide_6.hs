@@ -809,6 +809,16 @@ module Guide_6 (
 -- ⊢ (∀X.∀Y.R(X,f(Y))) ⇒ (∀X.R(X,f(f(X))))
 
 
+-- Ejercicio 15
+
+-- Demostrar que ninguna fórmula es lógicamente válida
+
+-- i. ∀X1.∃X2.P(X1,X2) ⇒ ∃X2.∀X1.P(X1,X2)
+-- ii. ∀X1.∀X2.(P(X1,X2) ⇒ P(X2,X1))
+-- iii. ∀X1.¬Q(X1) ⇒ Q(c)
+-- iv. (∀X1.P(X1,X1)) ⇒ ∃X2.∀X1.P(X1,X2)
+
+
 -- Ejercicio 16
 
 -- i. (∀X.P(X)) ⇒ P(a)
