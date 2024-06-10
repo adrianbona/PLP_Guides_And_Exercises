@@ -1047,4 +1047,3 @@ module Guide_3 (
 
 
 
-
