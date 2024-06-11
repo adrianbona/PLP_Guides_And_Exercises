@@ -817,9 +817,32 @@ module Guide_6 (
 -- Demostrar que ninguna fórmula es lógicamente válida
 
 -- i. ∀X1.∃X2.P(X1,X2) ⇒ ∃X2.∀X1.P(X1,X2)
+
+-- La fórmula propone que si para todo X1 existe un X2 tal que P(X1,X2), entonces existe un X2 tal que para todo X1 se cumple P(X1,X2).
+-- Esto no es cierto, ya que aunque exista un X2 para cada X1 no implica que ese X2 exista para todos los X1.
+-- Supongamos un predicado P tal que P(X1,X2) se cumple si X2 es el cuadradado de X1 cuyo dominio es los números naturales.
+-- En este caso, para cada X1 existe un X2 que cumple P(X1,X2), pero no existe un X2 que cumpla P(X1,X2) para todos los X1.
+
+
 -- ii. ∀X1.∀X2.(P(X1,X2) ⇒ P(X2,X1))
+
+-- La fórmula propone que para todo X1 y X2, si P(X1,X2) se cumple entonces P(X2,X1) también se cumple.
+-- Es fácil ver que esto no es cierto si tomamos el mismo ejemplo del ejercicio anterior.
+-- Supongamos un predicado P tal que P(X1,X2) se cumple si X2 es el cuadradado de X1 cuyo dominio es los números naturales.
+-- En este caso, P(2,4) se cumple pero P(4,2) no se cumple.
+
+
 -- iii. ∀X1.¬Q(X1) ⇒ Q(c)
--- iv. (∀X1.P(X1,X1)) ⇒ ∃X2.∀X1.P(X1,X2)
+
+-- La fórmula propone que si para todo X1 no se cumple Q(X1) entonces se cumple Q(c).
+-- Esto no es cierto si tomamos un dominio donde no se cumple Q(X1) para ningún X1 no tendría sentido que se cumpla Q(c).
+
+
+-- iv. ∀X1.P(X1,X1) ⇒ ∃X2.∀X1.P(X1,X2)
+
+-- La fórmula propone que si para todo X1 se cumple P(X1,X1) entonces existe un X2 tal que para todo X1 se cumple P(X1,X2).
+-- Esto no es cierto si tomamos como ejemplo un predicado P tal que represente la igualdad entre X1 y X2.
+-- En este caso, P(X1,X1) se cumple para todo X1 pero no existe un X2 tal que para todo X1 se cumple P(X1,X2).
 
 
 -- Ejercicio 16
