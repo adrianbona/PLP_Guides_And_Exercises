@@ -812,6 +812,49 @@ module Guide_6 (
 -- ⊢ (∀X.∀Y.R(X,f(Y))) ⇒ (∀X.R(X,f(f(X))))
 
 
+-- Ejercicio 11
+
+-- Gramática de las formulas FNN: σ ::= P(t1, . . . , tn) | ¬P(t1, . . . , tn) | σ ∧ σ | σ ∨ σ | ∀X. σ | ∃X. σ
+-- Demostrar que para cada fórmula σ existe una formula σ' en forma normal negada tal que ⊢ σ ⇔ σ'
+
+-- Veamos cada una de las fórmulas válidas para la lógia de primer orden y probemos que existe una versión en FNN para cada una de ellas:
+
+-- σ ::= P(t1, . . . ,tn) | ⊥ | σ ⇒ σ | σ ∧ σ | σ ∨ σ | ¬σ | ∀X. σ | ∃X. σ
+
+-- ⊢ P(t1, . . . ,tn) ⇔ P(t1, . . . ,tn) ✔
+-- ⊢ σ ∧ σ ⇔ σ ∧ σ ✔
+-- ⊢ σ ∨ σ ⇔ σ ∨ σ ✔
+-- ⊢ ∀X. σ ⇔ ∀X. σ ✔
+-- ⊢ ∃X. σ ⇔ ∃X. σ ✔
+
+-- ⊢ ⊥ ⇔ ⊥ ?
+
+--------- LEM
+-- σ ⊢ ¬σ ∨ σ
+-------------- ⇒i
+-- σ ⊢ σ ⇒ ¬σ ∨ σ
+---------------- ⇒i
+-- ⊢ σ ⇒ σ ⇒ ¬σ ∨ σ
+
+------------- ax
+-- ¬σ ∨ σ, σ ⊢ σ
+-------------- ⇒i
+-- ¬σ ∨ σ ⊢ σ ⇒ σ
+---------------- ⇒i
+-- ⊢ ¬σ ∨ σ ⇒ σ ⇒ σ
+
+-- ⊢ ¬σ ⇔ ¬σ
+
+
+
+
+-- Ejericio 12
+
+-- Gramática de las formulas FNP: Q1X1. . . . QnXn. τ donde cada Qi es un cuantificador (∀ o ∃) y τ es una fórmula en forma normal negada sin ocurrencias de cuantificadores
+-- Demostrar que para cada fórmula σ existe una formula σ' en forma normal prenexa tal que ⊢ σ ⇔ σ'
+
+
+
 -- Ejercicio 15
 
 -- Demostrar que ninguna fórmula es lógicamente válida
@@ -1237,12 +1280,6 @@ module Guide_6 (
 -- ∀X.(R(X,X) ⇒ Q(X)) ∧ ∃X.∀Y.R(X,Y) ⊢ ∃X.Q(X)
 --------------------------------------------- ⇒i
 -- ⊢ ∀X.(R(X,X) ⇒ Q(X)) ∧ ∃X.∀Y.R(X,Y) ⇒ ∃X.Q(X)
-
-
-
-
-
-
 
 
 
