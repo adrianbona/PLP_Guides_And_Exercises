@@ -77,13 +77,3 @@ module Guide_5 (
 -- ø ⊢ (λx.(λf.(λy.f 6) 5) (λy.if isZero(y) then x else y)) 4 ↪ V
 
 
-
-
-
-
-
-
-
-
-
-

@@ -559,3 +559,11 @@ distanciasRT rt = foldRT (\_ children -> if null children then [1] else map (+1)
 
 alturaRT :: RoseTree a -> Int
 alturaRT rt = foldRT (\_ children -> if null children then 1 else 1 + maximum children) rt
+
+
+
+
+
+
+
+

@@ -1257,10 +1257,3 @@ intersect xs ys = filter (\e -> elem e ys) xs --{I0}
 
 
 
-
-
-
-
-
-
-

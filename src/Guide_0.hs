@@ -150,3 +150,10 @@ negacionAB (Bin left root right) = Bin (negacionAB left) (not root) (negacionAB 
 productoAB :: AB Int -> Int
 productoAB Empty = 1
 productoAB (Bin left root right) = (productoAB left) * root * (productoAB right)
+
+
+
+
+
+
+

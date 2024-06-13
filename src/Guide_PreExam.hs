@@ -40,9 +40,9 @@ truncar (Módulo c i d) n = if n == 0 then Base c else Módulo c (truncar i (n-1
 --No se asegura de que no sean la misma nave
 esSubnavePropia :: NaveEspacial -> NaveEspacial -> Bool
 esSubnavePropia subNave nave =
-    recNave(\n c i d ->
+    recNave(\n _ _ _ ->
       case n of
-        Módulo c' i' d' -> rec i' || rec d' || n == subNave
+        Módulo _ i' d' -> rec i' || rec d' || n == subNave
     )
     (\c -> subNave == Base c)
     nave
@@ -188,4 +188,3 @@ esSubnavePropia subNave nave =
 
 
 --55--55--55--55--55--55--55--55--55--55--55--55--55--55--55--55--55--55--55--55--55--55--55--55--55--55--55--55--55--55
-
