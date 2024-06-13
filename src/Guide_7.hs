@@ -26,7 +26,7 @@ module Guide_7 (
 -- ¬(P ∨ Q) v P
 -- (¬P ∧ ¬Q) v P
 -- (¬P v P) ∧ (¬Q v P)
--- {¬P, P}, {¬Q, P}
+-- {{¬P, P}, {¬Q, P}}
 
 
 -- iv. ¬(P ⇔ ¬P)
@@ -37,7 +37,7 @@ module Guide_7 (
 -- ¬((¬P v ¬P) ∧ (P v P))
 -- ¬(¬P ∧ P)
 -- P v ¬P
--- {P, ¬P}
+-- {{P, ¬P}}
 
 
 -- v. ¬(P ∧ Q) ⇒ (¬P ∨ ¬Q)
@@ -49,16 +49,31 @@ module Guide_7 (
 -- (P v ¬P ∨ ¬Q) ∧ (Q v ¬P ∨ ¬Q)
 -- (true ∨ ¬Q) ∧ (true v ¬P)
 -- true
--- {}
+-- {{}}
 
 
 -- vi. (P ∧ Q) ∨ (P ∧ R)
 
 -- (P ∧ Q) ∨ (P ∧ R)
 -- (P ∧ (Q ∨ R))
--- (P ∧ Q) ∨ (P ∧ R)
--- {P, Q}, {P, R}
+-- P ∧ (Q ∨ R)
+-- {{P}, {Q, R}}
 
+
+-- vii. (P ∧ Q) ⇒ R
+
+-- (P ∧ Q) ⇒ R
+-- ¬(P ∧ Q) v R
+-- ¬P ∨ ¬Q v R
+-- {{¬P, ¬Q, R}}
+
+-- viii. P ⇒ (Q ⇒ R)
+
+-- P ⇒ (Q ⇒ R)
+-- P ⇒ (¬Q ∨ R)
+-- ¬P ∨ (¬Q ∨ R)
+-- ¬P ∨ ¬Q ∨ R
+-- {{¬P, ¬Q, R}}
 
 
 
