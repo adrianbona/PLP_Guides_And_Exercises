@@ -279,11 +279,51 @@ module Guide_7 (
 -- La resolución de la fórmula es insatisfacible, por lo que es una tautología
 
 
+-- Ejercicio 4
 
+-- Premisas: P ⇒ A, ¬P ⇒ C, ¬(A ∧ C), A, ¬L y conclusión P ∧ ¬L
 
+-- Pasaje de premisas a forma clausal: P ⇒ A, ¬P ⇒ C, ¬(A ∧ C), A, ¬L
 
+-- P ⇒ A
+-- ¬P ∨ A
+-- {¬P, A}
 
+-- ¬P ⇒ C
+-- ¬¬P ∨ C
+-- P ∨ C
+-- {P, C}
 
+-- ¬(A ∧ C)
+-- ¬A ∨ ¬C
+-- {¬A, ¬C}
+
+-- Premisas en forma clausal: {{¬P, A}, {P, C}, {¬A, ¬C}, {A}, {¬L}}
+
+-- Negación de la conclusión: ¬(P ∧ ¬L)
+
+-- ¬(P ∧ ¬L)
+-- ¬P ∨ ¬¬L
+-- ¬P ∨ L
+-- {¬P, L}
+
+-- Resolución sobre conjunto clausal: {{¬P, A}, {P, C}, {¬A, ¬C}, {A}, {¬L}, {¬P, L}}
+
+-- {{¬P, A}, {P, C}, {¬A, ¬C}, {A}, {¬L}, {¬P, L}}
+
+-- Con {A} y {¬A, ¬C} obtenemos {¬C}
+-- {{¬P, A}, {P, C}, {¬A, ¬C}, {A}, {¬L}, {¬P, L}, {¬C}}
+
+-- Con {¬C} y {P, C} obtenemos {P}
+-- {{¬P, A}, {P, C}, {¬A, ¬C}, {A}, {¬L}, {¬P, L}, {¬C}, {P}}
+
+-- Con {P} y {¬P, L} obtenemos {L}
+-- {{¬P, A}, {P, C}, {¬A, ¬C}, {A}, {¬L}, {¬P, L}, {¬C}, {P}, {L}}
+
+-- Con {L} y {¬L} obtenemos {}
+-- {{¬P, A}, {P, C}, {¬A, ¬C}, {A}, {¬L}, {¬P, L}, {¬C}, {P}, {L}, {}}
+
+-- La resolución de la fórmula es insatisfacible, por lo que se deduce P ∧ ¬L de P ⇒ A, ¬P ⇒ C, ¬(A ∧ C), A, ¬L
 
 
 
