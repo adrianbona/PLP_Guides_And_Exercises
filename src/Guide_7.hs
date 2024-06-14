@@ -1,7 +1,7 @@
 module Guide_7 (
 ) where
 
--- Ejericio 1
+-- Ejercicio 1
 
 -- Convertir a forma normal conjuntiva y luego a forma clausal
 
@@ -67,6 +67,7 @@ module Guide_7 (
 -- ¬P ∨ ¬Q v R
 -- {{¬P, ¬Q, R}}
 
+
 -- viii. P ⇒ (Q ⇒ R)
 
 -- P ⇒ (Q ⇒ R)
@@ -74,6 +75,165 @@ module Guide_7 (
 -- ¬P ∨ (¬Q ∨ R)
 -- ¬P ∨ ¬Q ∨ R
 -- {{¬P, ¬Q, R}}
+
+
+-- Ejercicio 2
+
+-- i. Indicar cuáles fórmulas son tautologías: se niega la fórmula, se convierte a forma normal conjuntiva y se obtienen las cláusulas
+
+-- ¬(P ⇒ P)
+-- ¬(¬P ∨ P)
+-- ¬¬P ∧ ¬P
+-- P ∧ ¬P
+
+-- {{P}, {¬P}}
+-- {{P}, {¬P}, {}}
+
+-- La resolución de la fórmula es insatisfacible, por lo que es una tautología
+
+
+-- ii. ¬((P ∧ Q) ⇒ P)
+
+-- ¬((P ∧ Q) ⇒ P)
+-- ¬(¬(P ∧ Q) ∨ P)
+-- ¬¬(P ∧ Q) ∧ ¬P
+-- P ∧ Q ∧ ¬P
+
+-- {{P}, {Q}, {¬P}}
+-- {{P}, {Q}, {¬P}, {}}
+
+-- La resolución de la fórmula es insatisfacible, por lo que es una tautología
+
+
+-- iii. ¬((P ∨ Q) ⇒ P)
+
+-- ¬((P ∨ Q) ⇒ P)
+-- ¬(¬(P ∨ Q) ∨ P)
+-- ¬¬(P ∨ Q) ∧ ¬P
+-- (P ∨ Q) ∧ ¬P
+
+-- {{P, Q}, {¬P}}
+-- {{P, Q}, {¬P}, {Q}}
+
+-- La resolución de la fórmula es satisfacible, por lo que no es una tautología
+
+
+-- iv. ¬¬(P ⇔ ¬P)
+
+-- ¬¬(P ⇔ ¬P)
+-- P ⇔ ¬P
+-- (P ⇒ ¬P) ∧ (¬P ⇒ P)
+-- (¬P ∨ ¬P) ∧ (¬¬P ∨ P)
+-- ¬P ∧ P
+
+-- {{¬P}, {P}}
+-- {{¬P}, {P}, {}}
+
+-- La resolución de la fórmula es insatisfacible, por lo que es una tautología
+
+
+-- v. ¬(¬(P ∧ Q) ⇒ (¬P ∨ ¬Q))
+
+-- ¬(¬(P ∧ Q) ⇒ (¬P ∨ ¬Q))
+-- ¬(¬¬(P ∧ Q) ∨ (¬P ∨ ¬Q))
+-- ¬(P ∧ Q) ∧ ¬(¬P ∨ ¬Q)
+-- (¬P ∨ ¬Q) ∧ ¬¬(P ∧ Q)
+-- (¬P ∨ ¬Q) ∧ P ∧ Q
+
+-- {{¬P, ¬Q}, {P}, {Q}}
+-- {{¬P, ¬Q}, {P}, {Q}, {¬Q}}
+-- {{¬P, ¬Q}, {P}, {Q}, {¬Q}, {}}
+
+-- La resolución de la fórmula es insatisfacible, por lo que es una tautología
+
+
+-- vi. ¬((P ∧ Q) ∨ (P ∧ R))
+
+-- ¬((P ∧ Q) ∨ (P ∧ R))
+-- ¬(P ∧ Q) ∧ ¬(P ∧ R)
+-- (¬P ∨ ¬Q) ∧ (¬P ∨ ¬R)
+
+-- {{¬P, ¬Q}, {¬P, ¬R}}
+
+-- La resolución de la fórmula es satisfacible, por lo que no es una tautología
+
+
+-- vii. ¬((P ∧ Q) ⇒ R)
+
+-- ¬((P ∧ Q) ⇒ R)
+-- ¬(¬(P ∧ Q) ∨ R)
+-- ¬¬(P ∧ Q) ∧ ¬R
+-- P ∧ Q ∧ ¬R
+
+-- {{P}, {Q}, {¬R}}
+
+-- La resolución de la fórmula es satisfacible, por lo que no es una tautología
+
+
+-- viii. ¬(P ⇒ (Q ⇒ R))
+
+-- ¬(P ⇒ (Q ⇒ R))
+-- ¬(¬P ∨ (¬Q ∨ R))
+-- P ∧ ¬(¬Q ∨ R)
+-- P ∧ Q ∧ ¬R
+
+-- {{P}, {Q}, {¬R}}
+
+-- La resolución de la fórmula es satisfacible, por lo que no es una tautología
+
+
+-- ii. ¿Se deduce (P ∧ Q) de (¬P ⇒ Q) ∧ (P ⇒ Q) ∧ (¬P ⇒ ¬Q)?
+
+-- Pasaje de premisas a forma clausal: (¬P ⇒ Q) ∧ (P ⇒ Q) ∧ (¬P ⇒ ¬Q)
+
+-- ¬P ⇒ Q
+-- ¬¬P ∨ Q
+-- P ∨ Q
+-- {P, Q}
+
+-- P ⇒ Q
+-- ¬P ∨ Q
+-- {¬P, Q}
+
+-- ¬P ⇒ ¬Q
+-- ¬¬P ∨ ¬Q
+-- P ∨ ¬Q
+-- {P, ¬Q}
+
+-- Premisas en forma clausal: {{P, Q}, {¬P, Q}, {P, ¬Q}}
+
+-- Negación de la conclusión: ¬(P ∧ Q)
+
+-- ¬(P ∧ Q)
+-- ¬P ∨ ¬Q
+-- {¬P, ¬Q}
+
+-- Resolución sobre conjunto clausal: {{P, Q}, {¬P, Q}, {P, ¬Q}, {¬P, ¬Q}}
+
+-- {{P, Q}, {¬P, Q}, {P, ¬Q}, {¬P, ¬Q}}
+-- {{P, Q}, {¬P, Q}, {P, ¬Q}, {¬P, ¬Q}, {Q}}
+-- {{P, Q}, {¬P, Q}, {P, ¬Q}, {¬P, ¬Q}, {Q}, {P}}
+-- {{P, Q}, {¬P, Q}, {P, ¬Q}, {¬P, ¬Q}, {Q}, {P}, {¬P}}
+-- {{P, Q}, {¬P, Q}, {P, ¬Q}, {¬P, ¬Q}, {Q}, {P}, {¬P}, {}}
+
+-- La resolución de la fórmula es insatisfacible, por lo que se deduce (P ∧ Q) de (¬P ⇒ Q) ∧ (P ⇒ Q) ∧ (¬P ⇒ ¬Q)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
