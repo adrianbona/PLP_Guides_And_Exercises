@@ -245,8 +245,38 @@ module Guide_7 (
 
 -- ii. (R ⇒ ¬Q) ⇒ ((R ∧ Q) ⇒ P)
 
+-- ¬((R ⇒ ¬Q) ⇒ ((R ∧ Q) ⇒ P))
+-- ¬(¬(R ⇒ ¬Q) ∨ ((R ∧ Q) ⇒ P))
+-- (R ⇒ ¬Q) ∧ ¬((R ∧ Q) ⇒ P)
+-- (¬R ∨ ¬Q) ∧ ¬(¬(R ∧ Q) ∨ P)
+-- (¬R ∨ ¬Q) ∧ (¬¬(R ∧ Q) ∧ ¬P)
+-- (¬R ∨ ¬Q) ∧ (R ∧ Q ∧ ¬P)
+-- (¬R ∧ (R ∧ Q ∧ ¬P) ∨ ¬Q ∧ (R ∧ Q ∧ ¬P)
+-- (¬R ∧ R ∧ Q ∧ ¬P) ∨ (¬Q ∧ R ∧ Q ∧ ¬P)
+-- false ∨ false
+-- false
+
+-- {{}}
+
+-- La resolución de la fórmula es insatisfacible, por lo que es una tautología
+
 
 -- iii. ((P ⇒ Q) ⇒ (R ⇒ ¬Q)) ⇒ ¬(R ∧ Q)
+
+-- ¬(((P ⇒ Q) ⇒ (R ⇒ ¬Q)) ⇒ ¬(R ∧ Q))
+-- ¬(¬((P ⇒ Q) ⇒ (R ⇒ ¬Q)) ∨ ¬(R ∧ Q))
+-- ((P ⇒ Q) ⇒ (R ⇒ ¬Q)) ∧ (R ∧ Q)
+-- (¬(P ⇒ Q) ∨ (R ⇒ ¬Q)) ∧ (R ∧ Q)
+-- ((¬¬P ∧ ¬Q) ∨ (¬R ∨ ¬Q)) ∧ (R ∧ Q)
+-- ((P ∧ ¬Q) ∨ (¬R ∨ ¬Q)) ∧ (R ∧ Q)
+-- (P ∧ ¬Q) ∧ (R ∧ Q) ∨ (¬R ∨ ¬Q) ∧ (R ∧ Q)
+-- (P ∧ ¬Q) ∧ (R ∧ Q) ∨ ¬(R ∧ Q) ∧ (R ∧ Q)
+-- P ∧ ¬Q ∧ R ∧ Q
+
+-- {{P}, {¬Q}, {R}, {Q}}
+-- {{P}, {¬Q}, {R}, {Q}, {}}
+
+-- La resolución de la fórmula es insatisfacible, por lo que es una tautología
 
 
 
