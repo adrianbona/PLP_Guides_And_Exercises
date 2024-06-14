@@ -219,14 +219,34 @@ module Guide_7 (
 -- La resolución de la fórmula es insatisfacible, por lo que se deduce (P ∧ Q) de (¬P ⇒ Q) ∧ (P ⇒ Q) ∧ (¬P ⇒ ¬Q)
 
 
+-- Ejercicio 3
+
+-- Demostrar que las siguientes son tauntologías
+
+-- i. (P ⇒ (P ⇒ Q)) ⇒ (P ⇒ Q)
+
+-- ¬((P ⇒ (P ⇒ Q)) ⇒ (P ⇒ Q))
+-- ¬(¬(P ⇒ (P ⇒ Q)) ∨ (P ⇒ Q))
+-- ¬¬(P ⇒ (P ⇒ Q)) ∧ ¬(P ⇒ Q)
+-- ¬¬(P ⇒ (¬P ∨ Q)) ∧ ¬(¬P ∨ Q)
+-- ¬¬(¬P ∨ (¬P ∨ Q)) ∧ ¬(¬P ∨ Q)
+-- ¬(¬P ∨ (¬P ∨ Q)) ∨ (¬P ∨ Q)
+-- (¬¬P ∧ ¬(¬P ∨ Q)) ∨ (¬P ∨ Q)
+-- (P ∧ (P ∧ ¬Q)) ∨ (¬P ∨ Q)
+-- (P ∧ P ∧ ¬Q) ∨ (¬P ∨ Q)
+-- (P ∧ ¬Q) ∨ ¬P ∨ Q
+
+-- {{P, ¬Q}, {¬P}, {Q}}
+-- {{P, ¬Q}, {¬P}, {Q}, {¬Q}}
+-- {{P, ¬Q}, {¬P}, {Q}, {¬Q}, {}}
+
+-- La resolución de la fórmula es insatisfacible, por lo que es una tautología
 
 
+-- ii. (R ⇒ ¬Q) ⇒ ((R ∧ Q) ⇒ P)
 
 
-
-
-
-
+-- iii. ((P ⇒ Q) ⇒ (R ⇒ ¬Q)) ⇒ ¬(R ∧ Q)
 
 
 
