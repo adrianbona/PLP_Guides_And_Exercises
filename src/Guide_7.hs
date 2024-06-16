@@ -405,8 +405,48 @@ module Guide_7 (
 -- {{P(X)}, {Q(f(X)), P(Z)}, {Q(f(X)) ∨ ¬Q(g(X,Z))}}
 
 
+-- Ejercicio 8
+
+-- Utilizar los siguientes predicados y constantes: Pagó(X) para expresar que X pagó su multa, Espía(X) para X
+-- es un espía, smullyan para el Sr. Smullyan y jefeGob para el jefe de gobierno.
+
+-- Hipótesis:
+
+-- ¬Pagó(smullyan)
+-- Pagó(smullyan)
+
+-- Conclusión:
+-- Espía(jefeGob)
+
+-- Cláusulas:
+-- {{¬Pagó(smullyan)}, {Pagó(smullyan)}, {¬Espía(jefeGob)}}
+
+-- Aplicando método de resolución:
+-- {{¬Pagó(smullyan)}, {Pagó(smullyan)}, {¬Espía(jefeGob)}}
+-- {{¬Pagó(smullyan)}, {Pagó(smullyan)}, {¬Espía(jefeGob)}, {}}
+
+-- La resolución de la fórmula es insatisfacible, por lo que se deduce Espía(jefeGob) de ¬Pagó(smullyan) y Pagó(smullyan)
 
 
+-- Ejercicio 9
+
+-- Cuáles de las siguientes fórmulas son lógicamente válidas? Demostrarlo mediante la técnica de resolución.
+
+-- i. [∃X.∀Y.R(X,Y)] ⇒ ∀Y.∃X.R(X,Y)
+
+-- ii. [∀X.∃Y.R(X,Y)] ⇒ ∃Y.∀X.R(X,Y)
+
+-- iii. ∃X.[P(X) ⇒ ∀X.P(X)]
+
+-- iv. ∃X.[P(X) ∨ Q(X)] ⇒ [∃X.P(X) ∨ ∃X.Q(X)]
+
+-- v. ∀X.[P(X) ∨ Q(X)] ⇒ [∀X.P(X) ∨ ∀X.Q(X)]
+
+-- vi. [∃X.P(X) ∧ ∀X.Q(X)] ⇒ ∃X.[P(X) ∧ Q(X)]
+
+-- vii. ∀X.∃Y.∀Z.∃W.[P(X,Y) ∨ ¬P(W,Z)]
+
+-- viii. ∀X.∀Y.∀Z.([¬P(f(a)) ∨ ¬P(Y) ∨ Q(Y)] ∧ P(f(Z)) ∧ [¬P(f(f(X))) ∨ ¬Q(f(X))])
 
 
 
