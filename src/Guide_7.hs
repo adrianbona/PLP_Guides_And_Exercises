@@ -326,4 +326,94 @@ module Guide_7 (
 -- La resolución de la fórmula es insatisfacible, por lo que se deduce P ∧ ¬L de P ⇒ A, ¬P ⇒ C, ¬(A ∧ C), A, ¬L
 
 
+-- Ejercicio 5
+
+-- Convertir a Forma Normal Negada (NNF)
+
+-- i. ∀X.∀Y.(¬Q(X,Y) ⇒ ¬P(X,Y))
+
+-- ∀X.∀Y.(¬Q(X,Y) ⇒ ¬P(X,Y))
+-- ∀X.∀Y.(¬¬Q(X,Y) ∨ ¬P(X,Y))
+-- ∀X.∀Y.(Q(X,Y) ∨ ¬P(X,Y))
+
+
+-- ii. ∀X.∀Y.((P(X,Y) ∧ Q(X,Y)) ⇒ R(X,Y))
+
+-- ∀X.∀Y.((P(X,Y) ∧ Q(X,Y)) ⇒ R(X,Y))
+-- ∀X.∀Y.(¬(P(X,Y) ∧ Q(X,Y)) ∨ R(X,Y))
+-- ∀X.∀Y.(¬P(X,Y) ∨ ¬Q(X,Y) ∨ R(X,Y))
+
+
+-- iii. ∀X.∃Y.(P(X,Y) ⇒ Q(X,Y))
+
+-- ∀X.∃Y.(P(X,Y) ⇒ Q(X,Y))
+-- ∀X.∃Y.(¬P(X,Y) ∨ Q(X,Y))
+
+
+-- Ejercicio 6
+
+-- Convertir a Forma Normal de Skolem y luego a Forma Clausal
+
+-- i. ∃X.∃Y.(X < Y), siendo < un predicado binario usado de forma infija
+
+-- ∃X.∃Y.(X < Y)
+-- ∃Y.(x < Y)
+-- x < y
+-- {{x < y}}
+
+
+-- ii. ∀X.∃Y.(X < Y)
+
+-- ∀X.∃Y.(X < Y)
+-- ∀X.(X < f(X))
+-- ∀X.(X < f(X))
+-- {{X < f(X)}}
+
+
+-- iii. ∀X.¬(P(X) ∧ ∀Y.(¬P(Y) ∨ Q(Y)))
+
+-- ∀X.¬(P(X) ∧ ∀Y.(¬P(Y) ∨ Q(Y)))
+-- ∀X.(¬P(X) ∨ ¬∀Y.(¬P(Y) ∨ Q(Y)))
+-- ∀X.(¬P(X) ∨ ∃Y.¬(¬P(Y) ∨ Q(Y)))
+-- ∀X.(¬P(X) ∨ ∃Y.(P(Y) ∧ ¬Q(Y)))
+-- ∀X.∃Y.(¬P(X) ∨ (P(Y) ∧ ¬Q(Y)))
+-- ∀X.∃Y.((¬P(X) ∨ P(Y)) ∧ (¬P(X) ∨ ¬Q(Y)))
+-- ∀X.((¬P(X) ∨ P(f(X))) ∧ (¬P(X) ∨ ¬Q(f(X))
+-- ∀X.(¬P(X) ∨ P(f(X))) ∧ ∀X.(¬P(X) ∨ ¬Q(f(X)))
+-- {{¬P(X), P(f(X))}, {¬P(X), ¬Q(f(X))}}
+
+
+-- iv. ∃X.∀Y.(P(X,Y) ∧ Q(X) ∧ ¬R(Y))
+
+-- ∃X.∀Y.(P(X,Y) ∧ Q(X) ∧ ¬R(Y))
+-- ∀Y.(P(x, Y) ∧ Q(x) ∧ ¬R(Y))
+-- ∀Y.P(x, Y) ∧ ∀Y.Q(x) ∧ ∀Y.¬R(Y)
+-- ∀Y.P(x, Y) ∧ ∀Y.Q(x) ∧ ∀Y.¬R(Y)
+-- {{P(x, Y)}, {Q(x)}, {¬R(Y)}}
+
+
+-- v. ∀X.(P(X) ∧ ∃Y.(Q(Y) ∨ ∀Z.∃W.(P(Z) ∧ ¬Q(W))))
+
+-- ∀X.(P(X) ∧ ∃Y.(Q(Y) ∨ ∀Z.∃W.(P(Z) ∧ ¬Q(W))))
+-- ∀X.∃Y.(P(X) ∧ (Q(Y) ∨ ∀Z.∃W.(P(Z) ∧ ¬Q(W))))
+-- ∀X.∃Y.∀Z.(P(X) ∧ (Q(Y) ∨ ∃W.(P(Z) ∧ ¬Q(W))))
+-- ∀X.∃Y.∀Z.∃W.(P(X) ∧ (Q(Y) ∨ (P(Z) ∧ ¬Q(W))))
+-- ∀X.∀Z.∃W.(P(X) ∧ (Q(f(X)) ∨ (P(Z) ∧ ¬Q(W))))
+-- ∀X.∀Z.(P(X) ∧ (Q(f(X)) ∨ (P(Z) ∧ ¬Q(g(X,Z)))))
+-- ∀X.∀Z.(P(X) ∧ Q(f(X)) ∨ P(Z) ∧ Q(f(X)) ∨ ¬Q(g(X,Z)))
+-- ∀X.∀Z.P(X) ∧ ∀X.∀Z.(Q(f(X)) ∨ P(Z)) ∧ ∀X.∀Z.(Q(f(X)) ∨ ¬Q(g(X,Z))))
+-- {{P(X)}, {Q(f(X)), P(Z)}, {Q(f(X)) ∨ ¬Q(g(X,Z))}}
+
+
+
+
+
+
+
+
+
+
+
+
+
 
