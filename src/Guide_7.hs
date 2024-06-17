@@ -434,19 +434,229 @@ module Guide_7 (
 
 -- i. [∃X.∀Y.R(X,Y)] ⇒ ∀Y.∃X.R(X,Y)
 
+-- ¬([∃X.∀Y.R(X,Y)] ⇒ ∀Y.∃X.R(X,Y))
+-- ¬(¬[∃X.∀Y.R(X,Y)] ∨ ∀Y.∃X.R(X,Y))
+-- ∃X.∀Y.R(X,Y) ∧ ¬∀Y.∃X.R(X,Y)
+-- ∃X.∀Y.R(X,Y) ∧ ∃Y.¬∃X.R(X,Y)
+-- ∃X.∀Y.R(X,Y) ∧ ∃Y.∀X.¬R(X,Y)
+-- ∃X.∀Y.R(X,Y) ∧ ∃Z.∀W.¬R(W,Z)
+-- ∃X.∀Y.∃Z.∀W.(R(X,Y) ∧ ¬R(W,Z))
+-- ∀Y.∃Z.∀W.(R(a,Y) ∧ ¬R(W,Z))
+-- ∀Y.∀W.(R(a,Y) ∧ ¬R(W,f(Y)))
+-- ∀Y.∀W.R(a,Y) ∧ ∀X.∀W.¬R(W,f(X))
+-- {{R(a,Y)}, {¬R(W,f(X))}}
+
+-- MGU sobre las dos cláusulas:
+-- { R(a,Y) ≟ R(W,f(X)) }
+-- Decompose ⇒ { a ≟ W, Y ≟ f(X) }
+-- Swap ⇒ { W ≟ a, Y ≟ f(X) }
+-- Elim { W := a } ⇒ { Y ≟ f(X) }
+-- Elim { Y := f(X) } ⇒ {}
+-- MGU = { W := a, Y := f(X) }
+
+-- {{R(a,Y)}, {¬R(W,f(X))}, {}}
+
+-- La resolución de la negación fórmula es insatisfacible por lo que la fórmula es válida
+
+
 -- ii. [∀X.∃Y.R(X,Y)] ⇒ ∃Y.∀X.R(X,Y)
+
+-- ¬([∀X.∃Y.R(X,Y)] ⇒ ∃Y.∀X.R(X,Y))
+-- ¬(¬[∀X.∃Y.R(X,Y)] ∨ ∃Y.∀X.R(X,Y))
+-- ∀X.∃Y.R(X,Y) ∧ ¬∃Y.∀X.R(X,Y)
+-- ∀X.∃Y.R(X,Y) ∧ ∀Y.¬∀X.R(X,Y)
+-- ∀X.∃Y.R(X,Y) ∧ ∀Z.∃W.¬R(W,Z)
+-- ∀X.∃Y.∀Z.∃W.(R(X,Y) ∧ ¬R(W,Z))
+-- ∀X.∀Z.∃W.(R(f(X),Y) ∧ ¬R(W,Z))
+-- ∀X.∀Z.(R(f(X),Y) ∧ ¬R(g(X,Z),Z))
+-- ∀X.∀Z.R(f(X),Y) ∧ ∀X.∀Z.¬R(g(X,Z),Z)
+-- {{R(f(X),Y)}, {¬R(g(X,Z),Z)}}
+
+-- MGU sobre las dos cláusulas:
+-- { R(f(X),Y) ≟ R(g(X,Z),Z) }
+-- Decompose ⇒ { f(X) ≟ g(X,Z), Y ≟ Z }
+-- OccursCheck ⇒ FALLA
+
+-- Al no poder unificar las únicas cláusulas, la fórmula no es válida dado que su negación es satisfacible
+
 
 -- iii. ∃X.[P(X) ⇒ ∀X.P(X)]
 
+-- ¬∃X.[P(X) ⇒ ∀X.P(X)]
+-- ¬∃X.[¬P(X) ∨ ∀X.P(X)]
+-- ∀X.[P(X) ∧ ¬∀X.P(X)]
+-- ∀X.[P(X) ∧ ∃X.¬P(X)]
+-- ∀X.[P(X) ∧ ∃Y.¬P(Y)]
+-- ∀X.∃Y.(P(X) ∧ ¬P(Y))
+-- ∀X.(P(X) ∧ ¬P(f(X)))
+-- ∀X.P(X) ∧ ∀X.¬P(f(X))
+-- ∀X.P(X) ∧ ∀Y.¬P(f(Y))
+-- {{P(X)}, {¬P(f(Y))}}
+
+-- MGU sobre las dos cláusulas:
+-- { P(X) ≟ P(f(Y)) }
+-- Decompose ⇒ { X ≟ f(Y) }
+-- Elim { X := f(Y) } ⇒ {}
+-- MGU = { X := f(Y) }
+
+-- {{P(X)}, {¬P(f(Y))}, {}}
+
+-- La resolución de la negación fórmula es insatisfacible por lo que la fórmula es válida
+
+
 -- iv. ∃X.[P(X) ∨ Q(X)] ⇒ [∃X.P(X) ∨ ∃X.Q(X)]
+
+-- ¬(∃X.[P(X) ∨ Q(X)] ⇒ [∃X.P(X) ∨ ∃X.Q(X)])
+-- ¬(¬∃X.[P(X) ∨ Q(X)] ∨ [∃X.P(X) ∨ ∃X.Q(X)])
+-- ∃X.[P(X) ∨ Q(X)] ∧ ¬[∃X.P(X) ∨ ∃X.Q(X)]
+-- ∃X.[P(X) ∨ Q(X)] ∧ ¬∃X.P(X) ∧ ¬∃X.Q(X)
+-- ∃X.[P(X) ∨ Q(X)] ∧ ∀X.¬P(X) ∧ ∀X.¬Q(X)
+-- ∃X.[P(X) ∨ Q(X)] ∧ ∀Y.¬P(Y) ∧ ∀Z.¬Q(Z)
+-- ∃X.∀Y.((P(X) ∨ Q(X)) ∧ ¬P(Y) ∧ ∀Z.¬Q(Z))
+-- ∃X.∀Y.∀Z.((P(X) ∨ Q(X)) ∧ ¬P(Y) ∧ ¬Q(Z))
+-- ∀Y.∀Z.((P(c) ∨ Q(c)) ∧ ¬P(Y) ∧ ¬Q(Z))
+-- ∀Y.∀Z.((P(c) ∨ Q(c)) ∧ ∀Y.∀Z.¬P(Y) ∧ ∀Y.∀Z.¬Q(Z))
+-- {{P(c), Q(c)}, {¬P(Y)}, {¬Q(Z)}}
+
+-- MGU sobre las dos primeras cláusulas:
+-- { P(c) ≟ P(Y) }
+-- Decompose ⇒ { c ≟ Y }
+-- Swap ⇒ { Y ≟ c }
+-- Elim { Y := c } ⇒ {}
+-- MGU = { Y := c }
+
+-- {{P(c), Q(c)}, {¬P(Y)}, {¬Q(Z)}, {Q(Y)}}
+
+-- MGU sobre las dos últimas cláusulas:
+-- { Q(Z) ≟ Q(Y) }
+-- Decompose ⇒ { Z ≟ Y }
+-- Elim { Z := Y } ⇒ {}
+-- MGU = { Z := Y }
+
+-- {{P(c), Q(c)}, {¬P(Y)}, {¬Q(Z)}, {Q(Y)}, {}}
+
+-- La resolución de la fórmula es insatisfacible por lo que la fórmula es válida
+
 
 -- v. ∀X.[P(X) ∨ Q(X)] ⇒ [∀X.P(X) ∨ ∀X.Q(X)]
 
+-- ¬(∀X.[P(X) ∨ Q(X)] ⇒ [∀X.P(X) ∨ ∀X.Q(X)])
+-- ¬(¬∀X.[P(X) ∨ Q(X)] ∨ [∀X.P(X) ∨ ∀X.Q(X)])
+-- ∀X.[P(X) ∨ Q(X)] ∧ ¬[∀X.P(X) ∨ ∀X.Q(X)]
+-- ∀X.[P(X) ∨ Q(X)] ∧ ¬∀X.P(X) ∧ ¬∀X.Q(X)
+-- ∀X.[P(X) ∨ Q(X)] ∧ ∃X.¬P(X) ∧ ∃X.¬Q(X)
+-- ∀X.[P(X) ∨ Q(X)] ∧ ∃Y.¬P(Y) ∧ ∃Z.¬Q(Z)
+-- ∀X.∃Y.((P(X) ∨ Q(X)) ∧ ¬P(Y) ∧ ∃Z.¬Q(Z))
+-- ∀X.∃Y.∃Z.((P(X) ∨ Q(X)) ∧ ¬P(Y) ∧ ¬Q(Z))
+-- ∀X.∃Z.((P(X) ∨ Q(X)) ∧ ¬P(f(X)) ∧ ¬Q(Z))
+-- ∀X.((P(X) ∨ Q(X)) ∧ ¬P(f(X)) ∧ ¬Q(g(X)))
+-- ∀X.(P(X) ∨ Q(X)) ∧ ∀X.¬P(f(X)) ∧ ∀X.¬Q(g(X))
+-- ∀X.(P(X) ∨ Q(X)) ∧ ∀Y.¬P(f(Y)) ∧ ∀Z.¬Q(g(Z))
+-- {{P(X), Q(X)}, {¬P(f(Y))}, {¬Q(g(Z))}}
+
+-- MGU sobre las dos primeras cláusulas:
+-- { P(X) ≟ P(f(Y)) }
+-- Decompose ⇒ { X ≟ f(Y) }
+-- Elim { X := f(Y) } ⇒ {}
+-- MGU = { X := f(Y) }
+
+-- {{P(X), Q(X)}, {¬P(f(Y))}, {¬Q(g(Z))}, {Q(f(Y))}}
+
+-- MGU sobre las dos últimas cláusulas:
+-- { Q(g(Z)) ≟ Q(f(Y)) }
+-- Decompose ⇒ { g(Z) ≟ f(Y) }
+-- OccursCheck ⇒ FALLA
+
+-- Al no poder unificar las cláusulas, la fórmula no es válida dado que su negación es satisfacible
+
+
 -- vi. [∃X.P(X) ∧ ∀X.Q(X)] ⇒ ∃X.[P(X) ∧ Q(X)]
+
+-- ¬([∃X.P(X) ∧ ∀X.Q(X)] ⇒ ∃X.[P(X) ∧ Q(X)])
+-- ¬(¬[∃X.P(X) ∧ ∀X.Q(X)] ∨ ∃X.[P(X) ∧ Q(X)])
+-- ∃X.P(X) ∧ ∀X.Q(X) ∧ ¬∃X.[P(X) ∧ Q(X)]
+-- ∃X.P(X) ∧ ∀X.Q(X) ∧ ∀Y.¬[P(Y) ∧ Q(Y)]
+-- ∃X.P(X) ∧ ∀X.Q(X) ∧ ∀Y.(¬P(Y) ∨ ¬Q(Y))
+-- ∃X.P(X) ∧ ∀Z.Q(Z) ∧ ∀Y.(¬P(Y) ∨ ¬Q(Y))
+-- ∃X.∀Z.∀Y.(P(X) ∧ Q(Z) ∧ (¬P(Y) ∨ ¬Q(Y)))
+-- ∀Z.∀Y.(P(c) ∧ Q(Z) ∧ (¬P(Y) ∨ ¬Q(Y)))
+-- ∀Z.∀Y.P(c) ∧ ∀Z.∀Y.Q(Z) ∀Z.∀Y.(¬P(Y) ∨ ¬Q(Y))
+-- {{P(c)}, {Q(Z)}, {¬P(Y), ¬Q(Y)}}
+
+-- MGU sobre las dos cláusulas de los extremos:
+-- { P(c) ≟ P(Y) }
+-- Decompose ⇒ { c ≟ Y }
+-- Swap ⇒ { Y ≟ c }
+-- Elim { Y := c } ⇒ {}
+-- MGU = { Y := c }
+
+-- {{P(c)}, {Q(Z)}, {¬P(Y), ¬Q(Y)}, {¬Q(c)}}
+
+-- MGU sobre las segunda y la última cláusula:
+
+-- { Q(Z) ≟ Q(c) }
+-- Decompose ⇒ { Z ≟ c }
+-- Elim { Z := c } ⇒ {}
+-- MGU = { Z := c }
+
+-- {{P(c)}, {Q(Z)}, {¬P(Y), ¬Q(Y)}, {¬Q(c)}, {}}
+
+-- La resolución de la fórmula es insatisfacible por lo que la fórmula es válida
+
 
 -- vii. ∀X.∃Y.∀Z.∃W.[P(X,Y) ∨ ¬P(W,Z)]
 
+-- ¬(∀X.∃Y.∀Z.∃W.[P(X,Y) ∨ ¬P(W,Z)])
+-- ∃X.¬(∃Y.∀Z.∃W.[P(X,Y) ∨ ¬P(W,Z)])
+-- ∃X.∀Y.¬(∀Z.∃W.[P(X,Y) ∨ ¬P(W,Z)])
+-- ∃X.∀Y.∃Z.¬(∃W.[P(X,Y) ∨ ¬P(W,Z)])
+-- ∃X.∀Y.∃Z.∀W.¬[P(X,Y) ∨ ¬P(W,Z)]
+-- ∃X.∀Y.∃Z.∀W.(¬P(X,Y) ∧ P(W,Z))
+-- ∀Y.∃Z.∀W.(¬P(c,Y) ∧ P(W,Z))
+-- ∀Y.∀W.(¬P(c,Y) ∧ P(W,f(Y)))
+-- ∀Y.∀W.¬P(c,Y) ∧ ∀Y.∀W.P(W,f(Y)))
+-- ∀Y.∀W.¬P(c,Y) ∧ ∀Z.∀W.P(W,f(Z)))
+-- {{¬P(c,Y)}, {P(W,f(Z))}}
+
+-- MGU sobre las dos cláusulas:
+-- { P(c,Y) ≟ P(W,f(Z)) }
+-- Decompose ⇒ { c ≟ W, Y ≟ f(Z) }
+-- Elim { c := W } ⇒ { Y ≟ f(Z) }
+-- Elim { Y := f(Z) } ⇒ {}
+
+-- {{¬P(c,Y)}, {P(W,f(Z))}, {}}
+
+-- La resolución de la fórmula es insatisfacible por lo que la fórmula es válida
+
+
 -- viii. ∀X.∀Y.∀Z.([¬P(f(a)) ∨ ¬P(Y) ∨ Q(Y)] ∧ P(f(Z)) ∧ [¬P(f(f(X))) ∨ ¬Q(f(X))])
+
+-- ¬(∀X.∀Y.∀Z.([¬P(f(a)) ∨ ¬P(Y) ∨ Q(Y)] ∧ P(f(Z)) ∧ [¬P(f(f(X))) ∨ ¬Q(f(X))])
+-- ∃X.¬(∀Y.∀Z.([¬P(f(a)) ∨ ¬P(Y) ∨ Q(Y)] ∧ P(f(Z)) ∧ [¬P(f(f(X))) ∨ ¬Q(f(X))])
+-- ∃X.∃Y.¬(∀Z.([¬P(f(a)) ∨ ¬P(Y) ∨ Q(Y)] ∧ P(f(Z)) ∧ [¬P(f(f(X))) ∨ ¬Q(f(X))])
+-- ∃X.∃Y.∃Z.¬([¬P(f(a)) ∨ ¬P(Y) ∨ Q(Y)] ∧ P(f(Z)) ∧ [¬P(f(f(X))) ∨ ¬Q(f(X))])
+-- ∃X.∃Y.∃Z.(¬[¬P(f(a)) ∨ ¬P(Y) ∨ Q(Y)] ∨ ¬P(f(Z)) ∨ [¬P(f(f(X))) ∨ ¬Q(f(X))])
+-- ∃X.∃Y.∃Z.([¬¬P(f(a)) ∧ ¬¬P(Y) ∧ ¬Q(Y)] ∨ ¬P(f(Z)) ∨ [¬P(f(f(X))) ∨ ¬Q(f(X))])
+-- ∃X.∃Y.∃Z.([P(f(a)) ∧ P(Y) ∧ ¬Q(Y)] ∨ ¬P(f(Z)) ∨ [¬P(f(f(X))) ∨ ¬Q(f(X))])
+-- ∃X.∃Y.∃Z.([P(f(a)) ∧ P(Y) ∧ ¬Q(Y)] ∨ ¬P(f(Z)) ∨ [P(f(f(X))) ∧ Q(f(X))])
+-- ∃X.∃Y.∃Z.([P(f(a)) ∨ ¬P(f(Z)) ∨ (P(f(f(X))) ∧ Q(f(X)))] ∧ [P(Y) ∨ ¬P(f(Z)) ∨ (P(f(f(X))) ∧ Q(f(X)))] ∧ [¬Q(Y) ∨ ¬P(f(Z)) ∨ (P(f(f(X))) ∧ Q(f(X)))])
+-- ∃X.∃Y.∃Z.((P(f(a)) ∨ ¬P(f(Z)) ∨ P(f(f(X)))) ∧ (P(f(a)) ∨ ¬P(f(Z)) ∨ Q(f(X))) ∧ (P(Y) ∨ ¬P(f(Z)) ∨ P(f(f(X)))) ∧ (P(Y) ∨ ¬P(f(Z)) ∨ Q(f(X))) ∧ (¬Q(Y) ∨ ¬P(f(Z)) ∨ P(f(f(X)))) ∧ (¬Q(Y) ∨ ¬P(f(Z)) ∨ Q(f(X))))
+-- ∃Y.∃Z.((P(f(a)) ∨ ¬P(f(Z)) ∨ P(f(f(b)))) ∧ (P(f(a)) ∨ ¬P(f(Z)) ∨ Q(f(b))) ∧ (P(Y) ∨ ¬P(f(Z)) ∨ P(f(f(b)))) ∧ (P(Y) ∨ ¬P(f(Z)) ∨ Q(f(b))) ∧ (¬Q(Y) ∨ ¬P(f(Z)) ∨ P(f(f(b)))) ∧ (¬Q(Y) ∨ ¬P(f(Z)) ∨ Q(f(b))))
+-- ∃Z.((P(f(a)) ∨ ¬P(f(Z)) ∨ P(f(f(b)))) ∧ (P(f(a)) ∨ ¬P(f(Z)) ∨ Q(f(b))) ∧ (P(c) ∨ ¬P(f(Z)) ∨ P(f(f(b)))) ∧ (P(c) ∨ ¬P(f(Z)) ∨ Q(f(b))) ∧ (¬Q(c) ∨ ¬P(f(Z)) ∨ P(f(f(b)))) ∧ (¬Q(c) ∨ ¬P(f(Z)) ∨ Q(f(b))))
+-- ((P(f(a)) ∨ ¬P(f(d)) ∨ P(f(f(b)))) ∧ (P(f(a)) ∨ ¬P(f(d)) ∨ Q(f(b))) ∧ (P(c) ∨ ¬P(f(d)) ∨ P(f(f(b)))) ∧ (P(c) ∨ ¬P(f(d)) ∨ Q(f(b))) ∧ (¬Q(c) ∨ ¬P(f(d)) ∨ P(f(f(b)))) ∧ (¬Q(c) ∨ ¬P(f(d)) ∨ Q(f(b)))
+
+-- {
+--  {P(f(a)), ¬P(f(d)), P(f(f(b)))},
+--  {P(f(a)), ¬P(f(d)), Q(f(b))},
+--  {P(c), ¬P(f(d)), P(f(f(b))},
+--  {P(c), ¬P(f(d)), Q(f(b))},
+--  {¬Q(c), ¬P(f(d)), P(f(f(b))},
+--  {¬Q(c), ¬P(f(d)), Q(f(b))}
+-- }
+
+-- No existen unificadores para las cláusulas, por lo que la fórmula no es válida dado que su negación es satisfacible
+
+
 
 
 
