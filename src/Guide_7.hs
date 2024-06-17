@@ -654,7 +654,67 @@ module Guide_7 (
 --  {¬Q(c), ¬P(f(d)), Q(f(b))}
 -- }
 
+-- MGU con cualquier combinación de cláusulas no es posible dado que siempre se llega a un occurs check.
 -- No existen unificadores para las cláusulas, por lo que la fórmula no es válida dado que su negación es satisfacible
+
+
+-- Ejercicio 10
+
+-- i. Expresar la regla del modus ponens en forma clausal y mostrar que es válida
+
+-- Regla del modus ponens: (P ⇒ Q) ∧ P ⇒ Q
+
+-- ¬(((P ⇒ Q) ∧ P) ⇒ Q)
+-- ¬(¬((P ⇒ Q) ∧ P) ∨ Q)
+-- (P ⇒ Q) ∧ P ∧ ¬Q
+-- (¬P ∨ Q) ∧ P ∧ ¬Q
+-- {{¬P, Q}, {P}, {¬Q}}
+
+-- {{¬P, Q}, {P}, {¬Q}}
+-- {{¬P, Q}, {P}, {¬Q}, {Q}}
+-- {{¬P, Q}, {P}, {¬Q}, {Q}, {}}
+
+-- La resolución de la fórmula es insatisfacible por lo que la regla del modus ponens es válida
+
+
+-- ii. Expresar la regla del modus tollens en forma clausal y mostrar que es válida
+
+-- Regla del modus tollens: (P ⇒ Q) ∧ ¬Q ⇒ ¬P
+
+-- ¬(((P ⇒ Q) ∧ ¬Q) ⇒ ¬P)
+-- ¬(¬((P ⇒ Q) ∧ ¬Q) ∨ ¬P)
+-- (P ⇒ Q) ∧ ¬Q ∧ P
+-- (¬P ∨ Q) ∧ ¬Q ∧ P
+-- {{¬P, Q}, {¬Q}, {P}}
+
+-- {{¬P, Q}, {¬Q}, {P}}
+-- {{¬P, Q}, {¬Q}, {P}, {Q}}
+-- {{¬P, Q}, {¬Q}, {P}, {Q}, {}}
+
+-- La resolución de la fórmula es insatisfacible por lo que la regla del modus tollens es válida
+
+
+-- iii. Expresar la regla de especialización en forma clausal y mostrar que es válida
+
+-- Regla de especialización: ∀X.P(X) ⇒ P(t)
+
+-- ¬(∀X.P(X) ⇒ P(t))
+-- ¬(¬∀X.P(X) ∨ P(t))
+-- ∀X.P(X) ∧ ¬P(t)
+-- ∀X.P(X) ∧ ∀X.¬P(t)
+-- {{P(X)}, {¬P(t)}}
+
+-- MGU sobre las dos cláusulas:
+-- { P(X) ≟ P(t) }
+-- Decompose ⇒ { X ≟ t }
+-- Elim { X := t } ⇒ {}
+-- MGU = { X := t }
+
+-- {{P(X)}, {¬P(t)}, {}}
+
+-- La resolución de la fórmula es insatisfacible por lo que la regla de especialización es válida
+
+
 
 
 
