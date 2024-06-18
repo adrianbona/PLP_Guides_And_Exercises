@@ -818,6 +818,126 @@ module Guide_7 (
 -- La demostración...
 
 
+-- Ejercicio Parcial
+
+-- Dadas las definiciones de Descendiente y Abuela a partir de la relación Madre, demostrar usando resolución general
+-- que los nietos son descendientes, es decir que: ∀X.∀Y.(Abuela(X,Y) ⇒ Descendiente(Y,X))
+
+-- Se quiere ver que ∀X.∀Y.(Abuela(X,Y) ⇒ Descendiente(Y,X))
+
+-- Pasaje a forma clausal:
+-- ¬∀X.∀Y.(Abuela(X,Y) ⇒ Descendiente(Y,X))
+-- ¬∀X.∀Y.(¬Abuela(X,Y) ∨ Descendiente(Y,X))
+-- ∃X.¬∀Y.(¬Abuela(X,Y) ∨ Descendiente(Y,X))
+-- ∃X.∃Y.¬(¬Abuela(X,Y) ∨ Descendiente(Y,X))
+-- ∃X.∃Y.(Abuela(X,Y) ∧ ¬Descendiente(Y,X))
+-- ∃Y.(Abuela(a,Y) ∧ ¬Descendiente(Y,a))
+-- Abuela(a,b) ∧ ¬Descendiente(b,a)
+-- {{Abuela(a,b)}, {¬Descendiente(b,a)}}
+
+
+-- i. Los hijos son descendientes:
+-- ∀X.∀Y.(Madre(X,Y) ⇒ Descendiente(Y,X))
+
+-- Pasaje a forma clausal:
+-- ∀X.∀Y.(Madre(X,Y) ⇒ Descendiente(Y,X))
+-- ∀X.∀Y.(¬Madre(X,Y) ∨ Descendiente(Y,X))
+-- ∀X.∀Y.¬Madre(X,Y) ∨ ∀X.∀Y.Descendiente(Y,X)
+-- {{¬Madre(X,Y), Descendiente(Y,X)}}
+
+
+-- ii. La relación de descendencia es transitiva:
+-- ∀X.∀Y.∀Z.((Descendiente(X,Y) ∧ Descendiente(Y,Z)) ⇒ Descendiente(X,Z))
+
+-- Pasaje a forma clausal:
+-- ∀X.∀Y.∀Z.((Descendiente(X,Y) ∧ Descendiente(Y,Z)) ⇒ Descendiente(X,Z))
+-- ∀X.∀Y.∀Z.(¬(Descendiente(X,Y) ∧ Descendiente(Y,Z)) ∨ Descendiente(X,Z))
+-- ∀X.∀Y.∀Z.(¬Descendiente(X,Y) ∨ ¬Descendiente(Y,Z) ∨ Descendiente(X,Z))
+-- ∀X.∀Y.∀Z.¬Descendiente(X,Y) ∨ ∀X.∀Y.∀Z.¬Descendiente(Y,Z) ∨ ∀X.∀Y.∀Z.Descendiente(X,Z)
+-- {{¬Descendiente(X,Y), ¬Descendiente(Y,Z), Descendiente(X,Z)}}
+
+
+-- iii. La abuela es madre de alguien que es madre del nieto:
+-- ∀X.∀Y.(Abuela(X,Y) ⇒ ∃Z.(Madre(X,Z) ∧ Madre(Z,Y)))
+
+-- Pasaje a forma clausal:
+-- ∀X.∀Y.(Abuela(X,Y) ⇒ ∃Z.(Madre(X,Z) ∧ Madre(Z,Y))
+-- ∀X.∀Y.(¬Abuela(X,Y) ∨ ∃Z.(Madre(X,Z) ∧ Madre(Z,Y)))
+-- ∀X.∀Y.∃Z.(¬Abuela(X,Y) ∨ (Madre(X,Z) ∧ Madre(Z,Y)))
+-- ∀X.∀Y.∃Z.(¬Abuela(X,Y) ∨ Madre(X,Z) ∧ ¬Abuela(X,Y) ∨ Madre(Z,Y))
+-- ∀X.∀Y.(¬Abuela(X,Y) ∨ Madre(X,f(X,Y)) ∧ ¬Abuela(X,Y) ∨ Madre(f(X,Y),Y))
+-- ∀X.∀Y.(¬Abuela(X,Y) ∨ Madre(X,f(X,Y))) ∧ ∀X.∀Y.(¬Abuela(X,Y) ∨ Madre(f(X,Y),Y))
+-- {{¬Abuela(X,Y), Madre(X,f(X,Y))}, {¬Abuela(X,Y), Madre(f(X,Y),Y)}}
+
+
+-- Conjunto de cláusulas:
+
+-- 1 {¬Madre(X1,Y1), Descendiente(Y1,X1)}
+-- 2 {¬Descendiente(X2,Y2), ¬Descendiente(Y2,Z2), Descendiente(X2,Z2)}
+-- 3 {¬Abuela(X3,Y3), Madre(X3,f(X3,Y3))}
+-- 4 {¬Abuela(X4,Y4), Madre(f(X4,Y4),Y4)}
+-- 5 {Abuela(a,b)}
+-- 6 {¬Descendiente(b,a)}
+
+-- MGU sobre las cláusulas 3 y 5:
+-- { Abuela(X3,Y3) ≟ Abuela(a,b) }
+-- Decompose ⇒ { X3 ≟ a, Y3 ≟ b }
+-- Elim { X3 := a, Y3 := b } ⇒ {}
+-- MGU = { X3 := a, Y3 := b }
+
+-- 7 {Madre(a,f(a,b))}
+
+-- MGU sobre las cláusulas 1 y 7:
+-- { Madre(a,f(a,b)) ≟ Madre(X1,Y1) }
+-- Decompose ⇒ { a ≟ X1, f(a,b) ≟ Y1 }
+-- Elim { X1 := a, Y1 := f(a,b) } ⇒ {}
+-- MGU = { X1 := a, Y1 := f(a,b) }
+
+-- 8 {Descendiente(f(a,b),a)}
+
+-- MGU sobre las cláusulas 4 y 5:
+-- { Abuela(X4,Y4) ≟ Abuela(a,b) }
+-- Decompose ⇒ { X4 ≟ a, Y4 ≟ b }
+-- Elim { X4 := a, Y4 := b } ⇒ {}
+-- MGU = { X4 := a, Y4 := b }
+
+-- 9 {Madre(f(a,b),b)}
+
+-- MGU sobre las cláusulas 1 y 9:
+
+-- { Madre(X1,Y1) ≟ Madre(f(a,b),b) }
+-- Decompose ⇒ { X1 ≟ f(a,b), Y1 ≟ b }
+-- Elim { X1 := f(a,b), Y1 := b } ⇒ {}
+-- MGU = { X1 := f(a,b), Y1 := b }
+
+-- 10 {Descendiente(b,f(a,b))}
+
+-- MGU sobre las cláusulas 2 y 10:
+-- { Descendiente(X2,Y2) ≟ Descendiente(b,f(a,b)) }
+-- Decompose ⇒ { X2 ≟ b, Y2 ≟ f(a,b) }
+-- Elim { X2 := b, Y2 := f(a,b) } ⇒ {}
+-- MGU = { X2 := b, Y2 := f(a,b) }
+
+-- 11 {¬Descendiente(f(a,b),Z2), Descendiente(b,Z2)}
+
+-- MGU sobre las cláusulas 8 y 11:
+-- { Descendiente(f(a,b),a) ≟ Descendiente(f(a,b),Z2) }
+-- Decompose ⇒ { a ≟ Z2 }
+-- Swap ⇒ { Z2 ≟ a }
+-- Elim { Z2 := a } ⇒ {}
+-- MGU = { Z2 := a }
+
+-- 12 {Descendiente(b,a)}
+
+-- MGU sobre las cláusulas 6 y 12:
+-- { Descendiente(b,a) ≟ Descendiente(b,a) }
+-- Delete ⇒ {}
+-- MGU = {}
+
+-- 13 {}
+
+-- Por resolución entre las cláusulas 12 y 13 se obtiene la cláusula vacía, por lo que la fórmula es válida
+
 
 
 
