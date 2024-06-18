@@ -878,7 +878,7 @@ module Guide_7 (
 -- cláusulas 3 y 4 para que todas las cláusulas sean de Horn. Luego la demostración habrá que hacerla de forma lineal.
 
 
--- Ejercicio Parcial
+-- Ejercicio Recuperatorio
 
 -- Dadas las definiciones de Descendiente y Abuela a partir de la relación Madre, demostrar usando resolución general
 -- que los nietos son descendientes, es decir que: ∀X.∀Y.(Abuela(X,Y) ⇒ Descendiente(Y,X))
@@ -1008,8 +1008,48 @@ module Guide_7 (
 -- {¬Descendiente(b,a)} : Es de Horn (podría ser GOAL)
 
 
+-- Ejercicio Parcial
+
+-- Demostrar mediante método de resolución una propiedad de las relaciones binarias. A saber, una relación no vacía
+-- no puede ser irreflexiva, simétrica y transitiva al mismo tiempo. Si R satisface las tres propiedades, entonces es vacía.
+
+-- R es irreflexiva: ∀X.¬R(X,X)
+
+-- Forma clausal:
+-- ∀X.¬R(X,X)
+-- {¬R(X1,X1)}
 
 
+-- R es simétrica: ∀X.∀Y.(R(X,Y) ⇒ R(Y,X))
+
+-- Forma clausal:
+-- ∀X.∀Y.(R(X,Y) ⇒ R(Y,X))
+-- ∀X.∀Y.(¬R(X,Y) ∨ R(Y,X))
+-- {¬R(X2,Y2), R(Y2,X2)}
+
+
+-- R es transitiva: ∀X.∀Y.∀Z.((R(X,Y) ∧ R(Y,Z)) ⇒ R(X,Z))
+
+-- Forma clausal:
+-- ∀X.∀Y.∀Z.((R(X,Y) ∧ R(Y,Z)) ⇒ R(X,Z))
+-- ∀X.∀Y.∀Z.(¬(R(X,Y) ∧ R(Y,Z)) ∨ R(X,Z))
+-- ∀X.∀Y.∀Z.(¬R(X,Y) ∨ ¬R(Y,Z) ∨ R(X,Z))
+-- {¬R(X3,Y3), ¬R(Y3,Z3), R(X3,Z3)}
+
+
+-- R es vacía: ∀X.¬∃Y.R(X,Y)
+
+-- Forma clausal (negada):
+-- ¬∀X.¬∃Y.R(X,Y)
+-- ∃X.¬¬∃Y.R(X,Y)
+-- ∃X.∃Y.R(X,Y)
+-- {R(X4,Y4)}
+
+-- Conjunto de cláusulas:
+-- 1 {¬R(X1,X1)}
+-- 2 {¬R(X2,Y2), R(Y2,X2)}
+-- 3 {¬R(X3,Y3), ¬R(Y3,Z3), R(X3,Z3)}
+-- 4 {R(X4,Y4)}
 
 
 
