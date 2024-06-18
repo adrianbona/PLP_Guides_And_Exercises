@@ -454,7 +454,8 @@ module Guide_7 (
 -- Elim { Y := f(X) } ⇒ {}
 -- MGU = { W := a, Y := f(X) }
 
--- {{R(a,Y)}, {¬R(W,f(X))}, {}}
+-- {{R(a,Y)}, {¬R(a,Y)}}
+-- {{R(a,Y)}, {¬R(a,Y)}, {}}
 
 -- La resolución de la negación fórmula es insatisfacible por lo que la fórmula es válida
 
@@ -499,7 +500,8 @@ module Guide_7 (
 -- Elim { X := f(Y) } ⇒ {}
 -- MGU = { X := f(Y) }
 
--- {{P(X)}, {¬P(f(Y))}, {}}
+-- {{P(f(Y))}, {¬P(f(Y))}}
+-- {{P(f(Y))}, {¬P(f(Y))}, {}
 
 -- La resolución de la negación fórmula es insatisfacible por lo que la fórmula es válida
 
@@ -525,15 +527,16 @@ module Guide_7 (
 -- Elim { Y := c } ⇒ {}
 -- MGU = { Y := c }
 
--- {{P(c), Q(c)}, {¬P(Y)}, {¬Q(Z)}, {Q(Y)}}
+-- {{P(c), Q(c)}, {¬P(c)}, {¬Q(Z)}, {Q(c)}}
 
 -- MGU sobre las dos últimas cláusulas:
--- { Q(Z) ≟ Q(Y) }
--- Decompose ⇒ { Z ≟ Y }
--- Elim { Z := Y } ⇒ {}
--- MGU = { Z := Y }
+-- { Q(Z) ≟ Q(c) }
+-- Decompose ⇒ { Z ≟ c }
+-- Elim { Z := c } ⇒ {}
+-- MGU = { Z := c }
 
--- {{P(c), Q(c)}, {¬P(Y)}, {¬Q(Z)}, {Q(Y)}, {}}
+-- {{P(c), Q(c)}, {¬P(c)}, {¬Q(c)}, {Q(c)}}
+-- {{P(c), Q(c)}, {¬P(c)}, {¬Q(c)}, {Q(c)}, {}}
 
 -- La resolución de la fórmula es insatisfacible por lo que la fórmula es válida
 
@@ -560,7 +563,7 @@ module Guide_7 (
 -- Elim { X := f(Y) } ⇒ {}
 -- MGU = { X := f(Y) }
 
--- {{P(X), Q(X)}, {¬P(f(Y))}, {¬Q(g(Z))}, {Q(f(Y))}}
+-- {{P(f(Y)), Q(f(Y))}, {¬P(f(Y))}, {¬Q(g(Z))}}
 
 -- MGU sobre las dos últimas cláusulas:
 -- { Q(g(Z)) ≟ Q(f(Y)) }
@@ -590,7 +593,7 @@ module Guide_7 (
 -- Elim { Y := c } ⇒ {}
 -- MGU = { Y := c }
 
--- {{P(c)}, {Q(Z)}, {¬P(Y), ¬Q(Y)}, {¬Q(c)}}
+-- {{P(c)}, {Q(c)}, {¬P(c), ¬Q(Y)}, {¬Q(c)}}
 
 -- MGU sobre las segunda y la última cláusula:
 
@@ -599,7 +602,8 @@ module Guide_7 (
 -- Elim { Z := c } ⇒ {}
 -- MGU = { Z := c }
 
--- {{P(c)}, {Q(Z)}, {¬P(Y), ¬Q(Y)}, {¬Q(c)}, {}}
+-- {{P(c)}, {Q(c)}, {¬P(c), ¬Q(Y)}, {¬Q(c)}}
+-- {{P(c)}, {Q(c)}, {¬P(c), ¬Q(Y)}, {¬Q(c)}, {}}
 
 -- La resolución de la fórmula es insatisfacible por lo que la fórmula es válida
 
@@ -621,10 +625,13 @@ module Guide_7 (
 -- MGU sobre las dos cláusulas:
 -- { P(c,Y) ≟ P(W,f(Z)) }
 -- Decompose ⇒ { c ≟ W, Y ≟ f(Z) }
--- Elim { c := W } ⇒ { Y ≟ f(Z) }
+-- Swap ⇒ { W ≟ c, Y ≟ f(Z) }
+-- Elim { W := c } ⇒ { Y ≟ f(Z) }
 -- Elim { Y := f(Z) } ⇒ {}
+-- MGU = { W := c, Y := f(Z) }
 
--- {{¬P(c,Y)}, {P(W,f(Z))}, {}}
+-- {{¬P(c,Y)}, {P(c,Y)}}
+-- {{¬P(c,Y)}, {P(c,Y)}, {}}
 
 -- La resolución de la fórmula es insatisfacible por lo que la fórmula es válida
 
@@ -710,17 +717,10 @@ module Guide_7 (
 -- Elim { X := t } ⇒ {}
 -- MGU = { X := t }
 
--- {{P(X)}, {¬P(t)}, {}}
+-- {{P(t)}, {¬P(t)}}
+-- {{P(t)}, {¬P(t)}, {}}
 
 -- La resolución de la fórmula es insatisfacible por lo que la regla de especialización es válida
-
-
-
-
-
-
-
-
 
 
 
