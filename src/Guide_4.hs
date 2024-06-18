@@ -140,7 +140,7 @@ module Guide_4 (
 -- x : Bool ⊢ if x then x else (λy : Bool . y) : Bool ⇒ Bool
 
 
--- Ejericio Extra 9
+-- Ejercicio Extra 9
 
 -- b) Escribir la reducción a un paso de los siguientes términos:
 

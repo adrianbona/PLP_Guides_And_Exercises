@@ -1152,7 +1152,7 @@ intersect xs ys = filter (\e -> elem e ys) xs --{I0}
 -- iii. Num a => ∀ p::Polinomio a . sinConstantesNegativas p ⇒ sinConstantesNegativas (derivado p)
 
 
--- Ejericio Extra
+-- Ejercicio Extra
 
 -- elem :: Eq a => a -> [a] -> Bool
 -- elem e [] = False {EL0}

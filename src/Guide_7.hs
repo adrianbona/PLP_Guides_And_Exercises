@@ -722,6 +722,47 @@ module Guide_7 (
 
 -- La resolución de la fórmula es insatisfacible por lo que la regla de especialización es válida
 
+-- Ejercicio 11
+
+-- i. {P(X), ¬P(X), Q(a)}
+
+-- No son cláusulas de Horn, ya que no cumplen con la restricción de tener a lo sumo un literal positivo.
+-- ∃Y.∀X.(P(X) ∨ ¬P(X) ∨ Q(Y))
+
+
+-- ii. {P(X), ¬Q(Y), ¬R(X,Y)}
+
+-- Es una cláusula de Horn (DEFINICIÓN), ya que cumple con la restricción de tener a lo sumo un literal positivo.
+-- ∀X.∀Y.(P(X) ∨ ¬Q(Y) ∨ ¬R(X,Y))
+
+
+-- iii. {¬P(X,X,Z), ¬Q(X,Y), ¬Q(Y,Z)}
+
+-- Es una cláusula de Horn (OBJETIVO), ya que cumple con la restricción de tener a lo sumo un literal positivo.
+-- ∀X.∀Y.∀Z.(¬P(X,X,Z) ∨ ¬Q(X,Y) ∨ ¬Q(Y,Z))
+-- ∀X.∀Y.∀Z.(¬P(X,X,Z) ∨ (Q(X,Y) ⇒ ¬Q(Y,Z)))
+-- ∀X.∀Y.∀Z.(P(X,X,Z) ⇒ (Q(X,Y) ⇒ ¬Q(Y,Z)))
+
+
+-- iv. {M(1,2,X)}
+
+-- Es una cláusula de Horn (DEFINICIÓN), ya que cumple con la restricción de tener a lo sumo un literal positivo.
+-- ∃Z.∃Y.∀X.M(Z,Y,X)
+
+
+-- Ejercicio 12
+
+-- Ejercicio 13
+
+-- Ejercicio 14
+
+-- Ejercicio 15
+
+-- Ejercicio 16
+
+-- Ejercicio 17
+
+-- Ejercicio 18
 
 -- Ejercicio 26
 

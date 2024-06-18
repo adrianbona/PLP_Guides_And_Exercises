@@ -124,7 +124,7 @@ module Guide_6 (
 -- ∃X' . P(Y, g(Y, Z)) ∧ ∀Y' . ¬Q(Y', X) ∨ P(Y, g(Y, Z))
 
 
--- Ejericio 4
+-- Ejercicio 4
 
 -- Sea σ = ¬∀X . (∃Y . P(X, Y, Z)) ∧ ∀Z . P(X, Y, Z)
 -- Reescribo como σ = ¬∀X' . (∃Y' . P(X', Y', Z)) ∧ ∀Z' . P(X, Y, Z')
@@ -852,7 +852,7 @@ module Guide_6 (
 -- TODO: ⊢ ¬σ ⇔ ¬σ
 
 
--- Ejericio 12
+-- Ejercicio 12
 
 -- Gramática de las formulas FNP: Q1X1. . . . QnXn. τ donde cada Qi es un cuantificador (∀ o ∃) y τ es una fórmula en forma normal negada sin ocurrencias de cuantificadores
 -- Demostrar que para cada fórmula σ existe una formula σ' en forma normal prenexa tal que ⊢ σ ⇔ σ'
