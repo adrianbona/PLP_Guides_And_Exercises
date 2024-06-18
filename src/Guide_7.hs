@@ -723,6 +723,106 @@ module Guide_7 (
 -- La resolución de la fórmula es insatisfacible por lo que la regla de especialización es válida
 
 
+-- Ejercicio 26
+
+-- a. Representar en forma clausal
+
+-- i. ∀X.(par(X) ⇒ ∃Y.(Y > X ∧ ¬par(Y)))
+
+-- ∀X.(par(X) ⇒ ∃Y.(esMayorQue(Y,X) ∧ ¬par(Y)))
+-- ∀X.(¬par(X) ∨ ∃Y.(esMayorQue(Y,X) ∧ ¬par(Y)))
+-- ∀X.∃Y.(¬par(X) ∨ (esMayorQue(Y,X) ∧ ¬par(Y)))
+-- ∀X.(¬par(X) ∨ (esMayorQue(f(X),X) ∧ ¬par(f(X))))
+-- ∀X.(¬par(X) ∨ esMayorQue(f(X),X) ∧ ¬par(X) ∨ ¬par(f(X)))
+-- ∀X.(¬par(X) ∨ esMayorQue(f(X),X) ∧ ∀X.(¬par(X) ∨ ¬par(f(X)))
+-- {{¬par(X), esMayorQue(f(X),X)}, {¬par(X), ¬par(f(X))}}
+
+
+-- ii. ∀X.(¬par(X) ⇒ ∃Y.(Y > X ∧ par(Y)))
+
+-- ∀X.(¬par(X) ⇒ ∃Y.(esMayorQue(Y,X) ∧ par(Y)))
+-- ∀X.(par(X) ∨ ∃Y.(esMayorQue(Y,X) ∧ par(Y)))
+-- ∀X.∃Y.(par(X) ∨ (esMayorQue(Y,X) ∧ par(Y)))
+-- ∀X.(par(X) ∨ (esMayorQue(f(X),X) ∧ par(f(X)))
+-- ∀X.(par(X) ∨ esMayorQue(f(X),X) ∧ par(X) ∨ par(f(X)))
+-- ∀X.(par(X) ∨ esMayorQue(f(X),X) ∧ ∀X.(par(X) ∨ par(f(X)))
+-- {{par(X), esMayorQue(f(X),X)}, {par(X), par(f(X))}}
+
+
+-- iii. ∀X.∀Y.∀Z.((X > Y ∧ Y > Z) ⇒ X > Z)
+
+-- ∀X.∀Y.∀Z.((esMayorQue(X,Y) ∧ esMayorQue(Y,Z)) ⇒ esMayorQue(X,Z))
+-- ∀X.∀Y.∀Z.(¬(esMayorQue(X,Y) ∧ esMayorQue(Y,Z)) ∨ esMayorQue(X,Z))
+-- ∀X.∀Y.∀Z.(¬esMayorQue(X,Y) ∨ ¬esMayorQue(Y,Z) ∨ esMayorQue(X,Z))
+-- {{¬esMayorQue(X,Y), ¬esMayorQue(Y,Z), esMayorQue(X,Z)}}
+
+-- b. Usando resolución demostrar: ∀X.(par(X) ⇒ ∃Y.(Y > X ∧ par(Y)))
+
+-- ¬∀X.(par(X) ⇒ ∃Y.(esMayorQue(Y,X) ∧ par(Y)))
+-- ∃X.¬(par(X) ⇒ ∃Y.(esMayorQue(Y,X) ∧ par(Y)))
+-- ∃X.¬(¬par(X) ∨ ∃Y.(esMayorQue(Y,X) ∧ par(Y)))
+-- ∃X.(par(X) ∧ ¬∃Y.(esMayorQue(Y,X) ∧ par(Y)))
+-- ∃X.(par(X) ∧ ∀Y.¬(esMayorQue(Y,X) ∧ par(Y)))
+-- ∃X.(par(X) ∧ ∀Y.(¬esMayorQue(Y,X) ∨ ¬par(Y)))
+-- ∃X.∀Y.(par(X) ∧ (¬esMayorQue(Y,X) ∨ ¬par(Y)))
+-- ∀Y.(par(a) ∧ (¬esMayorQue(Y,a) ∨ ¬par(Y)))
+-- ∀Y.par(a) ∧ ∀Y.(¬esMayorQue(Y,a) ∨ ¬par(Y)))
+-- {{par(a)}, {¬esMayorQue(Y,a), ¬par(Y)}}
+
+-- Conjunto de cláusulas:
+
+-- 1 {¬par(X1), esMayorQue(f(X1),X1)}
+-- 2 {¬par(X2), ¬par(f(X2))}
+-- 3 {par(X3), esMayorQue(f(X3),X3)},
+-- 4 {par(X4), par(f(X4))}
+-- 5 {par(a)}
+-- 6 {¬esMayorQue(Y1,a), ¬par(Y1)}
+
+-- MGU sobre las cláusulas 5 y 6:
+-- { par(a) ≟ par(Y1) }
+-- Decompose ⇒ { a ≟ Y1 }
+-- Swap ⇒ { Y1 ≟ a }
+-- Elim { Y1 := a } ⇒ {}
+-- MGU = { Y1 := a }
+
+-- 1 {¬par(X1), esMayorQue(f(X1),X1)}
+-- 2 {¬par(X2), ¬par(f(X2))}
+-- 3 {par(X3), esMayorQue(f(X3),X3)},
+-- 4 {par(X4), par(f(X4))}
+-- 5 {par(a)}
+-- 6 {¬esMayorQue(a,a), ¬par(a)}
+-- 7 {esMayorQue(f(a),a)}
+
+-- MGU sobre las cláusulas 1 y 7:
+-- { esMayorQue(f(X1),X1) ≟ esMayorQue(f(a),a) }
+-- Decompose ⇒ { f(X1) ≟ f(a), X1 ≟ a }
+-- Elim { X1 := a } ⇒ {f(a) ≟ f(a)}
+-- Decompose ⇒ { a ≟ a }
+-- Delete ⇒ {}
+-- MGU = { X1 := a }
+
+-- 1 {¬par(a), esMayorQue(f(a),a)}
+-- 2 {¬par(X2), ¬par(f(X2))}
+-- 3 {par(X3), esMayorQue(f(X3),X3)},
+-- 4 {par(X4), par(f(X4))}
+-- 5 {par(a)}
+-- 6 {¬esMayorQue(a,a), ¬par(a)}
+-- 7 {esMayorQue(f(a),a)}
+-- 8 {¬par(a)}
+
+-- Por resolución entre las cláusulas 5 y 6 se obtiene la cláusula vacía, por lo que la fórmula es válida
+
+
+-- c. La demostración es SLD?
+
+-- La demostración...
+
+
+
+
+
+
+
 
 
 
