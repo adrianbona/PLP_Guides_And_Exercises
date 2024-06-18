@@ -754,10 +754,10 @@ module Guide_7 (
 
 -- Realizarse de manera lineal (utilizando en cada paso el resolvente obtenido en el paso anterior) ✔
 -- Utilizar únicamente cláusulas de Horn ✔
--- Utilizar cada cláusula a lo sumo una vez.
+-- Utilizar cada cláusula a lo sumo una vez ✖
 -- Empezar por una cláusula objetivo (sin literales positivos) ✔
--- Empezar por una cláusula que provenga de la negación de lo que se quiere demostrar.
--- Recorrer el espacio de búsqueda de arriba hacia abajo y de izquierda a derecha.
+-- Empezar por una cláusula que provenga de la negación de lo que se quiere demostrar ✖
+-- Recorrer el espacio de búsqueda de arriba hacia abajo y de izquierda a derecha ✖
 -- Utilizar la regla de resolución binaria en lugar de la general ✔
 
 
