@@ -815,7 +815,17 @@ module Guide_7 (
 
 -- c. La demostración es SLD?
 
--- La demostración...
+-- Veamos que no todas las cláusulas son de Horn:
+
+-- {¬par(X1), esMayorQue(f(X1),X1)} : Es de Horn
+-- {¬par(X2), ¬par(f(X2))} : Es de Horn (podría ser GOAL)
+-- {par(X3), esMayorQue(f(X3),X3)} : No es de Horn
+-- {par(X4), par(f(X4))} : No es de Horn
+-- {par(a)} : Es de Horn
+-- {¬esMayorQue(Y1,a), ¬par(Y1)} : Es de Horn (podría ser GOAL)
+
+-- No todas las cláusulas son de Horn, por lo que la demostración no es SLD. Sin embargo podrían ser descartadas las
+-- cláusulas 3 y 4 para que todas las cláusulas sean de Horn. Luego la demostración habrá que hacerla de forma lineal.
 
 
 -- Ejercicio Parcial
@@ -937,6 +947,16 @@ module Guide_7 (
 -- 13 {}
 
 -- Por resolución entre las cláusulas 12 y 13 se obtiene la cláusula vacía, por lo que la fórmula es válida
+
+-- Observando el conjunto de cláusulas sabremos si hay posibilidad de resolución SLD:
+
+-- {¬Madre(X1,Y1), Descendiente(Y1,X1)} : Es de Horn
+-- {¬Descendiente(X2,Y2), ¬Descendiente(Y2,Z2), Descendiente(X2,Z2)} : Es de Horn
+-- {¬Abuela(X3,Y3), Madre(X3,f(X3,Y3))} : Es de Horn
+-- {¬Abuela(X4,Y4), Madre(f(X4,Y4),Y4)} : Es de Horn
+-- {Abuela(a,b)} : Es de Horn
+-- {¬Descendiente(b,a)} : Es de Horn (podría ser GOAL)
+
 
 
 
