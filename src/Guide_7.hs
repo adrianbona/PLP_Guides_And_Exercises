@@ -1058,8 +1058,83 @@ module Guide_7 (
 
 -- Ejercicio 17
 
--- Ejercicio 18
+-- Toda persona tiene un contacto en Facebook: ∀X.∃Y.esContacto(X,Y)
 
+-- ∀X.∃Y.esContacto(X,Y)
+-- ∀X.esContacto(X,f(X))
+-- {esContacto(X, f(X))}
+
+
+-- La relación entre contactos es simétrica: ∀X.∀Y.(esContacto(X,Y) ⇒ esContacto(Y,X))
+
+-- ∀X.∀Y.(esContacto(X,Y) ⇒ esContacto(Y,X))
+-- ∀X.∀Y.(¬esContacto(X,Y) ∨ esContacto(Y,X))
+-- {¬esContacto(X,Y), esContacto(Y,X)}
+
+-- i. Demostrar que toda persona es contacto de sí misma: ∀X esContacto(X,X)
+
+-- ¬∀X.esContacto(X,X)
+-- ∃X.¬esContacto(X,X)
+-- ¬esContacto(a,a)
+-- {¬esContacto(a,a)}
+
+-- Cláusulas y sus roles:
+-- 1 {esContacto(X1, f(X1))} (DEFINICIÓN)
+-- 2 {¬esContacto(X2,Y2), esContacto(Y2,X2)} (DEFINICIÓN)
+-- 3 {¬esContacto(a,a)} (OBJETIVO)
+
+-- Resolución SLD:
+
+-- MGU sobre las cláusulas 2 y 3:
+-- { esContacto(Y2,X2) ≟ esContacto(a,a) }
+-- Decompose ⇒ { Y2 ≟ a, X2 ≟ a }
+-- Elim { Y2 := a, X2 := a } ⇒ {}
+-- MGU = { Y2 := a, X2 := a }
+
+-- 4 {¬esContacto(a,a)} (DEFINICIÓN)
+
+-- MGU sobre las cláusulas 1 y 4:
+-- { esContacto(X1, f(X1)) ≟ esContacto(a,a) }
+-- Decompose ⇒ { X1 ≟ a, f(X1) ≟ a }
+-- Elim { X1 := a } ⇒ { f(a) ≟ a }
+-- Occurs check ⇒ FALLA
+
+-- La unificación no es posible, por lo que la fórmula no es válida
+
+
+-- ii. Demostrar que toda persona es contacto de alguien: ∀Y.∃X.esContacto(X,Y))
+
+-- ¬∀Y.∃X.esContacto(X,Y)
+-- ∃Y.¬∃X.esContacto(X,Y)
+-- ∃Y.∀X.¬esContacto(X,Y)
+-- ∀X.¬esContacto(X,a)
+-- {¬esContacto(X,a)}
+
+-- Cláusulas y sus roles:
+-- 1 {esContacto(X1, f(X1))} (DEFINICIÓN)
+-- 2 {¬esContacto(X2,Y2), esContacto(Y2,X2)} (DEFINICIÓN)
+-- 3 {¬esContacto(X3,a)} (OBJETIVO)
+
+-- Resolución SLD:
+
+-- MGU sobre las cláusulas 2 y 3:
+-- { esContacto(Y2,X2) ≟ esContacto(X3,a) }
+-- Decompose ⇒ { Y2 ≟ X3, X2 ≟ a }
+-- Elim { Y2 := X3, X2 := a } ⇒ {}
+-- MGU = { Y2 := X3, X2 := a }
+
+-- 4 {¬esContacto(X4,a)} (OBJETIVO)
+
+-- MGU sobre las cláusulas 1 y 4:
+-- { esContacto(X1, f(X1)) ≟ esContacto(X4,a) }
+-- Decompose ⇒ { X1 ≟ X4, f(X1) ≟ a }
+-- Elim { X1 := X4 } ⇒ { f(X4) ≟ a }
+-- Occurs check ⇒ FALLA
+
+-- La unificación no es posible, por lo que la fórmula no es válida
+
+
+-- Ejercicio 18
 
 -- Ejercicio 19
 
