@@ -1308,6 +1308,22 @@ module Guide_7 (
 
 -- i. Qué sucede al ejecutar "? - mayorOIgual(suc(suc(N)), suc(cero))"?
 
+-- Primero se aplica la regla mayorOIgual(suc(X),Y) hasta que no puede unificar más:
+
+-- mayorOIgual(suc(suc(N)), suc(cero))
+-- mayorOIgual(suc(N), suc(cero))
+-- mayorOIgual(N, suc(cero))
+
+-- Prolog no logra dar con un N que satisfaga la regla mayorOIgual(N, suc(cero)) porque no logra unificar el último término.
+
+-- ii. Convertir las reglas a cláusulas de Horn:
+
+-- natural(cero) se escribe como { natural(cero) } (cero es una constante)
+-- natural(suc(X)) :- natural(X). se escribe como { natural(X), ¬natural(suc(X)) }
+
+-- mayorOIgual(suc(X),Y) :- mayorOIgual(X,Y). se escribe como { mayorOIgual(X,Y), ¬mayorOIgual(suc(X),Y) }
+-- mayorOIgual(X,X) :- natural(X). se escribe como { natural(X), ¬mayorOIgual(X,X) }
+
 
 -- Ejercicio 21
 
