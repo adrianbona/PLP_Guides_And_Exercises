@@ -961,6 +961,24 @@ module Guide_7 (
 -- {{¬P(E,i(C)), P(E,C)} {¬P(E,C), P(E,i(C))}}
 
 
+-- ii. Demostrar ∀C.(V(i(C)) ⇒ V(C)) mediante resolución SLD de ser posible.
+
+-- ¬∀C.(V(i(C)) ⇒ V(C))
+-- ∃C.¬(V(i(C)) ⇒ V(C))
+-- ∃C.¬(¬V(i(C)) ∨ V(C))
+-- ∃C.(V(i(C)) ∧ ¬V(C))
+-- (V(i(a)) ∧ ¬V(a))
+-- {{V(i(a))}, {¬V(a)}}
+
+-- Cláusulas y sus roles:
+-- 1 {V(C1), P(f(C1),C1)} (NO ES HORN)
+-- 2 {¬V(C2), ¬P(E2,C2)} (OBJETIVO)
+-- 3 {¬P(E3,i(C3)), P(E3,C3)} (DEFINICIÓN)
+-- 4 {¬P(E4,C4), P(E4,i(C4))} (DEFINICIÓN)
+-- 5 {V(i(a))} (DEFINICIÓN)
+-- 6 {¬V(a)} (OBJETIVO)
+
+
 -- Ejercicio 16
 
 -- Ejercicio 17
