@@ -1129,7 +1129,7 @@ module Guide_7 (
 -- { esContacto(X1, f(X1)) ≟ esContacto(X4,a) }
 -- Decompose ⇒ { X1 ≟ X4, f(X1) ≟ a }
 -- Elim { X1 := X4 } ⇒ { f(X4) ≟ a }
--- Occurs check ⇒ FALLA
+-- Clash ⇒ FALLA
 
 -- La unificación no es posible, por lo que la fórmula no es válida
 
