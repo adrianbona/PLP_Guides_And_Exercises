@@ -981,6 +981,48 @@ module Guide_7 (
 
 -- Ejercicio 16
 
+-- Teorema del bebedor: ∃X.enBar(X) ⇒ ∃Y.(enBar(Y) ∧ (bebe(Y) ⇒ ∀Z.(enBar(Z) ⇒ bebe(Z))))
+
+-- Negar la fórmula que se quiere probar y eliminar implicaciones:
+-- ¬(∃X.enBar(X) ⇒ ∃Y.(enBar(Y) ∧ (bebe(Y) ⇒ ∀Z.(enBar(Z) ⇒ bebe(Z)))))
+-- ¬(¬∃X.enBar(X) ∨ ∃Y.(enBar(Y) ∧ (bebe(Y) ⇒ ∀Z.(enBar(Z) ⇒ bebe(Z)))))
+-- ∃X.enBar(X) ∧ ¬∃Y.(enBar(Y) ∧ (bebe(Y) ⇒ ∀Z.(enBar(Z) ⇒ bebe(Z)))
+-- ∃X.enBar(X) ∧ ∀Y.¬(enBar(Y) ∧ (bebe(Y) ⇒ ∀Z.(enBar(Z) ⇒ bebe(Z)))
+-- ∃X.enBar(X) ∧ ∀Y.¬(enBar(Y) ∧ (¬bebe(Y) ∨ ∀Z.(enBar(Z) ⇒ bebe(Z)))
+-- ∃X.enBar(X) ∧ ∀Y.¬(enBar(Y) ∧ (¬bebe(Y) ∨ ∀Z.(¬enBar(Z) ∨ bebe(Z)))
+-- ∃X.enBar(X) ∧ ∀Y.(¬enBar(Y) ∨ ¬(¬bebe(Y) ∨ ∀Z.(¬enBar(Z) ∨ bebe(Z)))
+-- ∃X.enBar(X) ∧ ∀Y.(¬enBar(Y) ∨ (bebe(Y) ∧ ¬∀Z.(enBar(Z) ∨ bebe(Z)))
+-- ∃X.enBar(X) ∧ ∀Y.(¬enBar(Y) ∨ (bebe(Y) ∧ ∃Z.¬(enBar(Z) ∨ bebe(Z)))
+-- ∃X.enBar(X) ∧ ∀Y.(¬enBar(Y) ∨ (bebe(Y) ∧ ∃Z.(¬enBar(Z) ∧ ¬bebe(Z)))
+
+-- Pasar a forma normal prenexa:
+-- ∃X.enBar(X) ∧ ∀Y.(¬enBar(Y) ∨ (bebe(Y) ∧ ∃Z.(¬enBar(Z) ∧ ¬bebe(Z)))
+-- ∃X.∀Y.(enBar(X) ∧ (¬enBar(Y) ∨ (bebe(Y) ∧ ∃Z.(¬enBar(Z) ∧ ¬bebe(Z))))
+-- ∃X.∀Y.∃Z.(enBar(X) ∧ (¬enBar(Y) ∨ (bebe(Y) ∧ (¬enBar(Z) ∧ ¬bebe(Z))))
+
+-- Pasar a forma normal conjuntiva:
+-- ∃X.∀Y.∃Z.(enBar(X) ∧ (¬enBar(Y) ∨ (bebe(Y) ∧ (¬enBar(Z) ∧ ¬bebe(Z))))
+-- ∃X.∀Y.∃Z.(enBar(X) ∧ (¬enBar(Y) ∨ (bebe(Y) ∧ ¬enBar(Z) ∧ ¬bebe(Z)))
+-- ∃X.∀Y.∃Z.(enBar(X) ∧ (¬enBar(Y) ∨ bebe(Y)) ∧ (¬enBar(Y) ∨ ¬enBar(Z)) ∧ (¬enBar(Y) ∨ ¬bebe(Z)))
+
+-- Skolemizar:
+-- ∃X.∀Y.∃Z.(enBar(X) ∧ (¬enBar(Y) ∨ bebe(Y)) ∧ (¬enBar(Y) ∨ ¬enBar(Z)) ∧ (¬enBar(Y) ∨ ¬bebe(Z)))
+-- ∀Y.∃Z.(enBar(a) ∧ (¬enBar(Y) ∨ bebe(Y)) ∧ (¬enBar(Y) ∨ ¬enBar(Z)) ∧ (¬enBar(Y) ∨ ¬bebe(Z)))
+-- ∀Y.(enBar(a) ∧ (¬enBar(Y) ∨ bebe(Y)) ∧ (¬enBar(Y) ∨ ¬enBar(f(Y))) ∧ (¬enBar(Y) ∨ ¬bebe(f(Y))))
+-- enBar(a) ∧ ∀Y.(¬enBar(Y) ∨ bebe(Y)) ∧ ∀Y.(¬enBar(Y) ∨ ¬enBar(f(Y))) ∧ ∀Y.(¬enBar(Y) ∨ ¬bebe(f(Y)))
+
+-- Pasar a forma clausal:
+-- enBar(a) ∧ ∀Y.(¬enBar(Y) ∨ bebe(Y)) ∧ ∀Y.(¬enBar(Y) ∨ ¬enBar(f(Y))) ∧ ∀Y.(¬enBar(Y) ∨ ¬bebe(f(Y)))
+-- {{enBar(a)}, {¬enBar(Y), bebe(Y)}, {¬enBar(Y), ¬enBar(f(Y))}, {¬enBar(Y), ¬bebe(f(Y))}}
+
+
+-- Cláusulas y sus roles:
+-- 1 {enBar(a)} (DEFINICIÓN)
+-- 2 {¬enBar(Y2), bebe(Y2)} (DEFINICIÓN)
+-- 3 {¬enBar(Y3), ¬enBar(f(Y3))} (OBJETIVO)
+-- 4 {¬enBar(Y4), ¬bebe(f(Y4))} (OBJETIVO)
+
+
 -- Ejercicio 17
 
 -- Ejercicio 18
