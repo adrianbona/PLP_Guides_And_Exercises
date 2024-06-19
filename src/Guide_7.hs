@@ -763,6 +763,80 @@ module Guide_7 (
 
 -- Ejercicio 13
 
+-- Constantes y predicados:
+
+-- R(X) para expresar que X es un robot
+-- Res(X,Y) para X puede resolver Y
+-- PL(X) para X es un problema lógico
+-- Pr(X) para X es un problema de esta práctica
+-- I(X) para X es inteligente
+-- J(X) para X es japonés
+-- la constante alan para Alan
+
+
+-- Hipótesis:
+
+-- Alan es un robot japonés.
+-- R(alan) ∧ J(alan)
+
+-- Cualquier robot que puede resolver un problema lógico es inteligente.
+-- ∀X.(R(X) ∧ ∃Y.(PL(Y) ∧ Res(X,Y)) ⇒ I(X))
+
+-- Todos los robots japoneses pueden resolver todos los problemas de esta práctica.
+-- ∀X.(R(X) ∧ J(X) ⇒ ∀Y.(Pr(Y) ⇒ Res(X,Y)))
+
+-- Todos los problemas de esta práctica son lógicos.
+-- ∀X.(Pr(X) ⇒ PL(X))
+
+-- Existe al menos un problema en esta práctica.
+-- ∃X.Pr(X)
+
+-- Conclusión:
+
+-- ¿Quién es inteligente?
+-- I(X)
+
+-- Pasaje a forma clausal:
+
+-- R(alan) ∧ J(alan)
+-- {{R(alan)}, {J(alan)}}
+
+-- ∀X.((R(X) ∧ ∃Y.(PL(Y) ∧ Res(X,Y)) ⇒ I(X))
+-- ∀X.(¬(R(X) ∧ ∃Y.(PL(Y) ∧ Res(X,Y))) ∨ I(X))
+-- ∀X.(¬R(X) ∨ ¬∃Y.(PL(Y) ∧ Res(X,Y)) ∨ I(X))
+-- ∀X.(¬R(X) ∨ ∀Y.¬(PL(Y) ∧ Res(X,Y)) ∨ I(X))
+-- ∀X.(¬R(X) ∨ ∀Y.(¬PL(Y) ∨ ¬Res(X,Y)) ∨ I(X))
+-- ∀X.∀Y.(¬R(X) ∨ ¬PL(Y) ∨ ¬Res(X,Y) ∨ I(X))
+-- {{¬R(X), ¬PL(Y), ¬Res(X,Y), I(X)}}
+
+-- ∀X.(R(X) ∧ J(X) ⇒ ∀Y.(Pr(Y) ⇒ Res(X,Y)))
+-- ∀X.(¬(R(X) ∧ J(X)) ∨ ∀Y.(Pr(Y) ⇒ Res(X,Y)))
+-- ∀X.(¬R(X) ∨ ¬J(X) ∨ ∀Y.(Pr(Y) ⇒ Res(X,Y)))
+-- ∀X.(¬R(X) ∨ ¬J(X) ∨ ∀Y.(¬Pr(Y) ∨ Res(X,Y)))
+-- ∀X.∀Y.(¬R(X) ∨ ¬J(X) ∨ ¬Pr(Y) ∨ Res(X,Y))
+-- {{¬R(X), ¬J(X), ¬Pr(Y), Res(X,Y)}}
+
+-- ∀X.(Pr(X) ⇒ PL(X))
+-- ∀X.(¬Pr(X) ∨ PL(X))
+-- {{¬Pr(X), PL(X)}}
+
+-- ∃X.Pr(X)
+-- {{Pr(a)}}
+
+-- ¬I(X)
+-- {{¬I(X)}}
+
+-- Conjunto de cláusulas:
+-- 1 {{R(alan)}, {J(alan)}}
+-- 2 {{¬R(X), ¬PL(Y), ¬Res(X,Y), I(X)}}
+-- 3 {{¬R(X), ¬J(X), ¬Pr(Y), Res(X,Y)}}
+-- 4 {{¬Pr(X), PL(X)}}
+-- 5 {{Pr(a)}}
+-- 6 {{¬I(X)}}
+
+-- Procedemos a la resolución SLD, para ello las clásulas deben ser identificadas según su rol.
+
+
 -- Ejercicio 14
 
 -- Ejercicio 15
@@ -1012,6 +1086,7 @@ module Guide_7 (
 
 -- Demostrar mediante método de resolución una propiedad de las relaciones binarias. A saber, una relación no vacía
 -- no puede ser irreflexiva, simétrica y transitiva al mismo tiempo. Si R satisface las tres propiedades, entonces es vacía.
+
 
 -- R es irreflexiva: ∀X.¬R(X,X)
 
