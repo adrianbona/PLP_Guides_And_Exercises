@@ -988,39 +988,71 @@ module Guide_7 (
 -- ¬(¬∃X.enBar(X) ∨ ∃Y.(enBar(Y) ∧ (bebe(Y) ⇒ ∀Z.(enBar(Z) ⇒ bebe(Z)))))
 -- ∃X.enBar(X) ∧ ¬∃Y.(enBar(Y) ∧ (bebe(Y) ⇒ ∀Z.(enBar(Z) ⇒ bebe(Z)))
 -- ∃X.enBar(X) ∧ ∀Y.¬(enBar(Y) ∧ (bebe(Y) ⇒ ∀Z.(enBar(Z) ⇒ bebe(Z)))
--- ∃X.enBar(X) ∧ ∀Y.¬(enBar(Y) ∧ (¬bebe(Y) ∨ ∀Z.(enBar(Z) ⇒ bebe(Z)))
--- ∃X.enBar(X) ∧ ∀Y.¬(enBar(Y) ∧ (¬bebe(Y) ∨ ∀Z.(¬enBar(Z) ∨ bebe(Z)))
--- ∃X.enBar(X) ∧ ∀Y.(¬enBar(Y) ∨ ¬(¬bebe(Y) ∨ ∀Z.(¬enBar(Z) ∨ bebe(Z)))
--- ∃X.enBar(X) ∧ ∀Y.(¬enBar(Y) ∨ (bebe(Y) ∧ ¬∀Z.(enBar(Z) ∨ bebe(Z)))
--- ∃X.enBar(X) ∧ ∀Y.(¬enBar(Y) ∨ (bebe(Y) ∧ ∃Z.¬(enBar(Z) ∨ bebe(Z)))
--- ∃X.enBar(X) ∧ ∀Y.(¬enBar(Y) ∨ (bebe(Y) ∧ ∃Z.(¬enBar(Z) ∧ ¬bebe(Z)))
+-- ∃X.enBar(X) ∧ ∀Y.(¬enBar(Y) ∨ ¬(bebe(Y) ⇒ ∀Z.(enBar(Z) ⇒ bebe(Z)))
+-- ∃X.enBar(X) ∧ ∀Y.(¬enBar(Y) ∨ ¬(¬bebe(Y) ∨ ∀Z.(enBar(Z) ⇒ bebe(Z)))
+-- ∃X.enBar(X) ∧ ∀Y.(¬enBar(Y) ∨ (bebe(Y) ∧ ¬∀Z.(enBar(Z) ⇒ bebe(Z)))
+-- ∃X.enBar(X) ∧ ∀Y.(¬enBar(Y) ∨ (bebe(Y) ∧ ∃Z.¬(enBar(Z) ⇒ bebe(Z)))
+-- ∃X.enBar(X) ∧ ∀Y.(¬enBar(Y) ∨ (bebe(Y) ∧ ∃Z.¬(¬enBar(Z) ∨ bebe(Z)))
+-- ∃X.enBar(X) ∧ ∀Y.(¬enBar(Y) ∨ (bebe(Y) ∧ ∃Z.(enBar(Z) ∧ ¬bebe(Z)))
 
 -- Pasar a forma normal prenexa:
--- ∃X.enBar(X) ∧ ∀Y.(¬enBar(Y) ∨ (bebe(Y) ∧ ∃Z.(¬enBar(Z) ∧ ¬bebe(Z)))
--- ∃X.∀Y.(enBar(X) ∧ (¬enBar(Y) ∨ (bebe(Y) ∧ ∃Z.(¬enBar(Z) ∧ ¬bebe(Z))))
--- ∃X.∀Y.∃Z.(enBar(X) ∧ (¬enBar(Y) ∨ (bebe(Y) ∧ (¬enBar(Z) ∧ ¬bebe(Z))))
+-- ∃X.enBar(X) ∧ ∀Y.(¬enBar(Y) ∨ (bebe(Y) ∧ ∃Z.(enBar(Z) ∧ ¬bebe(Z)))
+-- ∃X.∀Y.(enBar(X) ∧ (¬enBar(Y) ∨ (bebe(Y) ∧ ∃Z.(enBar(Z) ∧ ¬bebe(Z))))
+-- ∃X.∀Y.∃Z.(enBar(X) ∧ (¬enBar(Y) ∨ (bebe(Y) ∧ (enBar(Z) ∧ ¬bebe(Z))))
 
 -- Pasar a forma normal conjuntiva:
--- ∃X.∀Y.∃Z.(enBar(X) ∧ (¬enBar(Y) ∨ (bebe(Y) ∧ (¬enBar(Z) ∧ ¬bebe(Z))))
--- ∃X.∀Y.∃Z.(enBar(X) ∧ (¬enBar(Y) ∨ (bebe(Y) ∧ ¬enBar(Z) ∧ ¬bebe(Z)))
--- ∃X.∀Y.∃Z.(enBar(X) ∧ (¬enBar(Y) ∨ bebe(Y)) ∧ (¬enBar(Y) ∨ ¬enBar(Z)) ∧ (¬enBar(Y) ∨ ¬bebe(Z)))
+-- ∃X.∀Y.∃Z.(enBar(X) ∧ (¬enBar(Y) ∨ (bebe(Y) ∧ (enBar(Z) ∧ ¬bebe(Z))))
+-- ∃X.∀Y.∃Z.(enBar(X) ∧ (¬enBar(Y) ∨ (bebe(Y) ∧ enBar(Z) ∧ ¬bebe(Z)))
+-- ∃X.∀Y.∃Z.(enBar(X) ∧ (¬enBar(Y) ∨ bebe(Y)) ∧ (¬enBar(Y) ∨ enBar(Z)) ∧ (¬enBar(Y) ∨ ¬bebe(Z)))
 
 -- Skolemizar:
--- ∃X.∀Y.∃Z.(enBar(X) ∧ (¬enBar(Y) ∨ bebe(Y)) ∧ (¬enBar(Y) ∨ ¬enBar(Z)) ∧ (¬enBar(Y) ∨ ¬bebe(Z)))
--- ∀Y.∃Z.(enBar(a) ∧ (¬enBar(Y) ∨ bebe(Y)) ∧ (¬enBar(Y) ∨ ¬enBar(Z)) ∧ (¬enBar(Y) ∨ ¬bebe(Z)))
--- ∀Y.(enBar(a) ∧ (¬enBar(Y) ∨ bebe(Y)) ∧ (¬enBar(Y) ∨ ¬enBar(f(Y))) ∧ (¬enBar(Y) ∨ ¬bebe(f(Y))))
--- enBar(a) ∧ ∀Y.(¬enBar(Y) ∨ bebe(Y)) ∧ ∀Y.(¬enBar(Y) ∨ ¬enBar(f(Y))) ∧ ∀Y.(¬enBar(Y) ∨ ¬bebe(f(Y)))
+-- ∃X.∀Y.∃Z.(enBar(X) ∧ (¬enBar(Y) ∨ bebe(Y)) ∧ (¬enBar(Y) ∨ enBar(Z)) ∧ (¬enBar(Y) ∨ ¬bebe(Z)))
+-- ∀Y.∃Z.(enBar(a) ∧ (¬enBar(Y) ∨ bebe(Y)) ∧ (¬enBar(Y) ∨ enBar(Z)) ∧ (¬enBar(Y) ∨ ¬bebe(Z)))
+-- ∀Y.(enBar(a) ∧ (¬enBar(Y) ∨ bebe(Y)) ∧ (¬enBar(Y) ∨ enBar(f(Y))) ∧ (¬enBar(Y) ∨ ¬bebe(f(Y)))
+-- enBar(a) ∧ ∀Y.(¬enBar(Y) ∨ bebe(Y)) ∧ ∀Y.(¬enBar(Y) ∨ enBar(f(Y))) ∧ ∀Y.(¬enBar(Y) ∨ ¬bebe(f(Y)))
 
 -- Pasar a forma clausal:
--- enBar(a) ∧ ∀Y.(¬enBar(Y) ∨ bebe(Y)) ∧ ∀Y.(¬enBar(Y) ∨ ¬enBar(f(Y))) ∧ ∀Y.(¬enBar(Y) ∨ ¬bebe(f(Y)))
--- {{enBar(a)}, {¬enBar(Y), bebe(Y)}, {¬enBar(Y), ¬enBar(f(Y))}, {¬enBar(Y), ¬bebe(f(Y))}}
-
+-- enBar(a) ∧ ∀Y.(¬enBar(Y) ∨ bebe(Y)) ∧ ∀Y.(¬enBar(Y) ∨ enBar(f(Y))) ∧ ∀Y.(¬enBar(Y) ∨ ¬bebe(f(Y)))
+-- {{enBar(a)}, {¬enBar(Y), bebe(Y)}, {¬enBar(Y), enBar(f(Y))}, {¬enBar(Y), ¬bebe(f(Y))}}
 
 -- Cláusulas y sus roles:
 -- 1 {enBar(a)} (DEFINICIÓN)
 -- 2 {¬enBar(Y2), bebe(Y2)} (DEFINICIÓN)
--- 3 {¬enBar(Y3), ¬enBar(f(Y3))} (OBJETIVO)
+-- 3 {¬enBar(Y3), enBar(f(Y3))} (DEFINICIÓN)
 -- 4 {¬enBar(Y4), ¬bebe(f(Y4))} (OBJETIVO)
+
+-- Resolución SLD:
+
+-- MGU sobre las cláusulas 1 y 4:
+-- { enBar(a) ≟ enBar(Y4) }
+-- Decompose ⇒ { a ≟ Y4 }
+-- Swap ⇒ { Y4 ≟ a }
+-- Elim { Y4 := a } ⇒ {}
+-- MGU = { Y4 := a }
+
+-- 5 {¬bebe(f(a))} (OBJETIVO)
+
+-- MGU sobre las cláusulas 2 y 5:
+-- { bebe(Y2) ≟ bebe(f(a)) }
+-- Decompose ⇒ { Y2 ≟ f(a) }
+-- Elim { Y2 := f(a) } ⇒ {}
+-- MGU = { Y2 := f(a) }
+
+-- 6 {¬enBar(f(a))} (OBJETIVO)
+
+-- MGU sobre las cláusulas 3 y 6:
+-- { enBar(f(Y3)) ≟ enBar(f(a)) }
+-- Decompose ⇒ { f(Y3) ≟ f(a) }
+-- Decompose ⇒ { Y3 ≟ a }
+-- Elim { Y3 := a } ⇒ {}
+-- MGU = { Y3 := a }
+
+-- 7 {¬enBar(a)} (OBJETIVO)
+
+-- Resolución binaria sobre las cláusulas 1 y 7:
+-- 8 {}
+
+-- La resolución de la fórmula es insatisfacible por lo que la fórmula es válida y fue demostrada mediante SLD
 
 
 -- Ejercicio 17
