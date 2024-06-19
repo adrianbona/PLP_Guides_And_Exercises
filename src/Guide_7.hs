@@ -1298,6 +1298,7 @@ module Guide_7 (
 
 -- Por resolución entre las cláusulas 7 y 8 se obtiene la cláusula vacía, por lo que la fórmula es válida
 
+
 -- Ejercicio 20
 
 -- natural(cero).
@@ -1305,6 +1306,7 @@ module Guide_7 (
 
 -- mayorOIgual(suc(X),Y) :- mayorOIgual(X,Y).
 -- mayorOIgual(X,X) :- natural(X).
+
 
 -- i. Qué sucede al ejecutar "? - mayorOIgual(suc(suc(N)), suc(cero))"?
 
@@ -1315,6 +1317,7 @@ module Guide_7 (
 -- mayorOIgual(N, suc(cero))
 
 -- Prolog no logra dar con un N que satisfaga la regla mayorOIgual(N, suc(cero)) porque no logra unificar el último término.
+
 
 -- ii. Convertir las reglas a cláusulas de Horn:
 
