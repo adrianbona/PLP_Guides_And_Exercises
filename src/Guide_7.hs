@@ -1136,6 +1136,43 @@ module Guide_7 (
 
 -- Ejercicio 18
 
+-- Cláusulas:
+
+-- 1 {¬Progenitor(X1,Y1), Descendiente(Y1,X1)}
+-- 2 {¬Descendiente(X2,Y2), ¬Descendiente(Y2,Z2), Descendiente(X2,Z2)}
+-- 3 {¬Abuelo(X3,Y3), Progenitor(X3,medio(X3,Y3))}
+-- 4 {¬Abuelo(X4,Y4), Progenitor(medio(X4,Y4),Y4)}
+
+-- Demostrar que los nietos son descendientes: ∀X.∀Y.(Abuelo(X,Y) ⇒ Descendiente(Y,X)
+
+-- ¬∀X.∀Y.(Abuelo(X,Y) ⇒ Descendiente(Y,X))
+-- ∃X.¬∀Y.(Abuelo(X,Y) ⇒ Descendiente(Y,X))
+-- ∃X.∃Y.¬(Abuelo(X,Y) ⇒ Descendiente(Y,X))
+-- ∃X.∃Y.¬(¬Abuelo(X,Y) ∨ Descendiente(Y,X))
+-- ∃X.∃Y.(Abuelo(X,Y) ∧ ¬Descendiente(Y,X))
+-- ∃Y.(Abuelo(a,Y) ∧ ¬Descendiente(Y,a))
+-- Abuelo(a,b) ∧ ¬Descendiente(b,a)
+-- {{Abuelo(a,b)}, {¬Descendiente(b,a)}}
+
+-- Cláusulas y sus roles:
+-- 1 {¬Progenitor(X1,Y1), Descendiente(Y1,X1)} (DEFINICIÓN)
+-- 2 {¬Descendiente(X2,Y2), ¬Descendiente(Y2,Z2), Descendiente(X2,Z2)} (DEFINICIÓN)
+-- 3 {¬Abuelo(X3,Y3), Progenitor(X3,medio(X3,Y3))} (DEFINICIÓN)
+-- 4 {¬Abuelo(X4,Y4), Progenitor(medio(X4,Y4),Y4)} (DEFINICIÓN)
+-- 5 {Abuelo(a,b)} (DEFINICIÓN)
+-- 6 {¬Descendiente(b,a)} (OBJETIVO)
+
+-- Resolución:
+
+-- MGU sobre las cláusulas 1 y 6:
+-- { Descendiente(Y1,X1) ≟ Descendiente(b,a) }
+-- Decompose ⇒ { Y1 ≟ a, X1 ≟ b }
+-- Elim { Y1 := a, X1 := b } ⇒ {}
+-- MGU = { Y1 := a, X1 := b }
+
+-- 7 {¬Progenitor(b,a)} (OBJETIVO)
+
+
 -- Ejercicio 19
 
 -- Demostrar mediante método de resolución una propiedad de las relaciones binarias. A saber, una relación no vacía
