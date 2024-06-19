@@ -978,6 +978,7 @@ module Guide_7 (
 -- 5 {V(i(a))} (DEFINICIÓN)
 -- 6 {¬V(a)} (OBJETIVO)
 
+-- ???
 
 -- Ejercicio 16
 
@@ -1058,6 +1059,85 @@ module Guide_7 (
 -- Ejercicio 17
 
 -- Ejercicio 18
+
+
+-- Ejercicio 19
+
+-- Demostrar mediante método de resolución una propiedad de las relaciones binarias. A saber, una relación no vacía
+-- no puede ser irreflexiva, simétrica y transitiva al mismo tiempo. Si R satisface las tres propiedades, entonces es vacía.
+
+-- R es irreflexiva: ∀X.¬R(X,X)
+
+-- Forma clausal:
+-- ∀X.¬R(X,X)
+-- {¬R(X1,X1)}
+
+-- R es simétrica: ∀X.∀Y.(R(X,Y) ⇒ R(Y,X))
+
+-- Forma clausal:
+-- ∀X.∀Y.(R(X,Y) ⇒ R(Y,X))
+-- ∀X.∀Y.(¬R(X,Y) ∨ R(Y,X))
+-- {¬R(X2,Y2), R(Y2,X2)}
+
+-- R es transitiva: ∀X.∀Y.∀Z.((R(X,Y) ∧ R(Y,Z)) ⇒ R(X,Z))
+
+-- Forma clausal:
+-- ∀X.∀Y.∀Z.((R(X,Y) ∧ R(Y,Z)) ⇒ R(X,Z))
+-- ∀X.∀Y.∀Z.(¬(R(X,Y) ∧ R(Y,Z)) ∨ R(X,Z))
+-- ∀X.∀Y.∀Z.(¬R(X,Y) ∨ ¬R(Y,Z) ∨ R(X,Z))
+-- {¬R(X3,Y3), ¬R(Y3,Z3), R(X3,Z3)}
+
+-- R es vacía: ∀X.¬∃Y.R(X,Y)
+
+-- Forma clausal (negada):
+-- ¬∀X.¬∃Y.R(X,Y)
+-- ∃X.¬¬∃Y.R(X,Y)
+-- ∃X.∃Y.R(X,Y)
+-- ∃Y.R(a,Y)
+-- R(a,b)
+
+-- Conjunto de cláusulas:
+-- 1 {¬R(X1,X1)}
+-- 2 {¬R(X2,Y2), R(Y2,X2)}
+-- 3 {¬R(X3,Y3), ¬R(Y3,Z3), R(X3,Z3)}
+-- 4 {R(a,b)}
+
+-- MGU sobre las cláusulas 2 y 4:
+-- { R(a,b) ≟ R(X2,Y2) }
+-- Decompose ⇒ { a ≟ X2, b ≟ Y2 }
+-- Swap ⇒ { X2 ≟ a, Y2 ≟ b }
+-- Elim { X2 := a, Y2 := b } ⇒ {}
+
+-- 5 {R(b,a)}
+
+-- MGU sobre las cláusulas 3 y 5:
+-- { R(b,a) ≟ R(Y3,Z3) }
+-- Decompose ⇒ { b ≟ Y3, a ≟ Z3 }
+-- Swap ⇒ { Y3 ≟ b, Z3 ≟ a }
+-- Elim { Y3 := b, Z3 := a } ⇒ {}
+-- MGU = { Y3 := b, Z3 := a }
+
+-- 6 {¬R(X6,b), R(X6,a)}
+
+-- MGU sobre las cláusulas 4 y 6:
+-- { R(a,b) ≟ R(X6,b) }
+-- Decompose ⇒ { a ≟ X6, b ≟ b }
+-- Swap ⇒ { X6 ≟ a, b ≟ b }
+-- Elim { X6 := a } ⇒ {b ≟ b}
+-- Delete ⇒ {b ≟ b} ⇒ {}
+-- MGU = { X6 := a }
+
+-- 7 {¬R(a,a)}
+
+-- MGU sobre las cláusulas 1 y 7:
+-- { ¬R(a,a) ≟ ¬R(a,a) }
+-- Delete ⇒ {}
+-- MGU = {}
+
+-- 8 {}
+
+-- Por resolución entre las cláusulas 7 y 8 se obtiene la cláusula vacía, por lo que la fórmula es válida
+
 
 -- Ejercicio 26
 
@@ -1293,88 +1373,6 @@ module Guide_7 (
 -- {Abuela(a,b)} : Es de Horn
 -- {¬Descendiente(b,a)} : Es de Horn (podría ser GOAL)
 
-
--- Ejercicio Parcial
-
--- Demostrar mediante método de resolución una propiedad de las relaciones binarias. A saber, una relación no vacía
--- no puede ser irreflexiva, simétrica y transitiva al mismo tiempo. Si R satisface las tres propiedades, entonces es vacía.
-
-
--- R es irreflexiva: ∀X.¬R(X,X)
-
--- Forma clausal:
--- ∀X.¬R(X,X)
--- {¬R(X1,X1)}
-
-
--- R es simétrica: ∀X.∀Y.(R(X,Y) ⇒ R(Y,X))
-
--- Forma clausal:
--- ∀X.∀Y.(R(X,Y) ⇒ R(Y,X))
--- ∀X.∀Y.(¬R(X,Y) ∨ R(Y,X))
--- {¬R(X2,Y2), R(Y2,X2)}
-
-
--- R es transitiva: ∀X.∀Y.∀Z.((R(X,Y) ∧ R(Y,Z)) ⇒ R(X,Z))
-
--- Forma clausal:
--- ∀X.∀Y.∀Z.((R(X,Y) ∧ R(Y,Z)) ⇒ R(X,Z))
--- ∀X.∀Y.∀Z.(¬(R(X,Y) ∧ R(Y,Z)) ∨ R(X,Z))
--- ∀X.∀Y.∀Z.(¬R(X,Y) ∨ ¬R(Y,Z) ∨ R(X,Z))
--- {¬R(X3,Y3), ¬R(Y3,Z3), R(X3,Z3)}
-
-
--- R es vacía: ∀X.¬∃Y.R(X,Y)
-
--- Forma clausal (negada):
--- ¬∀X.¬∃Y.R(X,Y)
--- ∃X.¬¬∃Y.R(X,Y)
--- ∃X.∃Y.R(X,Y)
--- ∃Y.R(a,Y)
--- R(a,b)
-
-
--- Conjunto de cláusulas:
--- 1 {¬R(X1,X1)}
--- 2 {¬R(X2,Y2), R(Y2,X2)}
--- 3 {¬R(X3,Y3), ¬R(Y3,Z3), R(X3,Z3)}
--- 4 {R(a,b)}
-
--- MGU sobre las cláusulas 2 y 4:
--- { R(a,b) ≟ R(X2,Y2) }
--- Decompose ⇒ { a ≟ X2, b ≟ Y2 }
--- Swap ⇒ { X2 ≟ a, Y2 ≟ b }
--- Elim { X2 := a, Y2 := b } ⇒ {}
-
--- 5 {R(b,a)}
-
--- MGU sobre las cláusulas 3 y 5:
--- { R(b,a) ≟ R(Y3,Z3) }
--- Decompose ⇒ { b ≟ Y3, a ≟ Z3 }
--- Swap ⇒ { Y3 ≟ b, Z3 ≟ a }
--- Elim { Y3 := b, Z3 := a } ⇒ {}
--- MGU = { Y3 := b, Z3 := a }
-
--- 6 {¬R(X6,b), R(X6,a)}
-
--- MGU sobre las cláusulas 4 y 6:
--- { R(a,b) ≟ R(X6,b) }
--- Decompose ⇒ { a ≟ X6, b ≟ b }
--- Swap ⇒ { X6 ≟ a, b ≟ b }
--- Elim { X6 := a } ⇒ {b ≟ b}
--- Delete ⇒ {b ≟ b} ⇒ {}
--- MGU = { X6 := a }
-
--- 7 {¬R(a,a)}
-
--- MGU sobre las cláusulas 1 y 7:
--- { ¬R(a,a) ≟ ¬R(a,a) }
--- Delete ⇒ {}
--- MGU = {}
-
--- 8 {}
-
--- Por resolución entre las cláusulas 7 y 8 se obtiene la cláusula vacía, por lo que la fórmula es válida
 
 
 
