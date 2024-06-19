@@ -1322,10 +1322,43 @@ module Guide_7 (
 -- ii. Convertir las reglas a cláusulas de Horn:
 
 -- natural(cero) se escribe como { natural(cero) } (cero es una constante)
--- natural(suc(X)) :- natural(X). se escribe como { natural(X), ¬natural(suc(X)) }
+-- natural(suc(X)) :- natural(X). se escribe como { ¬natural(X), natural(suc(X)) }
 
--- mayorOIgual(suc(X),Y) :- mayorOIgual(X,Y). se escribe como { mayorOIgual(X,Y), ¬mayorOIgual(suc(X),Y) }
--- mayorOIgual(X,X) :- natural(X). se escribe como { natural(X), ¬mayorOIgual(X,X) }
+-- mayorOIgual(suc(X),Y) :- mayorOIgual(X,Y). se escribe como { mayorOIgual(suc(X),Y), ¬mayorOIgual(X,Y) }
+-- mayorOIgual(X,X) :- natural(X). se escribe como { ¬natural(X), mayorOIgual(X,X) }
+
+-- Probar mayorOIgual(suc(suc(N)), suc(cero)) en forma clausal:
+-- ¬mayorOIgual(suc(suc(N)), suc(cero))
+-- { ¬mayorOIgual(suc(suc(N)), suc(cero)) }
+
+-- Conjunto de cláusulas:
+
+-- 1 { natural(cero) }
+-- 2 { ¬natural(X2), natural(suc(X2)) }
+-- 3 { mayorOIgual(suc(X3),Y3), ¬mayorOIgual(X3,Y3) }
+-- 4 { ¬natural(X4), mayorOIgual(X4,X4) }
+-- 5 { ¬mayorOIgual(suc(suc(N)), suc(cero)) }
+
+-- MGU sobre las cláusulas 3 y 5:
+-- { suc(suc(N)) ≟ suc(X3), suc(cero) ≟ Y3 }
+-- Decompose ⇒ { suc(N) ≟ X3, cero ≟ Y3 }
+-- Swap ⇒ { X3 ≟ suc(N), Y3 ≟ cero }
+-- Elim { X3 := suc(N), Y3 := cero } ⇒ {}
+-- MGU = { X3 := suc(N), Y3 := cero }
+
+-- 6 { ¬mayorOIgual(N,cero) }
+
+-- MGU sobre las cláusulas 4 y 6:
+-- { mayorOIgual(X4,X4) ≟ mayorOIgual(N,cero) }
+-- Decompose ⇒ { X4 ≟ N, X4 ≟ cero }
+-- Elim { X4 := N } ⇒ { N ≟ cero }
+-- Elim { N := cero } ⇒ {}
+-- MGU = { N := cero }
+
+-- 7 {}
+
+-- La resolución de la fórmula es insatisfacible por lo que la fórmula es válida y fue demostrada.
+-- mayorOIgual(suc(suc(N)), suc(cero)) es verdadero para N cero
 
 
 -- Ejercicio 21
