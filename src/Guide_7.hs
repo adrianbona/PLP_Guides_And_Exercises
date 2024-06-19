@@ -889,7 +889,77 @@ module Guide_7 (
 
 -- Ejercicio 14
 
+-- Cláusulas:
+
+-- 1 {¬suma(X,Y,Z), suma(X,suc(Y), suc(Z))} (DEFINICIÓN)
+-- 2 {suma(X,cero,X)} (DEFINICIÓN)
+-- 3 {¬suma(X,X,Y), par(Y)} (DEFINICIÓN)
+
+-- Objetivo:
+-- 4 {¬par(suc(suc(cero)))} (OBJETIVO)
+
+-- MGU sobre las cláusulas 3 y 4:
+-- { par(Y) ≟ par(suc(suc(cero))) }
+-- Decompose ⇒ { Y ≟ suc(suc(cero)) }
+-- Elim { Y := suc(suc(cero)) } ⇒ {}
+-- MGU = { Y := suc(suc(cero)) }
+
+-- 5 {¬suma(X,X,suc(suc(cero)))} (DEFINICIÓN)
+
+-- MGU sobre las cláusulas 1 y 5:
+-- { suma(X,suc(Y), suc(Z)) ≟ suma(X,X,suc(suc(cero))) }
+-- Decompose ⇒ { X ≟ X, suc(Y) ≟ X, suc(Z) ≟ suc(suc(cero)) }
+-- Delete ⇒ { X ≟ X } { suc(Y) ≟ X, suc(Z) ≟ suc(suc(cero)) }
+-- Decompose ⇒ { Z ≟ suc(cero) } { suc(Y) ≟ X, Z ≟ suc(cero) }
+-- Swap ⇒ { X ≟ suc(Y) } { X ≟ suc(Y), Z ≟ suc(cero) }
+-- Elim { X := suc(Y) } ⇒ { Z := suc(cero) }
+-- MGU = { X := suc(Y), Z := suc(cero) }
+
+-- 6 {¬suma(suc(Y),Y,suc(cero))} (DEFINICIÓN)
+
+-- MGU sobre las cláusulas 2 y 6:
+-- { suma(suc(Y),Y,suc(cero)) ≟ suma(suc(Y),Y,suc(cero)) }
+-- Decompose ⇒ { Y ≟ Y, suc(cero) ≟ suc(cero) }
+-- Delete ⇒ { Y ≟ Y } { suc(cero) ≟ suc(cero) }
+-- Delete ⇒ { suc(cero) ≟ suc(cero) } {}
+-- MGU = {}
+
+-- 7 {}
+
+-- La resolución de la fórmula es insatisfacible por lo que la fórmula es válida y fue demostrada mediante SLD
+
+
 -- Ejercicio 15
+
+-- i. Pasar las fórmulas en lógica de primer orden a forma clausal:
+
+-- a. ∀C.(V(C) ∨ ∃E.P(E,C))
+
+-- ∀C.(V(C) ∨ ∃E.P(E,C))
+-- ∀C.∃E.(V(C) ∨ P(E,C))
+-- ∀C.(V(C) ∨ P(f(C),C))
+-- ∀C.V(C) ∨ ∀C.P(f(C),C)
+-- {V(C), P(f(C),C)}
+
+-- b. ¬∃C.(V(C) ∧ ∃E.P(E,C))
+
+-- ¬∃C.(V(C) ∧ ∃E.P(E,C))
+-- ∀C.¬(V(C) ∧ ∃E.P(E,C))
+-- ∀C.(¬V(C) ∨ ¬∃E.P(E,C))
+-- ∀C.(¬V(C) ∨ ∀E.¬P(E,C))
+-- ∀C.∀E.(¬V(C) ∨ ¬P(E,C))
+-- ∀C.∀E.¬V(C) ∨ ∀C.∀E.¬P(E,C)
+-- {¬V(C), ¬P(E,C)}
+
+
+-- c. ∀E.∀C.(P(E,i(C)) ⇔ P(E,C))
+
+-- ∀E.∀C.(P(E,i(C)) ⇔ P(E,C))
+-- ∀E.∀C.((P(E,i(C)) ⇒ P(E,C)) ∧ (P(E,C) ⇒ P(E,i(C))))
+-- ∀E.∀C.(¬P(E,i(C)) ∨ P(E,C)) ∧ (¬P(E,C) ∨ P(E,i(C)))
+-- ∀E.∀C.(¬P(E,i(C)) ∨ P(E,C)) ∧ ∀E.∀C.(¬P(E,C) ∨ P(E,i(C)))
+-- {{¬P(E,i(C)), P(E,C)} {¬P(E,C), P(E,i(C))}}
+
 
 -- Ejercicio 16
 
