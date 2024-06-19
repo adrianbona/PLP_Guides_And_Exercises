@@ -1123,15 +1123,19 @@ module Guide_7 (
 -- Elim { Y2 := X3, X2 := a } ⇒ {}
 -- MGU = { Y2 := X3, X2 := a }
 
--- 4 {¬esContacto(X4,a)} (OBJETIVO)
+-- 4 {¬esContacto(a,X4)} (OBJETIVO)
 
 -- MGU sobre las cláusulas 1 y 4:
--- { esContacto(X1, f(X1)) ≟ esContacto(X4,a) }
--- Decompose ⇒ { X1 ≟ X4, f(X1) ≟ a }
--- Elim { X1 := X4 } ⇒ { f(X4) ≟ a }
--- Clash ⇒ FALLA
+-- { esContacto(X1, f(X1)) ≟ esContacto(a,X4) }
+-- Decompose ⇒ { X1 ≟ a, f(X1) ≟ X4 }
+-- Elim { X1 := a } ⇒ { f(a) ≟ X4 }
+-- Swap ⇒ { X4 ≟ f(a) }
+-- Elim { X4 := f(a) } ⇒ {}
+-- MGU = { X1 := a, X4 := f(a) }
 
--- La unificación no es posible, por lo que la fórmula no es válida
+-- 5 {}
+
+-- La resolución de la fórmula es insatisfacible por lo que la fórmula es válida y fue demostrada mediante SLD
 
 
 -- Ejercicio 18
@@ -1164,13 +1168,57 @@ module Guide_7 (
 
 -- Resolución:
 
--- MGU sobre las cláusulas 1 y 6:
--- { Descendiente(Y1,X1) ≟ Descendiente(b,a) }
--- Decompose ⇒ { Y1 ≟ a, X1 ≟ b }
--- Elim { Y1 := a, X1 := b } ⇒ {}
--- MGU = { Y1 := a, X1 := b }
+-- MGU sobre las cláusulas 2 y 6:
+-- { Descendiente(X2,Z2) ≟ Descendiente(b,a) }
+-- Decompose ⇒ { X2 ≟ b, Z2 ≟ a }
+-- Elim { X2 := b, Z2 := a } ⇒ {}
+-- MGU = { X2 := b, Z2 := a }
 
--- 7 {¬Progenitor(b,a)} (OBJETIVO)
+-- 7 {¬Descendiente(b,Y7), ¬Descendiente(Y7,a)} (OBJETIVO)
+
+-- MGU sobre las cláusulas 1 y 7:
+
+-- { Descendiente(b,Y7) ≟ Descendiente(Y1,X1) }
+-- Decompose ⇒ { b ≟ Y1, Y7 ≟ X1 }
+-- Swap ⇒ { Y1 ≟ b, X1 ≟ Y7 }
+-- Elim { Y1 := b, X1 := Y7 } ⇒ {}
+-- MGU = { Y1 := b, X1 := Y7 }
+
+-- 8 {¬Descendiente(Y7,a), ¬Progenitor(Y7,b)} (OBJETIVO)
+
+-- MGU sobre las cláusulas 1 y 8:
+-- { Descendiente(Y7,a) ≟ Descendiente(Y1,X1) }
+-- Decompose ⇒ { Y7 ≟ Y1, a ≟ X1 }
+-- Swap ⇒ { Y1 ≟ Y7, X1 ≟ a }
+-- Elim { Y1 := Y7, X1 := a } ⇒ {}
+-- MGU = { Y1 := Y7, X1 := a }
+
+-- 9 {¬Progenitor(Y9,b), ¬Progenitor(a,Y9)} (OBJETIVO)
+
+-- MGU sobre las cláusulas 3 y 9:
+-- { Progenitor(X3,medio(X3,Y3)) ≟ Progenitor(a,Y9) }
+-- Decompose ⇒ { X3 ≟ a, medio(X3,Y3) ≟ Y9 }
+-- Elim { X3 := a, Y9 := medio(a,Y3) } ⇒ {}
+-- MGU = { X3 := a, Y9 := medio(a,Y3) }
+
+-- 10 {¬Abuelo(a,Y10), ¬Progenitor(medio(a,Y10),b)} (OBJETIVO)
+
+-- MGU sobre las cláusulas 4 y 10:
+-- { Progenitor(medio(X4,Y4),Y4) ≟ Progenitor(medio(a,Y10),b) }
+-- Decompose ⇒ { medio(X4,Y4) ≟ medio(a,Y10), Y4 ≟ b }
+-- Elim { Y4 := b } ⇒ {medio(X4,b) ≟ medio(a,Y10)}
+-- Decompose ⇒ { X4 ≟ a, b ≟ Y10 }
+-- Swap ⇒ { X4 ≟ a, Y10 ≟ b }
+-- Elim { X4 := a, Y10 := b } ⇒ {}
+-- MGU = { X4 := a, Y10 := b }
+
+-- 11 {¬Abuelo(a,b)} (OBJETIVO)
+
+-- Resolución binaria sobre las cláusulas 5 y 11:
+
+-- 12 {}
+
+-- La resolución de la fórmula es insatisfacible por lo que la fórmula es válida y no fue demostrada mediante SLD.
 
 
 -- Ejercicio 19
@@ -1249,6 +1297,31 @@ module Guide_7 (
 -- 8 {}
 
 -- Por resolución entre las cláusulas 7 y 8 se obtiene la cláusula vacía, por lo que la fórmula es válida
+
+-- Ejercicio 20
+
+-- natural(cero).
+-- natural(suc(X)) :- natural(X).
+
+-- mayorOIgual(suc(X),Y) :- mayorOIgual(X,Y).
+-- mayorOIgual(X,X) :- natural(X).
+
+-- i. Qué sucede al ejecutar "? - mayorOIgual(suc(suc(N)), suc(cero))"?
+
+
+-- Ejercicio 21
+
+
+-- Ejercicio 22
+
+
+-- Ejercicio 23
+
+
+-- Ejercicio 24
+
+
+-- Ejercicio 25
 
 
 -- Ejercicio 26
