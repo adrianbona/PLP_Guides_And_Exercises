@@ -826,15 +826,81 @@ module Guide_7 (
 -- ¬I(X)
 -- {{¬I(X)}}
 
--- Conjunto de cláusulas:
--- 1 {{R(alan)}, {J(alan)}}
--- 2 {{¬R(X), ¬PL(Y), ¬Res(X,Y), I(X)}}
--- 3 {{¬R(X), ¬J(X), ¬Pr(Y), Res(X,Y)}}
--- 4 {{¬Pr(X), PL(X)}}
--- 5 {{Pr(a)}}
--- 6 {{¬I(X)}}
+-- Conjunto de cláusulas y sus roles:
+-- 1 {R(alan)} (DEFINICIÓN)
+-- 2 {J(alan)} (DEFINICIÓN)
+-- 3 {¬R(X), ¬PL(Y), ¬Res(X,Y), I(X)} (DEFINICIÓN)
+-- 4 {¬R(X), ¬J(X), ¬Pr(Y), Res(X,Y)} (DEFINICIÓN)
+-- 5 {¬Pr(X), PL(X)} (DEFINICIÓN)
+-- 6 {Pr(a)} (DEFINICIÓN)
+-- 7 {¬I(X)} (OBJETIVO)
 
--- Procedemos a la resolución SLD, para ello las clásulas deben ser identificadas según su rol.
+-- Procedemos a la resolución SLD, se aplica la regla de resolución binaria sobre una cláusula de definición y el objetivo:
+
+-- MGU sobre las cláusulas 3 y 7:
+-- { I(X) ≟ I(X) }
+-- Decompose ⇒ {X ≟ X}
+-- Delete ⇒ {}
+-- MGU = {}
+
+-- 8 {¬R(X), ¬PL(Y), ¬Res(X,Y)} (OBJETIVO)
+
+-- MGU sobre las cláusulas 1 y 8:
+-- { R(alan) ≟ R(X) }
+-- Decompose ⇒ { alan ≟ X }
+-- Swap ⇒ { X ≟ alan }
+-- Elim { X := alan } ⇒ {}
+-- MGU = { X := alan }
+
+-- 9 {¬PL(Y), ¬Res(alan,Y)} (OBJETIVO)
+
+-- MGU sobre las cláusulas 5 y 9:
+
+-- { PL(X) ≟ PL(Y) }
+-- Decompose ⇒ { X ≟ Y }
+-- Elim { X := Y } ⇒ {}
+-- MGU = { X := Y }
+
+-- 10 {¬Res(alan,Y), ¬Pr(Y)} (OBJETIVO)
+
+-- MGU sobre las cláusulas 6 y 10:
+-- { Pr(a) ≟ Pr(Y) }
+-- Decompose ⇒ { a ≟ Y }
+-- Swap ⇒ { Y ≟ a }
+-- Elim { Y := a } ⇒ {}
+-- MGU = { Y := a }
+
+-- 11 {¬Res(alan,a)} (OBJETIVO)
+
+-- MGU sobre las cláusulas 4 y 11:
+-- { Res(X,Y) ≟ Res(alan,a) }
+-- Decompose ⇒ { X ≟ alan, Y ≟ a }
+-- Elim { X := alan, Y := a } ⇒ {}
+-- MGU = { X := alan, Y := a }
+
+-- 12 {¬R(alan), ¬J(alan), ¬Pr(a)} (OBJETIVO)
+
+-- Aplico la regla de resolución binaria sobre las cláusulas 2 y 12:
+
+-- 13 {¬R(alan), ¬Pr(a)}
+
+-- Aplico la regla de resolución binaria sobre las cláusulas 1 y 13:
+
+-- 14 {¬Pr(a)}
+
+-- Aplico la regla de resolución binaria sobre las cláusulas 6 y 14:
+
+-- 15 {}
+
+-- La resolución de la fórmula es insatisfacible por lo que la fórmula es válida
+
+
+
+
+
+
+
+
 
 
 -- Ejercicio 14
