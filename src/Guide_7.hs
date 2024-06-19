@@ -773,7 +773,6 @@ module Guide_7 (
 -- J(X) para X es japonés
 -- la constante alan para Alan
 
-
 -- Hipótesis:
 
 -- Alan es un robot japonés.
@@ -829,78 +828,63 @@ module Guide_7 (
 -- Conjunto de cláusulas y sus roles:
 -- 1 {R(alan)} (DEFINICIÓN)
 -- 2 {J(alan)} (DEFINICIÓN)
--- 3 {¬R(X), ¬PL(Y), ¬Res(X,Y), I(X)} (DEFINICIÓN)
--- 4 {¬R(X), ¬J(X), ¬Pr(Y), Res(X,Y)} (DEFINICIÓN)
--- 5 {¬Pr(X), PL(X)} (DEFINICIÓN)
+-- 3 {¬R(X3), ¬PL(Y3), ¬Res(X3,Y3), I(X3)} (DEFINICIÓN)
+-- 4 {¬R(X4), ¬J(X4), ¬Pr(Y4), Res(X4,Y4)} (DEFINICIÓN)
+-- 5 {¬Pr(X5), PL(X5)} (DEFINICIÓN)
 -- 6 {Pr(a)} (DEFINICIÓN)
--- 7 {¬I(X)} (OBJETIVO)
+-- 7 {¬I(X7)} (OBJETIVO)
 
 -- Procedemos a la resolución SLD, se aplica la regla de resolución binaria sobre una cláusula de definición y el objetivo:
 
 -- MGU sobre las cláusulas 3 y 7:
--- { I(X) ≟ I(X) }
--- Decompose ⇒ {X ≟ X}
--- Delete ⇒ {}
--- MGU = {}
+-- { I(X3) ≟ I(X7) }
+-- Decompose ⇒ { X3 ≟ X7 }
+-- Elim { X3 := X7 } ⇒ {}
+-- MGU = { X3 := X7 }
 
--- 8 {¬R(X), ¬PL(Y), ¬Res(X,Y)} (OBJETIVO)
+-- 8 {¬R(X7), ¬PL(Y7), ¬Res(X7,Y7)} (DEFINICIÓN)
 
--- MGU sobre las cláusulas 1 y 8:
--- { R(alan) ≟ R(X) }
--- Decompose ⇒ { alan ≟ X }
--- Swap ⇒ { X ≟ alan }
--- Elim { X := alan } ⇒ {}
--- MGU = { X := alan }
+-- MGU sobre las cláusulas 4 y 8:
+-- { Res(X4,Y4) ≟ Res(X7,Y7) }
+-- Decompose ⇒ { X4 ≟ X7, Y4 ≟ Y7 }
+-- Elim { X4 := X7, Y4 := Y7 } ⇒ {}
+-- MGU = { X4 := X7, Y4 := Y7 }
 
--- 9 {¬PL(Y), ¬Res(alan,Y)} (OBJETIVO)
+-- 9 {¬R(X7), ¬J(X7), ¬Pr(Y7), ¬PL(Y7)} (DEFINICIÓN)
 
 -- MGU sobre las cláusulas 5 y 9:
+-- { PL(X5) ≟ PL(Y7) }
+-- Decompose ⇒ { X5 ≟ Y7 }
+-- Elim { X5 := Y7 } ⇒ {}
+-- MGU = { X5 := Y7 }
 
--- { PL(X) ≟ PL(Y) }
--- Decompose ⇒ { X ≟ Y }
--- Elim { X := Y } ⇒ {}
--- MGU = { X := Y }
+-- 10 {¬R(X7), ¬J(X7), ¬Pr(Y7)} (DEFINICIÓN)
 
--- 10 {¬Res(alan,Y), ¬Pr(Y)} (OBJETIVO)
+-- MGU sobre las cláusulas 1 y 10:
+-- { R(alan) ≟ R(X7) }
+-- Decompose ⇒ { alan ≟ X7 }
+-- Swap ⇒ { X7 ≟ alan }
+-- Elim { X7 := alan } ⇒ {}
 
--- MGU sobre las cláusulas 6 y 10:
--- { Pr(a) ≟ Pr(Y) }
--- Decompose ⇒ { a ≟ Y }
--- Swap ⇒ { Y ≟ a }
--- Elim { Y := a } ⇒ {}
--- MGU = { Y := a }
+-- 11 {¬J(alan), ¬Pr(Y7)} (DEFINICIÓN)
 
--- 11 {¬Res(alan,a)} (OBJETIVO)
+-- MGU sobre las cláusulas 2 y 11:
+-- { J(alan) ≟ J(X7) }
+-- Decompose ⇒ { alan ≟ X7 }
+-- Swap ⇒ { X7 ≟ alan }
+-- Elim { X7 := alan } ⇒ {}
 
--- MGU sobre las cláusulas 4 y 11:
--- { Res(X,Y) ≟ Res(alan,a) }
--- Decompose ⇒ { X ≟ alan, Y ≟ a }
--- Elim { X := alan, Y := a } ⇒ {}
--- MGU = { X := alan, Y := a }
+-- 12 {¬Pr(Y7)} (DEFINICIÓN)
 
--- 12 {¬R(alan), ¬J(alan), ¬Pr(a)} (OBJETIVO)
+-- MGU sobre las cláusulas 6 y 12:
+-- { Pr(a) ≟ Pr(Y7) }
+-- Decompose ⇒ { a ≟ Y7 }
+-- Swap ⇒ { Y7 ≟ a }
+-- Elim { Y7 := a } ⇒ {}
 
--- Aplico la regla de resolución binaria sobre las cláusulas 2 y 12:
-
--- 13 {¬R(alan), ¬Pr(a)}
-
--- Aplico la regla de resolución binaria sobre las cláusulas 1 y 13:
-
--- 14 {¬Pr(a)}
-
--- Aplico la regla de resolución binaria sobre las cláusulas 6 y 14:
-
--- 15 {}
+-- 13 {} (OBJETIVO)
 
 -- La resolución de la fórmula es insatisfacible por lo que la fórmula es válida
-
-
-
-
-
-
-
-
 
 
 -- Ejercicio 14
