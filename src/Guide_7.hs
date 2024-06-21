@@ -978,7 +978,8 @@ module Guide_7 (
 -- 5 {V(i(a))} (DEFINICIÓN)
 -- 6 {¬V(a)} (OBJETIVO)
 
--- ???
+-- Queda pendiente trazar el plan para realizar la resolución binaria
+
 
 -- Ejercicio 16
 
