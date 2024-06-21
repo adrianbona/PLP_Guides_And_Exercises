@@ -1448,6 +1448,80 @@ module Guide_7 (
 
 -- Ejercicio 22
 
+-- preorder(nil,[]).
+-- preorder(bin(I,R,D),[R|L]) :- append(LI,LD,L), preorder(I,LI), preorder(D,LD).
+
+-- append([],YS,YS).
+-- append([X|XS],YS,[X|L]) :- append(XS,YS,L).
+
+-- Pasaje a forma clausal:
+
+-- preorder(nil,[])
+-- { preorder(nil,[]) }
+
+-- preorder(bin(I,R,D),[R|L]) :- append(LI,LD,L), preorder(I,LI), preorder(D,LD)
+-- { ¬append(LI,LD,L), ¬preorder(I,LI), ¬preorder(D,LD), preorder(bin(I,R,D),[R|L]) }
+
+-- append([],YS,YS)
+-- { append([],YS,YS) }
+
+-- append([X|XS],YS,[X|L]) :- append(XS,YS,L)
+-- { ¬append(XS,YS,L), append([X|XS],YS,[X|L]) }
+
+-- Demostrar preorder(bin(bin(nil,1,nil),2,nil),X)
+-- ¬preorder(bin(bin(nil,1,nil),2,nil),X)
+-- { ¬preorder(bin(bin(nil,1,nil),2,nil),X) }
+
+-- Conjunto de cláusulas:
+-- 1 { preorder(nil,[]) } (DEFINICIÓN)
+-- 2 { ¬append(LI2,LD2,L2), ¬preorder(I2,LI2), ¬preorder(D2,LD2), preorder(bin(I2,R2,D2),[R2|L2]) } (DEFINICIÓN)
+-- 3 { append([],YS3,YS3) } (DEFINICIÓN)
+-- 4 { ¬append(XS4,YS4,L4), append([X4|XS4],YS4,[X4|L4]) } (DEFINICIÓN)
+-- 5 { ¬preorder(bin(bin(nil,1,nil),2,nil),X5) } (OBJETIVO)
+
+-- Resolución SLD:
+
+-- MGU sobre las cláusulas 2 y 5:
+-- { preorder(bin(bin(nil,1,nil),2,nil),X5) ≟ preorder(bin(I2,R2,D2),[R2|L2]) }
+-- Decompose ⇒ { bin(bin(nil,1,nil),2,nil) ≟ bin(I2,R2,D2), X5 ≟ [R2|L2] }
+-- Decompose ⇒ { bin(nil,1,nil) ≟ I2, 2 ≟ R2, nil ≟ D2, X5 ≟ [R2|L2] }
+-- Swap ⇒ { I2 ≟ bin(nil,1,nil), R2 ≟ 2, D2 ≟ nil, X5 ≟ [R2|L2] }
+-- Elim { I2 := bin(nil,1,nil), R2 := 2, D2 := nil, X5 := [R2|L2] } ⇒ {}
+-- MGU = { I2 := bin(nil,1,nil), R2 := 2, D2 := nil, X5 := [2|L2] }
+
+-- 6 {  ¬append(LI2,LD2,L2), ¬preorder(bin(nil,1,nil),LI2), ¬preorder(nil,LD2) }
+
+-- MGU sobre las cláusulas 1 y 6:
+-- { preorder(nil,[]) ≟ preorder(nil,LD2) }
+-- Decompose ⇒ { [] ≟ LD2 }
+-- Swap ⇒ { LD2 ≟ [] }
+-- Elim { LD2 := [] } ⇒ {}
+-- MGU = { LD2 := [] }
+
+-- 7 { ¬append(LI7,[],L7), ¬preorder(bin(nil,1,nil),LI7) }
+
+-- MGU sobre las cláusulas 2 y 7:
+-- { preorder(bin(nil,1,nil),LI7) ≟ preorder(bin(I2,R2,D2),[R2|L2]) }
+-- Decompose ⇒ { bin(nil,1,nil) ≟ bin(I2,R2,D2), LI7 ≟ [R2|L2] }
+-- Decompose ⇒ { nil ≟ I2, 1 ≟ R2, nil ≟ D2, LI7 ≟ [R2|L2] }
+-- Swap ⇒ { I2 ≟ nil, R2 ≟ 1, D2 ≟ nil, LI7 ≟ [R2|L2] }
+-- Elim { I2 := nil, R2 := 1, D2 := nil, LI7 := [1|L2] } ⇒ {}
+-- MGU = { I2 := nil, R2 := 1, D2 := nil, LI7 := [1|L2] }
+
+-- 8 { ¬append([1|L2],[],L7), ¬append(LI2,LD2,L2), ¬preorder(nil,LI2), ¬preorder(nil,LD2) }
+
+-- MGU sobre las cláusulas 1 y 8 (dos veces para eliminar los preorders):
+-- 10 { ¬append([1|L2],[],L7), ¬append([],[],L2) }
+
+-- MGU sobre las cláusulas 3 y 10 (para eliminar el append)
+-- 11 { ¬append([1],[],L7) }
+
+-- MGU sobre las cláusulas 4 y 11 y luego 3 y 12 (para eliminar el append):
+-- 12 { }
+
+-- La resolución de la fórmula es insatisfacible por lo que la fórmula es válida y fue demostrada mediante SLD.
+-- La reconstrucción del MGU permite probar que preorder(bin(bin(nil,1,nil),2,nil),X) es verdadero para X = [2,1]
+
 
 -- Ejercicio 23
 
