@@ -1767,11 +1767,3 @@ module Guide_7 (
 -- {¬Descendiente(b,a)} : Es de Horn (podría ser GOAL)
 
 
-
-
-
-
-
-
-
-

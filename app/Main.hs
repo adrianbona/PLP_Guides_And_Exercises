@@ -20,5 +20,7 @@ import Guide_6 ()
 
 import Guide_7 ()
 
+import Guide_8 ()
+
 main :: IO ()
 main = putStrLn "Main file loaded"
