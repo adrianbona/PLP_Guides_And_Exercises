@@ -1364,6 +1364,87 @@ module Guide_7 (
 
 -- Ejercicio 21
 
+-- Pasaje a forma claual:
+
+-- analfabeto(X) :- vivo(X), noSabeLeer(X).
+-- { ¬vivo(X), ¬noSabeLeer(X), analfabeto(X) }
+
+-- vivo(X) :- delfín(X).
+-- { ¬delfín(X), vivo(X) }
+
+-- inteligente(flipper).
+-- { inteligente(flipper) }
+
+-- inteligente(alan).
+-- { inteligente(alan) }
+
+-- noSabeLeer(X) :- mesa(X).
+-- { ¬mesa(X), noSabeLeer(X) }
+
+-- noSabeLeer(X) :- delfín(X).
+-- { ¬delfín(X), noSabeLeer(X) }
+
+-- delfín(flipper).
+-- { delfín(flipper) }
+
+-- Demostrar que hay alguien que es inteligente y analfabeto, es decir que ∃X.(inteligente(X) ∧ analfabeto(X))
+
+-- ¬∃X.(inteligente(X) ∧ analfabeto(X))
+-- ∀X.¬(inteligente(X) ∧ analfabeto(X))
+-- ∀X.(¬inteligente(X) ∨ ¬analfabeto(X))
+-- ∀X.¬inteligente(X) ∨ ∀X.¬analfabeto(X)
+-- { ¬inteligente(X), ¬analfabeto(X) }
+
+-- Conjunto de cláusulas:
+-- 1 { ¬vivo(X1), ¬noSabeLeer(X1), analfabeto(X1) } (DEFINICIÓN)
+-- 2 { ¬delfín(X2), vivo(X2) } (DEFINICIÓN)
+-- 3 { inteligente(flipper) } (DEFINICIÓN)
+-- 4 { inteligente(alan) } (DEFINICIÓN)
+-- 5 { ¬mesa(X5), noSabeLeer(X5) } (DEFINICIÓN)
+-- 6 { ¬delfín(X6), noSabeLeer(X6) } (DEFINICIÓN)
+-- 7 { delfín(flipper) } (DEFINICIÓN)
+-- 8 { ¬inteligente(X8), ¬analfabeto(X8) } (OBJETIVO)
+
+-- Resolución SLD:
+
+-- MGU sobre las cláusulas 3 y 8:
+-- { inteligente(flipper) ≟ inteligente(X8) }
+-- Decompose ⇒ { flipper ≟ X8 }
+-- Elim { X8 := flipper } ⇒ {}
+-- MGU = { X8 := flipper }
+
+-- 9 { ¬analfabeto(flipper) } (OBJETIVO)
+
+-- MGU sobre las cláusulas 1 y 9:
+-- { analfabeto(X1) ≟ analfabeto(flipper) }
+-- Decompose ⇒ { X1 ≟ flipper }
+-- Elim { X1 := flipper } ⇒ {}
+-- MGU = { X1 := flipper }
+
+-- 10 { ¬vivo(flipper), ¬noSabeLeer(flipper) } (OBJETIVO)
+
+-- MGU sobre las cláusulas 2 y 10:
+-- { vivo(X2) ≟ vivo(flipper) }
+-- Decompose ⇒ { X2 ≟ flipper }
+-- Elim { X2 := flipper } ⇒ {}
+-- MGU = { X2 := flipper }
+
+-- 11 { ¬delfín(flipper), ¬noSabeLeer(flipper) } (OBJETIVO)
+
+-- MGU sobre las cláusulas 6 y 11:
+-- { noSabeLeer(X6) ≟ noSabeLeer(flipper) }
+-- Decompose ⇒ { X6 ≟ flipper }
+-- Elim { X6 := flipper } ⇒ {}
+-- MGU = { X6 := flipper }
+
+-- 12 { ¬delfín(flipper) } (OBJETIVO)
+
+-- Resolución binaria sobre las cláusulas 7 y 12:
+
+-- 13 {}
+
+-- La resolución de la fórmula es insatisfacible por lo que la fórmula es válida y fue demostrada mediante SLD
+
 
 -- Ejercicio 22
 
