@@ -1,1 +1,1 @@
-# Testing Haskell Exercises Completion
+# Testing PLP Guide Exercises

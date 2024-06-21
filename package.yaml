@@ -1,6 +1,6 @@
 name:                plp
 version:             0.1.0.0
-github:              "adrianbona/Haskell_Exercises"
+github:              "adrianbona/Guide_Exercises"
 license:             BSD-3-Clause
 author:              "Adrian Bona"
 maintainer:          "adrianbona@outlook.com"
@@ -40,16 +40,6 @@ executables:
   plp-exe:
     main:                Main.hs
     source-dirs:         app
-    ghc-options:
-    - -rtsopts
-    - -with-rtsopts=-N
-    dependencies:
-    - plp
-
-tests:
-  plp-test:
-    main:                Spec.hs
-    source-dirs:         test
     ghc-options:
     - -rtsopts
     - -with-rtsopts=-N
