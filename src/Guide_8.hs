@@ -32,15 +32,18 @@ module Guide_8 (
 -- descendiente(X,Y) :- padre(X,Z), descendiente(Z,Y).
 
 
--- iii. Consulta descendiente(Alguien, juan).
+-- iv. Nietos de juan.
 
--- descendiente(Alguien, juan)
+-- ?- abuelo(juan, X) .
+-- X = daniel ;
+-- X = diego ;
+-- X = pablo ;
+-- X = manuel ;
+-- X = ramiro.
 
----- padre(Alguien, juan)
------- false
 
----- padre(Alguien, Z), descendiente(Z, juan)
------- padre(juan, carlos), descendiente(Z, juan)
--------- padre(Z, juan)
----------- false
--------- padre(Z,Z1), descendiente(Z1,juan)
+-- v. Todos los hermanos de Pablo.
+
+-- ?- hermano(pablo, X) .
+-- X = manuel ;
+-- X = ramiro.
