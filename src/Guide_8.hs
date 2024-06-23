@@ -111,3 +111,12 @@ module Guide_8 (
 -- menorOIgual(X, X) :- natural(X).
 -- menorOIgual(X, suc(Y)) :- menorOIgual(X, Y).
 
+
+-- Ejercicio 4
+
+-- %juntar(?Lista1,?Lista2,?Lista3)
+-- juntar([], L, L).
+-- juntar([X|L1], L2, [X|L3]) :- juntar(L1, L2, L3).
+
+
+-- Ejercicio 5
