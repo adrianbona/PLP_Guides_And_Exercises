@@ -202,10 +202,28 @@ module Guide_8 (
 -- pertenece(X, L) :- append(_, [X|_], L).
 
 
+-- Ejercicio 6
+
+-- Definir el predicado aplanar(+Xs, -Ys), que es verdadero sii Ys contiene los elementos
+-- de todos los niveles de Xs, en el mismo orden de aparición
+
+-- %aplanar(+Xs, -Ys)
+-- aplanar([], []).
+-- aplanar([Z|Xs], Ys) :- aplanar(Z, Zs), aplanar(Xs, Xss), append(Zs, Xss, Ys).
+-- aplanar([X|Xs], Ys) :- not(aplanar(X, _)), aplanar(Xs, Xss), append([X], Xss, Ys).
 
 
+-- Ejercicio 7
 
+-- i. Definir el predicado palindromo(+L, ?L1), donde L1 es un palíndromo de L cuya primera mitad es L.
 
+-- %palindromo(+L, ?L1)
+-- palindromo(L, L1) :- reverse(L, LReverse), append(L,LReverse,L1) .
+
+-- ii. Definir el predicado iesimo(?I, +L, ?X), donde X es el elemento en la posición I de la lista L.
+
+-- %iesimo(?I, +L, ?X)
+-- iesimo(I, L, X) :- append(L1, [X|_], L), length(L1, I).
 
 
 
