@@ -120,3 +120,92 @@ module Guide_8 (
 
 
 -- Ejercicio 5
+
+
+-- i. Definir el predicado last(?L, ?U), donde U es el último elemento de la lista L
+
+-- Versión sin append
+-- last([X], X).
+-- last([_|L], X) :- last(L, X).
+
+-- Versión con append
+-- %last(?L, ?U)
+-- last(L, U) :- append(_, [U], L).
+
+
+-- ii. Definir el predicado reverse(+L, -L1), donde L1 contiene los mismos elementos que L, pero en orden invers
+
+-- %reverse(+L, -L1)
+-- reverse([], []).
+-- reverse([X|L], L1) :- reverse(L, L2), append(L2, [X], L1).
+
+-- Árbol de búsqueda para "reverse([a,b,c], [c,b,a])."
+
+-- Call: (12) reverse([a, b, c], [c, b, a])
+-- Exit: (12) reverse([a, b, c], [c, b, a])
+
+-- Call: (13) reverse([b, c], _10420)
+-- Exit: (13) reverse([b, c], [c, b])
+-- Exit: (13) append([c, b], [a], [c, b, a])
+-- Call: (13) append([c, b], [a], [c, b, a])
+
+-- Call: (14) reverse([c], _11232)
+-- Exit: (14) reverse([c], [c])
+-- Call: (14) append([c], [b], _10420)
+-- Exit: (14) append([c], [b], [c, b])
+-- Call: (14) append([b], [a], [b, a])
+-- Exit: (14) append([b], [a], [b, a])
+
+-- Call: (15) reverse([], _12044)
+-- Exit: (15) reverse([], [])
+-- Call: (15) append([], [c], _11232)
+-- Exit: (15) append([], [c], [c])
+-- Call: (15) append([], [b], _17190)
+-- Exit: (15) append([], [b], [b])
+-- Call: (15) append([], [a], [a])
+-- Exit: (15) append([], [a], [a])
+
+
+-- iii. Definir el predicado prefijo(?P, +L), donde P es prefijo de la lista L.
+
+-- Versión sin append:
+-- %prefijo(?P, +L)
+-- prefijo([], _).
+-- prefijo([X|P], [X|L]) :- prefijo(P, L).
+
+-- Versión con append:
+-- %prefijo(?P, +L)
+-- prefijo(P, L) :- append(P, _, L).
+
+
+-- iv. Definir el predicado sufijo(?S, +L), donde S es sufijo de la lista L.
+
+-- %sufijo(?S, +L)
+-- sufijo(S, L) :- append(_, S, L).
+
+
+-- v. Definir el predicado sublista(?S, +L), donde S es sublista de la lista L.
+
+-- %sublista(?S, +L)
+-- sublista(S, L) :- prefijo(P, L), sufijo(S, P).
+
+
+-- vi. Definir pertenece(?X, +L), que es verdadero sii el elemento X se encuentra en la lista L.
+
+-- Versión sin append:
+-- %pertenece(?X, +L)
+-- pertenece(X, [X|_]).
+-- pertenece(X, [_|L]) :- pertenece(X, L).
+
+-- Versión con append:
+-- %pertenece(?X, +L)
+-- pertenece(X, L) :- append(_, [X|_], L).
+
+
+
+
+
+
+
+
+
