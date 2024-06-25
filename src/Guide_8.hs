@@ -121,7 +121,6 @@ module Guide_8 (
 
 -- Ejercicio 5
 
-
 -- i. Definir el predicado last(?L, ?U), donde U es el último elemento de la lista L
 
 -- Versión sin append
@@ -224,6 +223,7 @@ module Guide_8 (
 
 -- %iesimo(?I, +L, ?X)
 -- iesimo(I, L, X) :- append(L1, [X|_], L), length(L1, I).
+
 
 
 
