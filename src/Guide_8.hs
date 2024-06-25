@@ -234,10 +234,10 @@ module Guide_8 (
 
 -- %interseccion(+L1, +L2, -L3)
 -- interseccion([], _, []).
--- interseccion([X|L1], L2, [X|L3]) :- member(X, L2), eliminar_todos(X, L2, L2SinX), eliminar_todos(X, L1, L1SinX), interseccion(L1SinX, L2SinX, L3).
--- interseccion([_|L1], L2, L3) :- interseccion(L1, L2, L3).
+-- interseccion([X|L1], L2, [X|L3]) :- member(X, L2), eliminarAparciones(X, L1, L1SinX), interseccion(L1SinX, L2, L3).
+-- interseccion([X|L1], L2, L3) :- not(member(X, L2)), interseccion(L1, L2, L3).
 
--- % eliminar_todos(+X, +Lista, -ListaSinX)
--- eliminar_todos(_, [], []).
--- eliminar_todos(X, [X|T], L) :- eliminar_todos(X, T, L).
--- eliminar_todos(X, [H|T], [H|L]) :- X \= H, eliminar_todos(X, T, L).
+-- % eliminarAparciones(+X, +Lista, -ListaSinX)
+-- eliminarAparciones(_, [], []).
+-- eliminarAparciones(X, [X|T], L) :- eliminarAparciones(X, T, L).
+-- eliminarAparciones(X, [H|T], [H|L]) :- X \= H, eliminarAparciones(X, T, L).
