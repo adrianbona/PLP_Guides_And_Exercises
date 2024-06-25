@@ -225,5 +225,19 @@ module Guide_8 (
 -- iesimo(I, L, X) :- append(L1, [X|_], L), length(L1, I).
 
 
+-- Ejercicio 8
 
+-- Definir los predicados usando member/2 y/o append/3 según corresponda.
 
+-- i. interseccion(+L1, +L2, -L3), tal que L3 es la intersección sin repeticiones
+-- de las listas L1 y L2, respetando en L3 el orden en que aparecen los elementos en L.
+
+-- %interseccion(+L1, +L2, -L3)
+-- interseccion([], _, []).
+-- interseccion([X|L1], L2, [X|L3]) :- member(X, L2), eliminar_todos(X, L2, L2SinX), eliminar_todos(X, L1, L1SinX), interseccion(L1SinX, L2SinX, L3).
+-- interseccion([_|L1], L2, L3) :- interseccion(L1, L2, L3).
+
+-- % eliminar_todos(+X, +Lista, -ListaSinX)
+-- eliminar_todos(_, [], []).
+-- eliminar_todos(X, [X|T], L) :- eliminar_todos(X, T, L).
+-- eliminar_todos(X, [H|T], [H|L]) :- X \= H, eliminar_todos(X, T, L).
