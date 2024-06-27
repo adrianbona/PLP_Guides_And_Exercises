@@ -263,3 +263,87 @@ module Guide_9 (
 
 -- Integer << timesRepeat: aBlock
 --   1 to: self do: [ aBlock value ].
+
+
+-- Ejercicio 9
+
+-- Agregar a la clase BlockClosure el método de clase generarBloqueInfinito que devuelve un bloque b1 tal que:
+-- b1 value devuelve un arreglo de 2 elementos #(1 b2),
+-- b2 value devuelve un arreglo de 2 elementos #(2 b3),
+-- ...,
+-- bi value devuelve un arreglo de 2 elementos #(i bi+1)
+
+-- BlockClosure class << generarBloqueInfinito
+--   ^ [ :x | #(x (self value: x + 1)) ] .
+
+
+-- Ejercicio 10
+
+-- i. Todo objeto es instancia de alguna clase y a su vez, estas son objetos.
+
+-- [Verdadero]
+
+
+-- ii. Cuando un mensaje es enviado a un objeto, el método asociado en la clase del receptor es ejecutado.
+
+-- [Falso] El método asociado en la clase del receptor es ejecutado si el objeto entiende el mensaje, de lo
+-- contrario se busca en la jerarquía de clases para encontrar la implementación del método correspondiente.
+
+
+-- iii. Al mandar un mensaje a una clase, por ejemplo Object new, se busca en esa clase el método correspondiente.
+-- A este método lo clasificamos como método de instancia.
+
+-- [Falso] Al mandar un mensaje a una clase se busca el método de clase correspondiente.
+
+
+-- iv. Una Variable de instancia es una variable compartida por todas las instancias vivas de una clase, en caso
+-- de ser modificada por alguna de ellas, la variable cambia.
+
+-- [Falso] Una Variable de instancia es una variable que pertenece a una instancia de una clase, por lo que no es
+-- compartida por todas las instancias vivas de una clase.
+
+
+-- v. Las Variables de clase son accesibles por el objeto clase, pero al mismo tiempo también son accesibles y
+-- compartidas por todas las instancias de la clase; es decir, si una instacia modifica el valor de dicha variable,
+-- dicho cambio afecta a todas las instancias.
+
+-- [Falso] Las Variables de clase son accesibles por el objeto clase pero no significa que los valores sean compartidos.
+-- Si una instancia modifica el valor de una variable de clase, el cambio no afecta a las demás instancias.
+
+
+-- vi. Al ver el código de un método, podemos determinar a qué objeto representará la pseudo-variable self.
+
+-- [Verdadero] Representará al objeto que recibe el mensaje.
+
+
+-- vii. Al ver el código de un método, podemos determinar a qué objeto representará la pseudo-variable super.
+
+-- [Verdadero] Representará a la superclase de la clase que implementa el método.
+
+
+-- viii. Un Método de clase puede acceder a las variables de clase pero no a las de instancia, y por otro lado,
+-- siempre devuelven un objeto instancia de la clase receptora.
+
+-- [Falso] Un Método de clase puede acceder a las variables de clase y no a las de instancia, pero no siempre devuelven
+-- un objeto instancia de la clase receptora.
+
+
+-- ix. Los métodos y variables de clase son los métodos y variables de instancia del objeto clase.
+
+-- [Falso] Los métodos y variables de clase son los métodos y variables de instancia del objeto clase.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
