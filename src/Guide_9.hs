@@ -333,7 +333,25 @@ module Guide_9 (
 -- [Falso] Los métodos y variables de clase son los métodos y variables de instancia del objeto clase.
 
 
+-- Ejercicio 11
 
+-- Suponiendo que anObject es una instancia de la clase OneClass que tiene definido el método de instancia
+-- aMessage. Al ejecutar la siguiente expresión: anObject aMessage...
+
+-- i. ¿A qué objeto queda ligada (hace referencia) la pseudo-variable self en el contexto de ejecución del método que es invocado?
+
+-- El objeto anObject recibe el mensaje aMessage. En la definición del método de la instancia aMessage, self hace referencia a anObject.
+
+
+-- ii. ¿A qué objeto queda ligada la pseudo-variable super en el contexto de ejecución del método que es invocado?
+
+-- La pseudo-variable super quedará ligada a la superclase de OneClass.
+
+
+-- iii. ¿Es cierto que super == self? ¿Es cierto en cualquier contexto de ejecución?
+
+-- No es cierto que super == self. En cualquier contexto de ejecución super hace referencia a la superclase de la clase
+-- que implementa el método, mientras que self hace referencia al objeto que recibe el mensaje.
 
 
 
