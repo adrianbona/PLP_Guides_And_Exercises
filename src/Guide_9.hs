@@ -240,3 +240,26 @@ module Guide_9 (
 
 -- c) obj foo: 10. (Ayuda: el resultado no es 20).
 -- 0 (el resultado es 0 porque el bloque retorna 0 si x > 5 y no continúa con el resto de las instrucciones)
+
+
+-- Ejercicio 8
+
+-- a) #curry, cuyo objeto receptor es un bloque de dos parámetros,
+-- y su resultado es un bloque similar al original pero currificado.
+
+-- BlockClosure << curry
+--   ^ [ :x | [ :y | self value: x value: y ] ] .
+
+
+-- b) #flip, que al enviarse a un bloque de dos parámetros,
+-- devuelve un bloque similar al original, pero con los parámetros en el orden inverso.
+
+-- BlockClosure << flip
+--   ^ [ :x :y | self value: y value: x ] .
+
+
+-- c) #timesRepeat:, cuyo objeto receptor es un número natural y
+-- recibe como colaborador un bloque, el cual se evaluará tantas veces como el número lo indique.
+
+-- Integer << timesRepeat: aBlock
+--   1 to: self do: [ aBlock value ].
