@@ -399,8 +399,58 @@ module Guide_9 (
 --   ^2 * 3.14 * radio.
 
 
+-- Ejercicio 13
 
+-- Object subclass: Counter [
 
+--   | count |
+--   class >> new [
+--     ^ super new initialize: 0.
+--   ]
+
+--   initialize: aValue [
+--     count := aValue.
+--     ^ self.
+--   ]
+
+--   next [
+--     self initialize: count + 1.
+--     ^ count.
+--   ]
+
+--   nextIf: condition [
+--     ^ condition ifTrue: [ self next ] ifFalse: [ count ]
+--   ]
+-- ]
+
+-- Counter subclass: FlexibleCounter [
+
+--   | block |
+--   class >> new: aBlock [
+--     ^ super new useBlock: aBlock.
+--   ]
+
+--   useBlock: aBlock [
+--     block := aBlock.
+--     ^ self.
+--   ]
+
+--   next [
+--     self initialize: (block value: count).
+--     ^ count.
+--   ]
+-- ]
+
+-- Considere la siguiente expresión: aCounter := FlexibleCounter new: [:v | v+2 ]. aCounter nextIf: true.
+
+-- Se desea saber qué mensajes se envían a qué objetos (dentro del contexto de la clase) y cuál es el resultado
+-- de dicha evaluación. Recordar que := y ^ no son mensajes. Recomendación, utilizar una tabla: "Objeto Mensaje Resultado"
+
+-- Tenemos dos instrucciones, la primera crea una instancia de FlexibleCounter y la segunda envía el mensaje nextIf a la misma.
+
+-- Objeto | Mensaje | Resultado
+-- FlexibleCounter Class | new: | una instancia de FlexibleCounter
+-- aCounter | nextIf: | 2
 
 
 
