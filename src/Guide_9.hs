@@ -354,7 +354,49 @@ module Guide_9 (
 -- que implementa el método, mientras que self hace referencia al objeto que recibe el mensaje.
 
 
+-- Ejercicio 12
 
+-- Se cuenta con la clase Figura, que tiene los métodos perimetro y lados.
+
+-- sumarTodos es un método de la clase Collection, que suma todos los elementos de la colección receptora.
+-- El método lados debe devolver un Bag (subclase de Collection) con las longitudes de los lados de la figura.
+
+-- Figura tiene dos subclases: Cuadrado y Círculo. Cuadrado tiene una variable de instancia lado, que representa
+-- la longitud del lado del cuadrado modelado; Círculo tiene una variable de instancia radio, que representa
+-- el radio del círculo modelado.
+
+-- Se pide que las clases Cuadrado y Círculo tengan definidos su método perímetro. Implementar los métodos
+-- que sean necesarios para ello, respetando el modelo (incompleto) recién presentado.
+
+-- Observaciones: el perímetro de un círculo se obtiene calculando: 2 · π · radio, y el del cuadrado: 4 · lado.
+-- Consideramos que un círculo no tiene lados. Aproximar π por 3,14.
+
+-- Object subclass: #Figura
+--   instanceVariableNames: ''.
+
+-- Figura >> perimetro
+--   ^((self lados) sumarTodos).
+
+-- Figura >> lados
+--   self subclassResponsibility.
+
+-- Figura subclass: #Cuadrado
+--   instanceVariableNames: 'lado'.
+
+-- Cuadrado >> lados
+--   ^Bag with: (4 * lado).
+
+-- Cuadrado >> perimetro
+--   ^4 * lado.
+
+-- Figura subclass: #Circulo
+--   instanceVariableNames: 'radio'.
+
+-- Circulo >> lados
+--   ^Bag new. "Los círculos no tienen lados, devolvemos un Bag vacío"
+
+-- Circulo >> perimetro
+--   ^2 * 3.14 * radio.
 
 
 
