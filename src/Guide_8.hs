@@ -234,10 +234,45 @@ module Guide_8 (
 
 -- %interseccion(+L1, +L2, -L3)
 -- interseccion([], _, []).
--- interseccion([X|L1], L2, [X|L3]) :- member(X, L2), eliminarApariciones(X, L1, L1SinX), interseccion(L1SinX, L2, L3).
+-- interseccion([X|L1], L2, [X|L3]) :- member(X, L2), borrar(L1, X, L1SinX), interseccion(L1SinX, L2, L3).
 -- interseccion([X|L1], L2, L3) :- not(member(X, L2)), interseccion(L1, L2, L3).
 
--- % eliminarApariciones(+X, +Lista, -ListaSinX)
--- eliminarApariciones(_, [], []).
--- eliminarApariciones(X, [X|T], L) :- eliminarApariciones(X, T, L).
--- eliminarApariciones(X, [H|T], [H|L]) :- X \= H, eliminarApariciones(X, T, L).
+-- %partir(+N, +L, -L1, -L2)
+-- partir(0, L, [], L).
+-- partir(N, [H|T], [H|L1], L2) :- N > 0, N1 is N - 1, partir(N1, T, L1, L2).
+
+-- For the predicate partir/4, all parameters (N, L, L1, and L2) are reversible. Each parameter can be deduced if the
+-- others are known, as evidenced by the logical structure of the predicate and successful test queries with various
+-- combinations of bound and unbound parameters.
+
+
+-- ii. borrar(+ListaOriginal, +X, -ListaSinXs), que elimina todas las ocurrencias de X de la lista ListaOriginal.
+
+-- %borrar(+ListaOriginal, +X, -ListaSinXs)
+-- borrar([], _, []).
+-- borrar([X|T], X, L) :- borrar(T, X, L).
+-- borrar([H|T], X, [H|L]) :- X \= H, borrar(X, T, L).
+
+
+-- iii. sacarDuplicados(+L1, -L2), que saca todos los elementos duplicados de la lista L1.
+
+-- %sacarDuplicados(+L1, -L2)
+-- sacarDuplicados([], []).
+-- sacarDuplicados([H|T], L) :- member(H, T), sacarDuplicados(T, L).
+-- sacarDuplicados([H|T], [H|L]) :- not(member(H, T)), sacarDuplicados(T, L).
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
