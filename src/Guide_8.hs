@@ -432,19 +432,18 @@ module Guide_8 (
 -- números naturales incluyendo el 0, tal todas las filas suman lo mismo. Devolver las matrices XS de manera ordenada.
 
 -- %cuadradoSemiLatino(+N, -XS)
--- cuadradoSemiLatino(N, XS) :- N > 1, length(XS, N), columnaSemiLatina(N, XS).
+-- cuadradoSemiLatino(N, XS) :- N > 1, length(XS, N), desde2(0, L), columnaSemiLatina(N, L, XS).
 
--- %columnaSemiLatina(+N, -XS)
--- columnaSemiLatina(_, []).
--- columnaSemiLatina(N, [X|XS]) :- length(X, N), filaSemiLatina(N,X), columnaSemiLatina(N, XS).
+-- %columnaSemiLatina(+N, +L, -XS)
+-- columnaSemiLatina(_, _, []).
+-- columnaSemiLatina(N, L, [X|XS]) :- length(X, N), filaSemiLatina(N, L, X), columnaSemiLatina(N, L, XS).
 
--- %filaSemiLatina(+N, -F)
--- filaSemiLatina(N, F) :- length(F, N), filaSuma(F, N).
+-- %filaSemiLatina(+N, +L, -F)
+-- filaSemiLatina(N, L, F) :- length(F, N), filaSuma(F, L).
 
 -- %filaSuma(?XS, +N)
 -- filaSuma([X], X).
 -- filaSuma([X|XS], N) :- between(0, N, X), Z is N-X, filaSuma(XS, Z).
-
 
 
 
