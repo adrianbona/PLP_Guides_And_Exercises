@@ -234,8 +234,8 @@ module Guide_8 (
 
 -- %interseccion(+L1, +L2, -L3)
 -- interseccion([], _, []).
--- interseccion([X|L1], L2, [X|L3]) :- member(X, L2), borrar(L1, X, L1SinX), interseccion(L1SinX, L2, L3).
 -- interseccion([X|L1], L2, L3) :- not(member(X, L2)), interseccion(L1, L2, L3).
+-- interseccion([X|L1], L2, [X|L3]) :- member(X, L2), borrar(L1, X, L1SinX), interseccion(L1SinX, L2, L3).
 
 -- %partir(+N, +L, -L1, -L2)
 -- partir(0, L, [], L).
@@ -261,18 +261,59 @@ module Guide_8 (
 -- sacarDuplicados([H|T], L) :- member(H, T), sacarDuplicados(T, L).
 -- sacarDuplicados([H|T], [H|L]) :- not(member(H, T)), sacarDuplicados(T, L).
 
+-- %cantApariciones(+X, +L, -N)
+-- cantApariciones(_, [], 0).
+-- cantApariciones(X, [X|T], N) :- cantApariciones(X, T, M), N is M + 1.
+-- cantApariciones(X, [H|T], N) :- X \= H, cantApariciones(X, T, N).
 
 
+-- iv. permutación(+L1, ?L2), que tiene éxito cuando L2 es permutación de L1.
+
+-- %permutacion(+L1, ?L2)
+-- permutacion([], []).
+-- permutacion([X|Xs], Ys) :-
+--   borrar(Xs, X, XsSinX),
+--   borrar(Ys, X, YsSinX),
+--   length([X|Xs], Xn),
+--   length(Ys, Yn),
+--   Xn = Yn,
+--   permutacion(XsSinX, YsSinX).
 
 
+-- v. reparto(+L, +N, -LListas) que tenga éxito si LListas es una lista de N listas
+-- (N ≥ 1) tales que al concatenarlas se obtiene la lista L.
+
+-- %reparto(+L, +N, -LListas)
+-- reparto(L, 1, [L]).
+-- reparto(L, N, [L1|LListas]) :- N > 1, N1 is N - 1, append(L1, L2, L), reparto(L2, N1, LListas).
 
 
+-- vi. repartoSinVacías(+L, -LListas) similar al anterior, pero ninguna de las listas en LListas puede ser vacía.
+
+-- %repartoSinVacias(+L, -LListas)
+-- repartoSinVacias(L, LListas) :- length(L, N), between(1,N,M), reparto(L, M, LListas), not(member([], LListas)).
 
 
+-- Ejercicio 9
 
+-- elementosTomadosEnOrden(+L,+N,-Elementos), que tenga éxito si L es una lista, N ≥ 0 y Elementos es una lista de
+-- N elementos de L, preservando el orden en que aparecen en la lista original.
 
+-- %elementosTomadosEnOrden(+L, +N,-Elementos)
+-- elementosTomadosEnOrden(L, N, Elementos) :- length(L, M), between(0, M, N), tomar(L, N, Elementos).
 
-
+-- %tomar(+L, +N, -Elementos)
+-- tomar(_, 0, []).
+-- tomar(Xs, 1, [X]) :- pertenece(X, Xs).
+-- tomar(Xs, N, [X,Y|Resto]) :-
+--   N > 1,
+--   N1 is N - 1,
+--   pertenece(X, Xs),
+--   pertenece(Y, Xs),
+--   iesimo(Ix, Xs, X),
+--   iesimo(Iy, Xs, Y),
+--   Ix < Iy,
+--   tomar(Xs, N1, [Y|Resto]).
 
 
 
