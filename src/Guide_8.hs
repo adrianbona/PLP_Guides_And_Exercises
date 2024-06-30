@@ -368,10 +368,30 @@ module Guide_8 (
 -- cantidadNodos(bin(Izq, _, Der), N) :- cantidadNodos(Izq, Ni), cantidadNodos(Der, Nd), N is Ni + Nd + 1.
 
 
+-- Ejercicio 13
+
+-- i. inorder(+AB, -Lista), que tenga éxito si AB es un árbol binario y Lista es la lista de los nodos de AB en recorrido inorder.
+
+-- %inorder(+AB, -Lista)
+-- inorder(nil, []).
+-- inorder(bin(Izq, V, Der), Lista) :- inorder(Izq, L1), inorder(Der, L2), append(L1, [V|L2], Lista).
 
 
+-- ii. arbolConNodos(+Lista, -AB), que tenga éxito si AB es un árbol binario con los nodos de Lista.
+
+-- %arbolConNodos(+Lista, -AB)
+-- arbolConNodos([], nil).
+-- arbolConNodos(Lista, bin(Izq, V, Der)) :- partir(N, Lista, L1, [V|L2]), arbolConNodos(L1, Izq), arbolConNodos(L2, Der).
 
 
+-- iii. aBB(+T), que tenga éxito si T es un árbol binario de búsqueda.
+
+-- %aBB(+T)
+-- aBB(nil).
+-- aBB(bin(nil, _, nil)).
+-- aBB(bin(bin(Izq, Vi, Der), V, nil)) :- Vi < V, aBB(bin(Izq, Vi, Der)).
+-- aBB(bin(nil, V, bin(Izq, Vi, Der))) :- V < Vi, aBB(bin(Izq, Vi, Der)).
+-- aBB(bin(bin(Izq1, Vi1, Der1), V, bin(Izq2, Vi2, Der2))) :- Vi1 < V, V < Vi2, aBB(bin(Izq1, Vi1, Der1)), aBB(bin(Izq2, Vi2, Der2)).
 
 
 
