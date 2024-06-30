@@ -381,7 +381,11 @@ module Guide_8 (
 
 -- %arbolConNodos(+Lista, -AB)
 -- arbolConNodos([], nil).
--- arbolConNodos(Lista, bin(Izq, V, Der)) :- partir(N, Lista, L1, [V|L2]), arbolConNodos(L1, Izq), arbolConNodos(L2, Der).
+-- arbolConNodos(Lista, bin(Izq, V, Der)) :- partir(_, Lista, L1, [V|L2]), arbolConNodos(L1, Izq), arbolConNodos(L2, Der).
+
+-- %arbolConNodosInorder(+Lista, -AB)
+-- arbolConNodosInorder([], nil).
+-- arbolConNodosInorder(Lista, bin(Izq, V, Der)) :- append(L1, [V|L2], Lista), arbolConNodosInorder(L1, Izq), arbolConNodosInorder(L2, Der).
 
 
 -- iii. aBB(+T), que tenga éxito si T es un árbol binario de búsqueda.
@@ -389,21 +393,8 @@ module Guide_8 (
 -- %aBB(+T)
 -- aBB(nil).
 -- aBB(bin(nil, _, nil)).
--- aBB(bin(bin(Izq, Vi, Der), V, nil)) :- Vi < V, aBB(bin(Izq, Vi, Der)).
--- aBB(bin(nil, V, bin(Izq, Vi, Der))) :- V < Vi, aBB(bin(Izq, Vi, Der)).
--- aBB(bin(bin(Izq1, Vi1, Der1), V, bin(Izq2, Vi2, Der2))) :- Vi1 < V, V < Vi2, aBB(bin(Izq1, Vi1, Der1)), aBB(bin(Izq2, Vi2, Der2)).
-
-
-
-
-
-
-
-
-
-
-
-
-
+-- aBB(bin(Izq, V, nil)) :- aBB(Izq), raiz(Izq, Vi), Vi < V.
+-- aBB(bin(nil, V, Der)) :- aBB(Der), raiz(Der, Vi), V < Vi.
+-- aBB(bin(Izq, V, Der)) :- aBB(Izq), aBB(Der), raiz(Izq, Vi1), raiz(Der, Vi2), Vi1 < V, V < Vi2.
 
 
