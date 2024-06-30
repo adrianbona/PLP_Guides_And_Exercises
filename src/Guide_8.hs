@@ -316,4 +316,74 @@ module Guide_8 (
 --   tomar(Xs, N1, [Y|Resto]).
 
 
+-- Ejercicio 10
+
+-- %desde(+X, -Y)
+-- desde(X, X).
+-- desde(X, Y) :- N is X + 1, desde(N, Y).
+
+-- %desde2(+X, ?Y)
+-- desde2(X, X).
+-- desde2(X, Y) :- var(Y), N is X + 1, desde2(N, Y). % Y no está instanciada
+-- desde2(X, Y) :- nonvar(Y), X < Y.                 % Y está instanciada
+
+
+-- Ejercicio 11
+
+-- % intercalar(+L1, +L2, -L3)
+-- intercalar([], [], []).
+-- intercalar([], L2, L2).
+-- intercalar(L1, [], L1).
+-- intercalar([X|L1], [Y|L2], [X,Y|L3]) :- intercalar(L1, L2, L3).
+
+-- Es reversible en todos los parámetros. Si se conoce L1 y L2, se puede deducir L3 y viceversa.
+
+
+-- Ejercicio 12
+
+-- Un árbol binario se representa en Prolog con:
+-- nil, si el árbol es vacío
+-- bin(izq, v, der), árbol con nodo valor v, hijo izquierdo izq y hijo derecho der.
+
+-- i. vacio(+A), que tenga éxito si A es un árbol binario vacío.
+
+-- %vacio(+A)
+-- vacio(nil).
+
+-- ii. raiz(+A, -V), que tenga éxito si V es la raíz del árbol A.
+
+-- %raiz(+A, -V)
+-- raiz(bin(_, V, _), V).
+
+-- iii. altura(+A, -N), que tenga éxito si N es la altura del árbol A.
+
+-- %altura(+A, -N)
+-- altura(nil, 0).
+-- altura(bin(Izq, _, Der), N) :- altura(Izq, Ni), altura(Der, Nd), N is max(Ni, Nd) + 1.
+
+-- iv. cantidadNodos(+A, -N), que tenga éxito si N es la cantidad de nodos del árbol A.
+
+-- %cantidadNodos(+A, -N)
+-- cantidadNodos(nil, 0).
+-- cantidadNodos(bin(Izq, _, Der), N) :- cantidadNodos(Izq, Ni), cantidadNodos(Der, Nd), N is Ni + Nd + 1.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
