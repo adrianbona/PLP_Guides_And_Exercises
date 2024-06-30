@@ -424,3 +424,36 @@ module Guide_8 (
 
 -- %generarPares(-X, -Y)
 -- generarPares(X, Y) :- desde2(1, Z), Z1 is Z - 1, between(1, Z1, X), Y is Z - X.
+
+
+-- Ejercicio 15
+
+-- Definir el predicado cuadradoSemiLatino(+N, -XS) que tenga éxito si XS es una matriz cuadrada de NxN compuesta por
+-- números naturales incluyendo el 0, tal todas las filas suman lo mismo. Devolver las matrices XS de manera ordenada.
+
+-- %cuadradoSemiLatino(+N, -XS)
+-- cuadradoSemiLatino(N, XS) :- N > 1, length(XS, N), columnaSemiLatina(N, XS).
+
+-- %columnaSemiLatina(+N, -XS)
+-- columnaSemiLatina(_, []).
+-- columnaSemiLatina(N, [X|XS]) :- length(X, N), filaSemiLatina(N,X), columnaSemiLatina(N, XS).
+
+-- %filaSemiLatina(+N, -F)
+-- filaSemiLatina(N, F) :- length(F, N), filaSuma(F, N).
+
+-- %filaSuma(?XS, +N)
+-- filaSuma([X], X).
+-- filaSuma([X|XS], N) :- between(0, N, X), Z is N-X, filaSuma(XS, Z).
+
+
+
+
+
+
+
+
+
+
+
+
+
