@@ -322,10 +322,15 @@ module Guide_8 (
 -- desde(X, X).
 -- desde(X, Y) :- N is X + 1, desde(N, Y).
 
+
 -- %desde2(+X, ?Y)
 -- desde2(X, X).
 -- desde2(X, Y) :- var(Y), N is X + 1, desde2(N, Y). % Y no está instanciada
 -- desde2(X, Y) :- nonvar(Y), X < Y.                 % Y está instanciada
+
+
+-- %pmq(+X, -Y)
+-- pmq(X, Y) :- between(0, X, Y), Y mod 2 =:= 0.
 
 
 -- Ejercicio 11
@@ -408,3 +413,14 @@ module Guide_8 (
 
 -- Estamos considerando que las variables X y V están instanciadas, es decir que en términos de la reversibilidad de los
 -- predicados, ni X ni T1 pueden ser deducidos si T2 es conocido. Por lo tanto, el predicado es reversible solo en T2.
+
+
+-- Ejercicio 14
+
+-- Definir coprimos(-X, -Y), que tenga éxito si X e Y son coprimos, es decir, si no tienen divisores comunes mayores a 1.
+
+-- %coprimos(-X, -Y)
+-- coprimos(X, Y) :- generarPares(X, Y), 1 is gcd(X, Y).
+
+-- %generarPares(-X, -Y)
+-- generarPares(X, Y) :- desde2(1, Z), Z1 is Z - 1, between(1, Z1, X), Y is Z - X.
