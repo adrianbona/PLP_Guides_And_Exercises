@@ -398,3 +398,13 @@ module Guide_8 (
 -- aBB(bin(Izq, V, Der)) :- aBB(Izq), aBB(Der), raiz(Izq, Vi1), raiz(Der, Vi2), Vi1 < V, V < Vi2.
 
 
+-- iv. aBBInsertar(+X, +T1, -T2), que tenga éxito si T2 es el árbbol binario de búsqueda que resulta de insertar X en T1.
+
+-- %aBBInsertar(+X, +T1, -T2)
+-- aBBInsertar(X, nil, bin(nil, X, nil)).
+-- aBBInsertar(X, bin(Izq, V, Der), bin(Izq, V, Der)) :- X = V.
+-- aBBInsertar(X, bin(Izq1, V, Der), bin(Izq2, V, Der)) :- X < V, aBBInsertar(X, Izq1, Izq2).
+-- aBBInsertar(X, bin(Izq, V, Der1), bin(Izq, V, Der2)) :- X > V, aBBInsertar(X, Der1, Der2).
+
+-- Estamos considerando que las variables X y V están instanciadas, es decir que en términos de la reversibilidad de los
+-- predicados, ni X ni T1 pueden ser deducidos si T2 es conocido. Por lo tanto, el predicado es reversible solo en T2.
