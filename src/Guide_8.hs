@@ -482,11 +482,29 @@ module Guide_8 (
 -- Ejercicio 16
 
 -- tri(A, B, C) denotará un triángulo con lados de longitud A, B y C
+-- tri(A, B, C) :- A > 0, B > 0, C > 0.
+
 
 -- i. esTriangulo(+T), que tenga éxito si es un triángulo válido.
 
 -- %esTriangulo(+T)
 -- esTriangulo(tri(A, B, C)) :- A + B > C, A + C > B, B + C > A.
+
+
+-- ii. perimetro(?T, ?P), que es verdad si P es el perímetro del triángulo válido T.
+
+-- %perimetro(?T, ?P)
+-- perimetro(tri(A, B, C), P) :- ground(tri(A, B, C)), esTriangulo(tri(A, B, C)), P is A + B + C.
+-- perimetro(tri(A, B, C), P) :- not(ground(tri(A, B, C))), generarTriplas(A, B, C), esTriangulo(tri(A, B, C)), P is A + B + C.
+
+-- %generarTriplas(-A, -B, -C)
+-- generarTriplas(A, B, C) :- desde2(3, P), between(0, P, A), S is P - A, between(0, S, B), C is S - B.
+
+
+-- iii. triangulo(-T), que genera triángulos válidos, sin repetirlos.
+
+-- %triangulo(-T)
+-- triangulo(T) :- perimetro(T, _).
 
 
 -- Ejercicio 19
@@ -501,8 +519,20 @@ module Guide_8 (
 -- unCorte(L, L1, L2, D) :- append(L1, L2, L), sum_list(L1, S1), sum_list(L2, S2), D is abs(S1 - S2).
 
 
+-- Ejercicio de Parcial
 
+-- Definir el predicado matrices(+LS, -L) que es verdadero si L es una matriz cuadrada formada por listas de LS.
 
+-- %matrices(+LS, -L)
+-- matrices(FS, L) :-
+--   generarMatrices(FS, L), % Generate
+--   esMatrizCuadrada(L).    % Test
+
+-- %generarMatrices(+FS, -L)
+-- generarMatrices(FS, L) :- length(FS, N), between(1, N, M), elementosTomadosEnOrden(FS, M, L).
+
+-- %esMatrizCuadrada(+L)
+-- esMatrizCuadrada(L) :- length(L, N), N > 1, forall(member(F, L), length(F, N)).
 
 
 
