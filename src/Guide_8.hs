@@ -449,18 +449,43 @@ module Guide_8 (
 -- ii. Definir el predicado cuadradoMagico(+N, -XS) que instancia XS con cuadrados cuyas filas y columnas suman todas un mismo valor.
 
 -- %cuadradoMagico(+N, -XS)
--- cuadradoMagico(N, XS) :- N > 1, length(XS, N), desde2(0, L), columnaMagica(N, L, XS).
+-- cuadradoMagico(N, XS) :-
+--   N > 1,
+--   generarCuadrado(N, XS),  % Generate
+--   esCuadradoMagico(N, XS). % Test
 
--- %columnaMagica(+N, +L, -XS)
--- columnaMagica(_, _, []).
--- columnaMagica(N, L, [X|XS]) :- length(X, N), filaMagica(N, L, X), columnaMagica(N, L, XS).
+-- %esCuadradoMagico(+N, +XS)
+-- esCuadradoMagico(N, XS) :-
+--   nth1(1, XS, PrimeraFila),
+--   sum_list(PrimeraFila, Referencia),
+--   forall(between(1, N, Fila), sumarFila(Fila, XS, Referencia)),
+--   forall(between(1, N, Columna), sumarColumna(Columna, XS, Referencia)).
 
--- %filaMagica(+N, +L, -F)
--- filaMagica(N, L, F) :- length(F, N), filaSuma(F, L).
+-- %sumarFila(+F, +XS, -SFila)
+-- sumarFila(F, XS, SFila) :- nth1(F, XS, Fila), sum_list(Fila, SFila).
 
--- %filaSuma(?XS, +N)
--- filaSuma([X], X).
--- filaSuma([X|XS], N) :- between(0, N, X), Z is N-X, filaSuma(XS, Z).
+-- %sumarColumna(+C, +XS, -SColumna)
+-- sumarColumna(C, XS, SColumna) :- maplist(nth1(C), XS, Columna), sum_list(Columna, SColumna).
+
+-- %generarCuadrado(+N, -XS)
+-- generarCuadrado(N, XS) :- length(XS, N), desde2(1, L), generarColumna(N, L, XS).
+
+-- %generarColumna(+N, +L, -XS)
+-- generarColumna(_, _, []).
+-- generarColumna(N, L, [X|XS]) :- length(X, N), generarFila(N, L, X), generarColumna(N, L, XS).
+
+-- %generarFila(+N, +L, -F)
+-- generarFila(_, _, []).
+-- generarFila(N, L, [F|FS]) :- between(0, L, F), Fila is N-1, generarFila(Fila, L, FS).
+
+
+
+
+
+
+
+
+
 
 
 
