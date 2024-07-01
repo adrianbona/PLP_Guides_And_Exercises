@@ -479,16 +479,16 @@ module Guide_8 (
 -- generarFila(N, L, [F|FS]) :- between(0, L, F), Fila is N-1, generarFila(Fila, L, FS).
 
 
+-- Ejercicio 19
 
+-- Definir el predicado corteMasParejo(+L, -L1, -L2), que dada una lista L de números naturales, realice el corte
+-- en las listas L1 y L2 de manera que la diferencia entre la suma de los elementos de L1 y L2 sea la mínima posible.
 
+-- %corteMasParejo(+L, -L1, -L2)
+-- corteMasParejo(L, L1, L2) :- unCorte(L, L1, L2, D), forall((unCorte(L, _, _, D1), D1 < D), D1 = D).
 
-
-
-
-
-
-
-
+-- %unCorte(+L, -L1, -L2, -D)
+-- unCorte(L, L1, L2, D) :- append(L1, L2, L), sum_list(L1, S1), sum_list(L2, S2), D is abs(S1 - S2).
 
 
 
