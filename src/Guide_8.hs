@@ -428,7 +428,7 @@ module Guide_8 (
 
 -- Ejercicio 15
 
--- Definir el predicado cuadradoSemiLatino(+N, -XS) que tenga éxito si XS es una matriz cuadrada de NxN compuesta por
+-- i. Definir el predicado cuadradoSemiLatino(+N, -XS) que tenga éxito si XS es una matriz cuadrada de NxN compuesta por
 -- números naturales incluyendo el 0, tal todas las filas suman lo mismo. Devolver las matrices XS de manera ordenada.
 
 -- %cuadradoSemiLatino(+N, -XS)
@@ -445,6 +445,22 @@ module Guide_8 (
 -- filaSuma([X], X).
 -- filaSuma([X|XS], N) :- between(0, N, X), Z is N-X, filaSuma(XS, Z).
 
+
+-- ii. Definir el predicado cuadradoMagico(+N, -XS) que instancia XS con cuadrados cuyas filas y columnas suman todas un mismo valor.
+
+-- %cuadradoMagico(+N, -XS)
+-- cuadradoMagico(N, XS) :- N > 1, length(XS, N), desde2(0, L), columnaMagica(N, L, XS).
+
+-- %columnaMagica(+N, +L, -XS)
+-- columnaMagica(_, _, []).
+-- columnaMagica(N, L, [X|XS]) :- length(X, N), filaMagica(N, L, X), columnaMagica(N, L, XS).
+
+-- %filaMagica(+N, +L, -F)
+-- filaMagica(N, L, F) :- length(F, N), filaSuma(F, L).
+
+-- %filaSuma(?XS, +N)
+-- filaSuma([X], X).
+-- filaSuma([X|XS], N) :- between(0, N, X), Z is N-X, filaSuma(XS, Z).
 
 
 
