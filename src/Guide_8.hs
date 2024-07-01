@@ -479,6 +479,16 @@ module Guide_8 (
 -- generarFila(N, L, [F|FS]) :- between(0, L, F), Fila is N-1, generarFila(Fila, L, FS).
 
 
+-- Ejercicio 16
+
+-- tri(A, B, C) denotará un triángulo con lados de longitud A, B y C
+
+-- i. esTriangulo(+T), que tenga éxito si es un triángulo válido.
+
+-- %esTriangulo(+T)
+-- esTriangulo(tri(A, B, C)) :- A + B > C, A + C > B, B + C > A.
+
+
 -- Ejercicio 19
 
 -- Definir el predicado corteMasParejo(+L, -L1, -L2), que dada una lista L de números naturales, realice el corte
