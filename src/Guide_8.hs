@@ -521,7 +521,7 @@ module Guide_8 (
 
 -- Ejercicio de Parcial
 
--- Definir el predicado matrices(+LS, -L) que es verdadero si L es una matriz cuadrada formada por listas de LS.
+-- i. Definir el predicado matrices(+LS, -L) que es verdadero si L es una matriz cuadrada formada por listas de LS.
 
 -- %matrices(+LS, -L)
 -- matrices(FS, L) :-
