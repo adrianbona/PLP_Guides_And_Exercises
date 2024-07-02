@@ -547,3 +547,11 @@ module Guide_8 (
 -- %esMatrizCuadrada(+L)
 -- esMatrizCuadrada(L) :- length(L, N), N > 1, forall(member(F, L), length(F, N)).
 
+-- ii. Definir el predicado diagonal(+M, -D) que tenga éxito si D es la diagonal de la matriz M.
+
+-- %diagonal(+M, -D)
+-- diagonal(M, D) :- length(M, N), extraerDiagonales(M, N, Ds), sum_list(Ds, D).
+
+-- %extraerDiagonales(+M, +N, -Ds)
+-- extraerDiagonales(M, 1, [D]) :- nth1(1, M, F), nth1(1, F, D).
+-- extraerDiagonales(M, N, [D|Ds]) :- nth1(N, M, F), nth1(N, F, D), N1 is N - 1, extraerDiagonales(M, N1, Ds).
