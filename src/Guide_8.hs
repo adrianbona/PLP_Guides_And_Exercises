@@ -529,11 +529,21 @@ module Guide_8 (
 --   esMatrizCuadrada(L).    % Test
 
 -- %generarMatrices(+FS, -L)
--- generarMatrices(FS, L) :- length(FS, N), between(1, N, M), elementosTomadosEnOrden(FS, M, L).
+-- generarMatrices(FS, L) :-
+--   length(FS, N),
+--   between(1, N, M),
+--   tomadosDesordenados(FS, M, L).
+
+-- %tomadosDesordenados(+L, +N, -Elementos)
+-- tomadosDesordenados(_, 0, []).
+-- tomadosDesordenados(Xs, 1, [X]) :- pertenece(X, Xs).
+-- tomadosDesordenados(Xs, N, [X|Resto]) :-
+--   N > 1,
+--   N1 is N - 1,
+--   pertenece(X, Xs),
+--   borrar(Xs, X, XsSinX),
+--   tomadosDesordenados(XsSinX, N1, Resto).
 
 -- %esMatrizCuadrada(+L)
 -- esMatrizCuadrada(L) :- length(L, N), N > 1, forall(member(F, L), length(F, N)).
-
-
-
 
