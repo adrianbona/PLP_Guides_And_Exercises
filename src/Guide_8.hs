@@ -507,6 +507,20 @@ module Guide_8 (
 -- triangulo(T) :- perimetro(T, _).
 
 
+-- Ejercicio 17
+
+-- frutal(frutilla).
+-- frutal(banana).
+-- frutal(manzana).
+-- cremoso(banana).
+-- cremoso(americana).
+-- cremoso(frutilla).
+-- cremoso(dulceDeLeche).
+
+-- leGusta(X) :- frutal(X), cremoso(X).
+-- cucurucho(X,Y) :- leGusta(X), leGusta(Y).
+
+
 -- Ejercicio 19
 
 -- Definir el predicado corteMasParejo(+L, -L1, -L2), que dada una lista L de números naturales, realice el corte
