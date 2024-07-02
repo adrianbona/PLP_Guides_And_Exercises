@@ -625,6 +625,18 @@ module Guide_8 (
 --   not((esNodo(G, N), not(member(N, L)))).
 
 
+-- iii. Implementar el predicado esConexo(+G), que tenga éxito si el grafo G es conexo.
+
+-- %esConexo(+G)
+-- esConexo(G) :- forall((esNodo(G, D), esNodo(G, H), D \= H), caminoSimple(G, D, H, _)).
+
+
+-- iv. Implementar el predicado esEstrella(+G), que tenga éxito si el grafo G es una estrella.
+
+-- %esEstrella(+G)
+-- esEstrella(G) :- esConexo(G), esNodo(G, D), esNodo(G, H), D =\= H, esArista(G, D, H).
+
+
 -- Ejercicio de Parcial
 
 -- i. Definir el predicado matrices(+LS, -L) que es verdadero si L es una matriz cuadrada formada por listas de LS.
