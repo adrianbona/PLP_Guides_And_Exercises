@@ -622,7 +622,6 @@ module Guide_8 (
 --   esNodo(G, H),
 --   D \= H,
 --   caminoSimple(G, D, H, L),
---   sinRepetidos(L),
 --   not((esNodo(G, N), not(member(N, L)))).
 
 
