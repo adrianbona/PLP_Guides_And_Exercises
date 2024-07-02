@@ -573,6 +573,47 @@ module Guide_8 (
 -- minimoTalQueP(X) :- desde2(0, X), unTalP(X), !.
 
 
+-- Ejercicio 21
+
+-- Suponiendo la existencia de perteneceConjunto/2 y dado el siguiente predicado:
+-- natural(cero).
+-- natural(suc(X)) :- natural(X).
+
+-- i. Definir el predicado conjuntoDeNaturales(X) que sea verdadero cuando todos los elementos de X son números naturales.
+
+-- %conjuntoDeNaturales(+X)
+-- conjuntoDeNaturales(X) :- forall(perteneceConjunto(E, X), natural(E)).
+
+-- iii. ¿Por qué no funciona: conjuntoDeNaturalesMalo(X) :- not( (not(natural(E)), pertenece(E,X)) ).?
+
+-- La expresión se puede leer como: "No es verdad que exista un elemento E tal que E no sea un número natural y E
+-- pertenezca al conjunto X." conjuntoDeNaturalesMalo(X) es verdadero si no hay ningún elemento en el conjunto X que no
+-- sea un número natural.
+
+
+-- Ejercicio 23
+
+-- esNodo(+G, ?X), que dado un grafo G, tiene éxito si X es un nodo de G.
+-- esArista(+G, ?X, ?Y), que dado un grafo G, tiene éxito si hay una arista entre X e Y.
+
+-- Ambos predicados pueden utilizarse para enumerar todos los nodos y aristas de un grafo, respectivamente.
+
+-- i. Implementar el predicado caminoSimple(+G, +D, +H, ?L), que tenga éxito si L es un camino simple entre D y H en
+-- el grafo G. Un camino simple es un camino en el que no se repiten nodos.
+
+-- %caminoSimple(+G, +D, +H, ?L)
+-- caminoSimple(G, D, H, L) :- camino(G, D, H, L), sinRepetidos(L).
+
+-- %camino(+G, +D, +H, ?L)
+-- camino(_, D, D, [D]).
+-- camino(G, D, H, [D|L]) :- esNodo(G, D), esArista(G, D, X), camino(G, X, H, L).
+
+-- %sinRepetidos(+L)
+-- sinRepetidos([]).
+-- sinRepetidos([_]).
+-- sinRepetidos([X,Y|L]) :- not(member(X, [Y|L])), sinRepetidos([Y|L]).
+
+
 -- Ejercicio de Parcial
 
 -- i. Definir el predicado matrices(+LS, -L) que es verdadero si L es una matriz cuadrada formada por listas de LS.
