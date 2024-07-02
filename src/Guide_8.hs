@@ -517,8 +517,40 @@ module Guide_8 (
 -- cremoso(frutilla).
 -- cremoso(dulceDeLeche).
 
--- leGusta(X) :- frutal(X), cremoso(X).
--- cucurucho(X,Y) :- leGusta(X), leGusta(Y).
+-- leGusta1(X) :- frutal(X), cremoso(X).
+-- cucurucho1(X,Y) :- leGusta1(X), leGusta1(Y).
+
+-- leGusta2(X) :- frutal(X), cremoso(X).
+-- cucurucho2(X,Y) :- leGusta2(X), !, leGusta2(Y).
+
+-- leGusta3(X) :- frutal(X), cremoso(X).
+-- cucurucho3(X,Y) :- leGusta3(X), leGusta3(Y), !.
+
+
+-- i. Escribir el árbol de búsqueda para la consulta cucurucho1(X,Y).
+
+-- cucurucho1(X,Y).
+-- leGusta1(X), leGusta1(Y).
+-- frutal(X), cremoso(X), leGusta1(Y).
+-- frutal(frutilla), cremoso(frutilla), leGusta1(Y). { X := frutilla }
+-- frutal(frutilla), cremoso(frutilla), frutal(Y), cremoso(Y).
+-- frutal(frutilla), cremoso(frutilla), frutal(frutilla), cremoso(frutilla). { Y := frutilla }
+-- { X := frutilla, Y := frutilla }
+-- frutal(frutilla), cremoso(frutilla), frutal(Y), cremoso(Y).
+-- frutal(frutilla), cremoso(frutilla), frutal(banana), cremoso(banana). { Y := banana }
+-- { X := frutilla, Y := banana }
+-- frutal(X), cremoso(X), leGusta1(Y).
+-- frutal(banana), cremoso(banana), leGusta1(Y). { X := banana }
+-- frutal(banana), cremoso(banana), frutal(Y), cremoso(Y).
+-- frutal(banana), cremoso(banana), frutal(frutilla), cremoso(frutilla). { Y := frutilla }
+-- { X := banana, Y := frutilla }
+-- frutal(banana), cremoso(banana), frutal(Y), cremoso(Y).
+-- frutal(banana), cremoso(banana), frutal(banana), cremoso(banana). { Y := banana }
+-- { X := banana, Y := banana }
+
+
+-- ii. Cuando se utiliza cucurucho2/2 no se realiza backtracking en la primer aparición de leGusta2/1. En cambio, cuando
+-- se utiliza cucurucho3/2, no se realiza backtracking cuando se llega al primer resultado exitoso del predicado completo.
 
 
 -- Ejercicio 19
@@ -531,6 +563,14 @@ module Guide_8 (
 
 -- %unCorte(+L, -L1, -L2, -D)
 -- unCorte(L, L1, L2, D) :- append(L1, L2, L), sum_list(L1, S1), sum_list(L2, S2), D is abs(S1 - S2).
+
+
+-- Ejercicio 20
+
+-- Dado un predicado unario P sobre números naturales, definir un predicado que determine el mínimo X tal que P(X) es verdadero.
+
+-- %minimoTalQueP(-X)
+-- minimoTalQueP(X) :- desde2(0, X), unTalP(X), !.
 
 
 -- Ejercicio de Parcial
@@ -578,8 +618,3 @@ module Guide_8 (
 --   pertenece(M, LS),
 --   diagonal(M, D),
 --   forall((pertenece(M1, LS), M1 \= M), (diagonal(M1, D1), D1 =< D)).
-
-
-
-
-
