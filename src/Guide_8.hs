@@ -614,6 +614,18 @@ module Guide_8 (
 -- sinRepetidos([X,Y|L]) :- not(member(X, [Y|L])), sinRepetidos([Y|L]).
 
 
+-- ii. Implementar el predicado caminoHamiltoniano(+G, ?L), que tenga éxito si L es un camino hamiltoniano en el grafo G.
+
+-- %caminoHamiltoniano(+G, ?L)
+-- caminoHamiltoniano(G, L) :-
+--   esNodo(G, D),
+--   esNodo(G, H),
+--   D \= H,
+--   caminoSimple(G, D, H, L),
+--   sinRepetidos(L),
+--   not((esNodo(G, N), not(member(N, L)))).
+
+
 -- Ejercicio de Parcial
 
 -- i. Definir el predicado matrices(+LS, -L) que es verdadero si L es una matriz cuadrada formada por listas de LS.
