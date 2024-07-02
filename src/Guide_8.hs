@@ -555,3 +555,17 @@ module Guide_8 (
 -- %extraerDiagonales(+M, +N, -Ds)
 -- extraerDiagonales(M, 1, [D]) :- nth1(1, M, F), nth1(1, F, D).
 -- extraerDiagonales(M, N, [D|Ds]) :- nth1(N, M, F), nth1(N, F, D), N1 is N - 1, extraerDiagonales(M, N1, Ds).
+
+-- iii. Definir el predicado matrizConDiagonalMayor(+LS, -M) que es verdaderos cuando M es una matriz cuadrada
+-- que aparece en LS y cuyos elementos de la diagonal suman la mayor cantidad posible.
+
+-- %matrizConDiagonalMayor(+LS, -M)
+-- matrizConDiagonalMayor(LS, M) :-
+--   pertenece(M, LS),
+--   diagonal(M, D),
+--   forall((pertenece(M1, LS), M1 \= M), (diagonal(M1, D1), D1 =< D)).
+
+
+
+
+
