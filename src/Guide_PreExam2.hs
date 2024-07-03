@@ -117,13 +117,24 @@ module Guide_PreExam2 (
 
 -- Cláusulas:
 
--- {¬camino(C1), comunica(g(C1),f(C1),C1)}
--- {¬comunica(A2,B2,C2), camino(C2)}
--- {comunica(X3,Y3,h(X3,Y3))}
--- {¬comunica(X4,Y4,C4), conduceA(Y4,C4)}
--- {¬conduceA(X5,C5), ¬comunica(X5,Y5,D5), conduceA(Y5,C5)}
--- {camino(c)}
--- {¬conduceA(Roma,c)}
+-- 1 {¬camino(C1), comunica(g(C1),f(C1),C1)}  // Definición
+-- 2 {¬comunica(A2,B2,C2), camino(C2)}  // Definición
+-- 3 {comunica(X3,Y3,h(X3,Y3))}  // Definición
+-- 4 {¬comunica(X4,Y4,C4), conduceA(Y4,C4)}  // Definición
+-- 5 {¬conduceA(X5,C5), ¬comunica(X5,Y5,D5), conduceA(Y5,C5)} // Definición
+-- 6 {camino(c)} // Definición
+-- 7 {¬conduceA(Roma,c)}  // Objetivo
+
+-- Resolución:
+
+-- MGU sobre las cláusulas 7 y 5:
+-- { conduceA(Roma,c) ≟ conduceA(Y5,C5) }
+-- Decompose ⇒ { Roma ≟ Y5, c ≟ C5 }
+-- Swap ⇒ { Y5 ≟ Roma, C5 ≟ c }
+-- MGU = { Y5 := Roma, C5 := c }
+
+-- 8 { ¬conduceA(X5,c), ¬comunica(X5,Roma,D5) }
+
 
 
 
