@@ -24,5 +24,7 @@ import Guide_8 ()
 
 import Guide_9 ()
 
+import Guide_PreExam2 ()
+
 main :: IO ()
 main = putStrLn "Main file loaded"

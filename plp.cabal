@@ -36,6 +36,7 @@ library
       Guide_8
       Guide_9
       Guide_PreExam
+      Guide_PreExam2
       Guide_Solved
   other-modules:
       Paths_plp
