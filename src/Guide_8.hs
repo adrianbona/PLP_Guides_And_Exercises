@@ -229,13 +229,12 @@ module Guide_8 (
 
 -- Definir los predicados usando member/2 y/o append/3 según corresponda.
 
+
 -- i. interseccion(+L1, +L2, -L3), tal que L3 es la intersección sin repeticiones
 -- de las listas L1 y L2, respetando en L3 el orden en que aparecen los elementos en L.
 
 -- %interseccion(+L1, +L2, -L3)
--- interseccion([], _, []).
--- interseccion([X|L1], L2, L3) :- not(member(X, L2)), interseccion(L1, L2, L3).
--- interseccion([X|L1], L2, [X|L3]) :- member(X, L2), borrar(L1, X, L1SinX), interseccion(L1SinX, L2, L3).
+-- interseccion(Xs, Ys, Zs) :- append(Xs, Ys, Ws), sacarDuplicados(Ws, Zs).
 
 -- %partir(+N, +L, -L1, -L2)
 -- partir(0, L, [], L).
@@ -258,8 +257,7 @@ module Guide_8 (
 
 -- %sacarDuplicados(+L1, -L2)
 -- sacarDuplicados([], []).
--- sacarDuplicados([H|T], L) :- member(H, T), sacarDuplicados(T, L).
--- sacarDuplicados([H|T], [H|L]) :- not(member(H, T)), sacarDuplicados(T, L).
+-- sacarDuplicados([H|T], [H|L]) :- borrar(T, H, TsinH), sacarDuplicados(TsinH, L).
 
 -- %cantApariciones(+X, +L, -N)
 -- cantApariciones(_, [], 0).

@@ -46,7 +46,6 @@ module Guide_PreExam2 (
 --  Indicar qué mensajes se envían a qué objetos, con qué colabradores y cuál es el resultado de cada colaboración al
 -- ejecutar la siguiente línea de código: "aDrone avanzar."
 
-
 -- Mensaje      | Objeto | Colaboradores | Resultado
 -- ------------ | ------ | ------------- | ---------
 -- avanzar      | aDrone | ø             | aDrone
