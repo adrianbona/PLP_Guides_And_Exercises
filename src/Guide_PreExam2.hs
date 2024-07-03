@@ -65,8 +65,75 @@ module Guide_PreExam2 (
 
 --33--33--33--33--33--33--33--33--33--33--33--33--33--33--33--33--33--33--33--33--33--33--33--33--33--33--33--33--33--33
 
+-- Convertir las siguientes fórmulas a Forma Clausal:
 
---44--44--44--44--44--44--44--44--44--44--44--44--44--44--44--44--44--44--44--44--44--44--44--44--44--44--44--44--44--44
+
+-- ∀C.(camino(C) ⇔ (∃A.∃B.comunica(A,B,C)))
+
+-- ∀C.(camino(C) ⇔ (∃A.∃B.comunica(A,B,C)))
+-- ∀C.((camino(C) ⇒ (∃A.∃B.comunica(A,B,C))) ∧ (∃A.∃B.comunica(A,B,C) ⇒ camino(C)))
+-- ∀C.((¬camino(C) ∨ (∃A.∃B.comunica(A,B,C))) ∧ (¬∃A.∃B.comunica(A,B,C) ∨ camino(C)))
+-- ∀C.((¬camino(C) ∨ (∃A.∃B.comunica(A,B,C))) ∧ (∀A.¬∃B.comunica(A,B,C) ∨ camino(C)))
+-- ∀C.((¬camino(C) ∨ (∃A.∃B.comunica(A,B,C))) ∧ (∀A.∀B.¬comunica(A,B,C) ∨ camino(C)))
+-- ∀C.∃A.∃B.(¬camino(C) ∨ comunica(A,B,C)) ∧ ∀C.∀A.∀B.(¬comunica(A,B,C) ∨ camino(C))
+-- ∀C.∃A.(¬camino(C) ∨ comunica(A,f(C),C)) ∧ ∀C.∀A.∀B.(¬comunica(A,B,C) ∨ camino(C))
+-- ∀C.(¬camino(C) ∨ comunica(g(C),f(C),C)) ∧ ∀C.∀A.∀B.(¬comunica(A,B,C) ∨ camino(C))
+-- {{¬camino(C1), comunica(g(C1),f(C1),C1)}, {¬comunica(A2,B2,C2), camino(C2)}}
 
 
---55--55--55--55--55--55--55--55--55--55--55--55--55--55--55--55--55--55--55--55--55--55--55--55--55--55--55--55--55--55
+-- ∀X.∀Y.∃C.comunica(X,Y,C)
+
+-- ∀X.∀Y.∃C.comunica(X,Y,C)
+-- ∀X.∀Y.comunica(X,Y,f(X,Y))
+-- {{comunica(X3,Y3,h(X3,Y3))}}
+
+
+-- ∀X.∀Y.∀C.(comunica(X,Y,C) ⇒ conduceA(Y,C))
+
+-- ∀X.∀Y.∀C.(comunica(X,Y,C) ⇒ conduceA(Y,C))
+-- ∀X.∀Y.∀C.(¬comunica(X,Y,C) ∨ conduceA(Y,C))
+-- {{¬comunica(X4,Y4,C4), conduceA(Y4,C4)}}
+
+
+-- ∀X.∀Y.∀C.((conduceA(X,C) ∧ ∃D.comunica(X,Y,D)) ⇒ conduceA(Y,C))
+
+-- ∀X.∀Y.∀C.((conduceA(X,C) ∧ ∃D.comunica(X,Y,D)) ⇒ conduceA(Y,C))
+-- ∀X.∀Y.∀C.(¬(conduceA(X,C) ∧ ∃D.comunica(X,Y,D)) ∨ conduceA(Y,C))
+-- ∀X.∀Y.∀C.(¬conduceA(X,C) ∨ ¬∃D.comunica(X,Y,D) ∨ conduceA(Y,C))
+-- ∀X.∀Y.∀C.(¬conduceA(X,C) ∨ ∀D.¬comunica(X,Y,D) ∨ conduceA(Y,C))
+-- ∀X.∀Y.∀C.∀D.(¬conduceA(X,C) ∨ ¬comunica(X,Y,D) ∨ conduceA(Y,C))
+-- {{¬conduceA(X5,C5), ¬comunica(X5,Y5,D5), conduceA(Y5,C5)}}
+
+
+-- Utilizar el método de resolución para probar que todos los caminos conducen a Roma. Es decir: ∀C.(camino(C) ⇒ conduceA(Roma,C))
+
+-- ¬∀C.(camino(C) ⇒ conduceA(Roma,C))
+-- ¬∀C.(¬camino(C) ∨ conduceA(Roma,C))
+-- ∃C.¬(¬camino(C) ∨ conduceA(Roma,C))
+-- ∃C.(camino(C) ∧ ¬conduceA(Roma,C))
+-- camino(c) ∧ ¬conduceA(Roma,c))
+-- {{camino(c)}, {¬conduceA(Roma,c)}}
+
+
+-- Cláusulas:
+
+-- {¬camino(C1), comunica(g(C1),f(C1),C1)}
+-- {¬comunica(A2,B2,C2), camino(C2)}
+-- {comunica(X3,Y3,h(X3,Y3))}
+-- {¬comunica(X4,Y4,C4), conduceA(Y4,C4)}
+-- {¬conduceA(X5,C5), ¬comunica(X5,Y5,D5), conduceA(Y5,C5)}
+-- {camino(c)}
+-- {¬conduceA(Roma,c)}
+
+
+
+
+
+
+
+
+
+
+
+
+
