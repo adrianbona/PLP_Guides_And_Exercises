@@ -133,14 +133,43 @@ module Guide_PreExam2 (
 -- Swap ⇒ { Y5 ≟ Roma, C5 ≟ c }
 -- MGU = { Y5 := Roma, C5 := c }
 
--- 8 { ¬conduceA(X5,c), ¬comunica(X5,Roma,D5) }
+-- 8 { ¬conduceA(X5,c), ¬comunica(X5,Roma,D5) }  // Objetivo
 
+-- MGU sobre las cláusulas 8 y 4:
+-- { conduceA(X5,c) ≟ conduceA(Y4,C4) }
+-- Decompose ⇒ { X5 ≟ Y4, c ≟ C4 }
+-- Swap ⇒ { Y4 ≟ X5, C4 ≟ c }
+-- MGU = { Y4 := X5, C4 := c }
 
+-- 9 { ¬comunica(X5,Roma,D5), ¬comunica(X4,X5,c) }  // Objetivo
 
+-- MGU sobre las cláusulas 9 y 1:
+-- { comunica(X4,X5,c) ≟ comunica(g(C1),f(C1),C1) }
+-- Decompose ⇒ { X4 ≟ g(C1), X5 ≟ f(C1), c ≟ C1 }
+-- Swap ⇒ { X4 ≟ g(C1), X5 ≟ f(C1), C1 ≟ c }
+-- Elim { C1 := c } ⇒ { X4 ≟ g(c), X5 ≟ f(c) }
+-- MGU = { X4 := g(c), X5 := f(c), C1 := c }
 
+-- 10 { ¬comunica(f(c), Roma, D5), ¬camino(c) }  // Objetivo
 
+-- MGU sobre las cláusulas 10 y 3:
+-- { comunica(f(c), Roma, D5) ≟ comunica(X3,Y3,h(X3,Y3)) }
+-- Decompose ⇒ { f(c) ≟ X3, Roma ≟ Y3, D5 ≟ h(X3,Y3) }
+-- Swap ⇒ { X3 ≟ f(c), Y3 ≟ Roma, D5 ≟ h(X3,Y3) }
+-- Elim { X3 := f(c), Y3 := Roma } ⇒ { D5 ≟ h(f(c),Roma) }
+-- MGU = { X3 := f(c), Y3 := Roma, D5 := h(f(c),Roma) }
 
+-- 11 { ¬camino(c) }  // Objetivo
 
+-- MGU sobre las cláusulas 11 y 6:
+
+-- 12 {}  // Cláusula vacía, se llegó a la contradicción
+
+-- El método de resolución utilizado fue SLD:
+--   1. Todas las cláusulas utilizadas para la resolución son de Horn.
+--   2. Cada paso comienza con una cláusula objetivo.
+--   3. Se aplica el método de resolución de manera lineal.
+--   4. Se utiliza la regla de resolución binaria.
 
 
 
