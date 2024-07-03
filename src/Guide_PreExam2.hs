@@ -68,10 +68,13 @@ module Guide_PreExam2 (
 --- cantidad de números primos consecutivos. Puede haber más de una solución.
 
 -- %sublistaMasLargaDePrimos(+L, -P)
--- sublistaMasLargaDePrimos(L, P) :- sublistaDePrimos(L, P), not((sublistaDePrimos(L, Q), length(Q, N), length(P, M), M < N)).
+-- sublistaMasLargaDePrimos(L, P) :-
+--   sublistaDePrimos(L, P),
+--   not((sublistaDePrimos(L, Q), length(Q, N), length(P, M), M < N)).
 
 -- %sublistaDePrimos(+L, -P)
--- sublistaDePrimos(L, P) :- append(_, T, L), append(P, _, T), todosPrimos(P).
+-- sublistaDePrimos(_, []).
+-- sublistaDePrimos(L, P) :- append(_, T, L), append(P, _, T), P \= [], todosPrimos(P).
 
 -- %todosPrimos(+L)
 -- todosPrimos([]).
@@ -80,7 +83,6 @@ module Guide_PreExam2 (
 -- %primo(+N)
 -- primo(1).
 -- primo(N) :- N > 1, M is N - 1, not((between(2, M, X), N mod X =:= 0)).
-
 
 --33--33--33--33--33--33--33--33--33--33--33--33--33--33--33--33--33--33--33--33--33--33--33--33--33--33--33--33--33--33
 
