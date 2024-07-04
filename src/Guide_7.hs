@@ -1582,7 +1582,25 @@ module Guide_7 (
 -- 5 {par(a)} (DEFINICIÓN)
 -- 6 {¬esMayorQue(Y6,a), ¬par(Y6)} (OBJETIVO)
 
--- Resolución ???
+-- Resolución:
+
+-- MGU sobre las cláusulas 1 y 6:
+-- { esMayorQue(Y6,a) ≟ esMayorQue(f(X1),X1) }
+-- Decompose ⇒ { Y6 ≟ f(X1), a ≟ X1 }
+-- Swap ⇒ { X1 ≟ a, Y6 ≟ f(a) }
+-- Elim { X1 := a, Y6 := f(a) } ⇒ {}
+-- MGU = { X1 := a, Y6 := f(a) }
+
+-- 7 { ¬par(a), ¬par(f(a)) }
+
+-- MGU sobre las cláusulas 5 y 7:
+
+-- { par(a) ≟ par(X4) }
+-- Swap ⇒ { X4 ≟ a }
+-- Elim { X4 := a } ⇒ {}
+-- MGU = { X4 := a }
+
+-- 8 { }
 
 -- c. La demostración es SLD?
 
@@ -1718,5 +1736,4 @@ module Guide_7 (
 -- {¬Abuela(X4,Y4), Madre(f(X4,Y4),Y4)} : Es de Horn
 -- {Abuela(a,b)} : Es de Horn
 -- {¬Descendiente(b,a)} : Es de Horn (podría ser GOAL)
-
 
