@@ -1,6 +1,33 @@
 module Guide_8 (
 ) where
 
+-- Ejercicio Teórica
+
+-- i. Definir appendAlt(L1, L2, L3).
+
+-- %appendAlt(?L1, ?L2, ?L3)
+-- appendAlt([], L, L).
+-- appendAlt([X|L1], L2, [X|L3]) :- appendAlt(L1, L2, L3).
+
+
+-- ii. Definir ocurreAlMenosUnaVez(X, L) usando append/3.
+
+-- %ocurreAlMenosUnaVez(?X, +L)
+-- ocurreAlMenosUnaVez(X, L) :- append(_, [X|_], L).
+
+
+-- iii. Definir ocurreAlMenosDosVeces(X, L) usando append/3.
+
+-- %ocurreAlMenosDosVeces(?X, +L)
+-- ocurreAlMenosDosVeces(X, L) :- append(_, [X|T], L), append(_, [X|_], T).
+
+
+-- iv. Definir ocurreExactamenteUnaVez(X, L) combinando las anteriores.
+
+-- %ocurreExactamenteUnaVez(?X, +L)
+-- ocurreExactamenteUnaVez(X, L) :- ocurreAlMenosUnaVez(X, L), not(ocurreAlMenosDosVeces(X, L)).
+
+
 -- Ejercicio 1
 
 -- padre(juan, carlos).
