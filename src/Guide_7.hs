@@ -1538,6 +1538,7 @@ module Guide_7 (
 
 -- i. ∀X.(par(X) ⇒ ∃Y.(Y > X ∧ ¬par(Y)))
 
+-- Para todo X par, existe Y tal que Y es mayor que X y Y no es par
 -- ∀X.(par(X) ⇒ ∃Y.(esMayorQue(Y,X) ∧ ¬par(Y)))
 -- ∀X.(¬par(X) ∨ ∃Y.(esMayorQue(Y,X) ∧ ¬par(Y)))
 -- ∀X.∃Y.(¬par(X) ∨ (esMayorQue(Y,X) ∧ ¬par(Y)))
@@ -1549,6 +1550,7 @@ module Guide_7 (
 
 -- ii. ∀X.(¬par(X) ⇒ ∃Y.(Y > X ∧ par(Y)))
 
+-- Para todo X impar existe un Y impar mayor que X
 -- ∀X.(¬par(X) ⇒ ∃Y.(esMayorQue(Y,X) ∧ par(Y)))
 -- ∀X.(par(X) ∨ ∃Y.(esMayorQue(Y,X) ∧ par(Y)))
 -- ∀X.∃Y.(par(X) ∨ (esMayorQue(Y,X) ∧ par(Y)))
@@ -1560,6 +1562,7 @@ module Guide_7 (
 
 -- iii. ∀X.∀Y.∀Z.((X > Y ∧ Y > Z) ⇒ X > Z)
 
+-- La relación de mayor que es transitiva
 -- ∀X.∀Y.∀Z.((esMayorQue(X,Y) ∧ esMayorQue(Y,Z)) ⇒ esMayorQue(X,Z))
 -- ∀X.∀Y.∀Z.(¬(esMayorQue(X,Y) ∧ esMayorQue(Y,Z)) ∨ esMayorQue(X,Z))
 -- ∀X.∀Y.∀Z.(¬esMayorQue(X,Y) ∨ ¬esMayorQue(Y,Z) ∨ esMayorQue(X,Z))
