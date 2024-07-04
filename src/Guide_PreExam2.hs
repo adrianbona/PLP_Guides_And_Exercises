@@ -1,6 +1,7 @@
 module Guide_PreExam2 (
 ) where
 
+
 --11--11--11--11--11--11--11--11--11--11--11--11--11--11--11--11--11--11--11--11--11--11--11--11--11--11--11--11--11--11
 
 
@@ -81,6 +82,7 @@ module Guide_PreExam2 (
 -- %primo(+N)
 -- primo(1).
 -- primo(N) :- N > 1, M is N - 1, not((between(2, M, X), N mod X =:= 0)).
+
 
 --33--33--33--33--33--33--33--33--33--33--33--33--33--33--33--33--33--33--33--33--33--33--33--33--33--33--33--33--33--33
 
@@ -190,8 +192,6 @@ module Guide_PreExam2 (
 --   2. Cada paso comienza con una cláusula objetivo.
 --   3. Se aplica el método de resolución de manera lineal.
 --   4. Se utiliza la regla de resolución binaria.
-
-
 
 
 

@@ -233,12 +233,15 @@ module Guide_8 (
 -- i. interseccion(+L1, +L2, -L3), tal que L3 es la intersección sin repeticiones
 -- de las listas L1 y L2, respetando en L3 el orden en que aparecen los elementos en L.
 
+-- ?- interseccion([2,1,5,3,1,3,2,6,3,7],[3,2,2,2,3,5,1,6], X).
+-- X = [2, 1, 5, 3, 6] ;
+
 -- %interseccion(+L1, +L2, -L3)
 -- interseccion([], _, []).
 -- interseccion([X|L1], L2, L3) :- not(member(X, L2)), interseccion(L1, L2, L3).
 -- interseccion([X|L1], L2, [X|L3]) :-
+--   member(X, L2),
 --   sacarDuplicados(L2, T2),
---   member(X, T2),
 --   borrar(L1, X, T1),
 --   interseccion(T1, T2, L3).
 
