@@ -1523,15 +1523,6 @@ module Guide_7 (
 -- La reconstrucción del MGU permite probar que preorder(bin(bin(nil,1,nil),2,nil),X) es verdadero para X = [2,1]
 
 
--- Ejercicio 23
-
-
--- Ejercicio 24
-
-
--- Ejercicio 25
-
-
 -- Ejercicio 26
 
 -- a. Representar en forma clausal
@@ -1555,9 +1546,9 @@ module Guide_7 (
 -- ∀X.(par(X) ∨ ∃Y.(esMayorQue(Y,X) ∧ par(Y)))
 -- ∀X.∃Y.(par(X) ∨ (esMayorQue(Y,X) ∧ par(Y)))
 -- ∀X.∃Y.(par(X) ∨ esMayorQue(Y,X) ∧ par(X) ∨ par(Y))
--- ∀X.(par(X) ∨ esMayorQue(f(X),X) ∧ par(X) ∨ par(f(X)))
--- ∀X.(par(X) ∨ esMayorQue(f(X),X)) ∧ ∀X.(par(X) ∨ par(f(X)))
--- {{par(X), esMayorQue(f(X),X)}, {par(X), par(f(X))}}
+-- ∀X.(par(X) ∨ esMayorQue(g(X),X) ∧ par(X) ∨ par(g(X)))
+-- ∀X.(par(X) ∨ esMayorQue(g(X),X)) ∧ ∀X.(par(X) ∨ par(g(X)))
+-- {{par(X), esMayorQue(g(X),X)}, {par(X), par(g(X))}}
 
 
 -- iii. ∀X.∀Y.∀Z.((X > Y ∧ Y > Z) ⇒ X > Z)
@@ -1567,6 +1558,7 @@ module Guide_7 (
 -- ∀X.∀Y.∀Z.(¬(esMayorQue(X,Y) ∧ esMayorQue(Y,Z)) ∨ esMayorQue(X,Z))
 -- ∀X.∀Y.∀Z.(¬esMayorQue(X,Y) ∨ ¬esMayorQue(Y,Z) ∨ esMayorQue(X,Z))
 -- {{¬esMayorQue(X,Y), ¬esMayorQue(Y,Z), esMayorQue(X,Z)}}
+
 
 -- b. Usando resolución demostrar: ∀X.(par(X) ⇒ ∃Y.(Y > X ∧ par(Y)))
 
@@ -1583,58 +1575,16 @@ module Guide_7 (
 
 -- Conjunto de cláusulas:
 
--- 1 {¬par(X1), esMayorQue(f(X1),X1)}
--- 2 {¬par(X2), ¬par(f(X2))}
--- 3 {par(X3), esMayorQue(f(X3),X3)},
--- 4 {par(X4), par(f(X4))}
--- 5 {par(a)}
--- 6 {¬esMayorQue(Y1,a), ¬par(Y1)}
+-- 1 {¬par(X1), esMayorQue(f(X1),X1)} (DEFINICIÓN)
+-- 2 {¬par(X2), ¬par(f(X2))} (OBJETIVO)
+-- 3 {par(X3), esMayorQue(g(X3),X3)} (NO ES DE HORN)
+-- 4 {par(X4), par(g(X4))} (NO ES DE HORN)
+-- 5 {par(a)} (DEFINICIÓN)
+-- 6 {¬esMayorQue(Y6,a), ¬par(Y6)} (OBJETIVO)
 
--- MGU sobre las cláusulas 5 y 6:
--- { par(a) ≟ par(Y1) }
--- Decompose ⇒ { a ≟ Y1 }
--- Swap ⇒ { Y1 ≟ a }
--- Elim { Y1 := a } ⇒ {}
--- MGU = { Y1 := a }
-
--- 1 {¬par(X1), esMayorQue(f(X1),X1)}
--- 2 {¬par(X2), ¬par(f(X2))}
--- 3 {par(X3), esMayorQue(f(X3),X3)},
--- 4 {par(X4), par(f(X4))}
--- 5 {par(a)}
--- 6 {¬esMayorQue(a,a), ¬par(a)}
--- 7 {esMayorQue(f(a),a)}
-
--- MGU sobre las cláusulas 1 y 7:
--- { esMayorQue(f(X1),X1) ≟ esMayorQue(f(a),a) }
--- Decompose ⇒ { f(X1) ≟ f(a), X1 ≟ a }
--- Elim { X1 := a } ⇒ {f(a) ≟ f(a)}
--- Decompose ⇒ { a ≟ a }
--- Delete ⇒ {}
--- MGU = { X1 := a }
-
--- 1 {¬par(a), esMayorQue(f(a),a)}
--- 2 {¬par(X2), ¬par(f(X2))}
--- 3 {par(X3), esMayorQue(f(X3),X3)},
--- 4 {par(X4), par(f(X4))}
--- 5 {par(a)}
--- 6 {¬esMayorQue(a,a), ¬par(a)}
--- 7 {esMayorQue(f(a),a)}
--- 8 {¬par(a)}
-
--- Por resolución entre las cláusulas 5 y 6 se obtiene la cláusula vacía, por lo que la fórmula es válida
-
+-- Resolución ???
 
 -- c. La demostración es SLD?
-
--- Veamos que no todas las cláusulas son de Horn:
-
--- {¬par(X1), esMayorQue(f(X1),X1)} : Es de Horn
--- {¬par(X2), ¬par(f(X2))} : Es de Horn (podría ser GOAL)
--- {par(X3), esMayorQue(f(X3),X3)} : No es de Horn
--- {par(X4), par(f(X4))} : No es de Horn
--- {par(a)} : Es de Horn
--- {¬esMayorQue(Y1,a), ¬par(Y1)} : Es de Horn (podría ser GOAL)
 
 -- No todas las cláusulas son de Horn, por lo que la demostración no es SLD. Sin embargo podrían ser descartadas las
 -- cláusulas 3 y 4 para que todas las cláusulas sean de Horn. Luego la demostración habrá que hacerla de forma lineal.
