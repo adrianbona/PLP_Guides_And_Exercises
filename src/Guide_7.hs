@@ -1554,9 +1554,9 @@ module Guide_7 (
 -- ∀X.(¬par(X) ⇒ ∃Y.(esMayorQue(Y,X) ∧ par(Y)))
 -- ∀X.(par(X) ∨ ∃Y.(esMayorQue(Y,X) ∧ par(Y)))
 -- ∀X.∃Y.(par(X) ∨ (esMayorQue(Y,X) ∧ par(Y)))
--- ∀X.(par(X) ∨ (esMayorQue(f(X),X) ∧ par(f(X)))
+-- ∀X.∃Y.(par(X) ∨ esMayorQue(Y,X) ∧ par(X) ∨ par(Y))
 -- ∀X.(par(X) ∨ esMayorQue(f(X),X) ∧ par(X) ∨ par(f(X)))
--- ∀X.(par(X) ∨ esMayorQue(f(X),X) ∧ ∀X.(par(X) ∨ par(f(X)))
+-- ∀X.(par(X) ∨ esMayorQue(f(X),X)) ∧ ∀X.(par(X) ∨ par(f(X)))
 -- {{par(X), esMayorQue(f(X),X)}, {par(X), par(f(X))}}
 
 
