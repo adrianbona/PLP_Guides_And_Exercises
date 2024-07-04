@@ -234,7 +234,14 @@ module Guide_8 (
 -- de las listas L1 y L2, respetando en L3 el orden en que aparecen los elementos en L.
 
 -- %interseccion(+L1, +L2, -L3)
--- interseccion(Xs, Ys, Zs) :- append(Xs, Ys, Ws), sacarDuplicados(Ws, Zs).
+-- intersección([], _, []).
+-- intersección([X|L1], L2, Rs) :- not(member(X, L2)), intersección(L1, L2, Rs).
+-- intersección([X|L1], L2, [X|L3]) :-
+--   sacarDuplicados(L1, T1),
+--   sacarDuplicados(L2, T2),
+--   member(X, T2),
+--   intersección(T1, T2, L3).
+
 
 -- %partir(+N, +L, -L1, -L2)
 -- partir(0, L, [], L).
