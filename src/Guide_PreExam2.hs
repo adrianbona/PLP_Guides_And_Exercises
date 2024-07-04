@@ -84,6 +84,31 @@ module Guide_PreExam2 (
 -- primo(N) :- N > 1, M is N - 1, not((between(2, M, X), N mod X =:= 0)).
 
 
+-- ii. Definir el predicado listaDeArboles/1 que instancia en L todas las listas de
+-- árboles binarios no vacíos con variables libres en sus nodos.
+
+
+-- %listaDeArboles(-L)
+-- listaDeArboles([]).
+-- listaDeArboles([H|T]) :- desde(0, N), arbolConNodosN(N, H), listaDeArboles(T).
+
+
+-- %arbolConNodosN(+N,-A)
+-- arbolConNodosN(0, nil).
+-- arbolConNodosN(1, bin(nil, _, nil)).
+-- arbolConNodosN(N, bin(I, _, D)) :-
+--   N >= 2,
+--   M is N - 1,
+--   between(0, M, T),
+--   arbolConNodosN(T, I),
+--   M3 is M - T,
+--   arbolConNodosN(M3, D).
+
+
+-- %paresQueSuman(+S, -X, -Y)
+-- paresQueSuman(S, X, Y) :- between(0, S, X), Y is S - X.
+
+
 --33--33--33--33--33--33--33--33--33--33--33--33--33--33--33--33--33--33--33--33--33--33--33--33--33--33--33--33--33--33
 
 
