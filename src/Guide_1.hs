@@ -65,6 +65,11 @@ module Guide_1 (
   hojasRT,
   distanciasRT,
   alturaRT,
+  AT(..),
+  foldAT,
+  preorder,
+  mapAT,
+  nivel,
 ) where
 
 import Guide_0 (AB(Empty, Bin))
@@ -561,8 +566,47 @@ alturaRT :: RoseTree a -> Int
 alturaRT rt = foldRT (\_ children -> if null children then 1 else 1 + maximum children) rt
 
 
+-- Ejercicio de Parcial
 
+data AT a = NilT | Tri a (AT a) (AT a) (AT a)
 
+-- at1 = Tri 1 (Tri 2 NilT NilT NilT) (Tri 3 (Tri 4 NilT NilT NilT) NilT NilT) (Tri 5 NilT NilT NilT)
+
+-- a) Dar el tipo y definir la función foldAT que implementa el esquema de recursión estructural
+
+foldAT :: (a -> b -> b -> b -> b) -> b -> AT a -> b
+foldAT _ z NilT = z
+foldAT f z (Tri root izq med der) = f root (foldAT f z izq) (foldAT f z med) (foldAT f z der)
+
+-- b) Definir la función preorder :: AT a -> [a], que lista los nodos de un árbol ternario en el orden
+-- en que aparecen: primero la raíz, despuás los nodos del subárbol izquierdo, luego los del medio y
+-- finalmente los del derecho.
+
+-- preorder at1
+-- [1, 2, 3, 4, 5].
+
+preorder :: AT a -> [a]
+preorder = foldAT (\root izq med der -> [root] ++ izq ++ med ++ der) []
+
+-- c) Definir la función mapAT :: (a -> b) -> AT a -> AT b, que aplica una función a todos los nodos de un árbol ternario
+
+mapAT :: (a -> b) -> AT a -> AT b
+mapAT _ NilT = NilT
+mapAT f (Tri root izq med der) = Tri (f root) (mapAT f izq) (mapAT f med) (mapAT f der)
+
+-- d) Definir la función nivel :: AT a -> Int -> [a], que devuelve la lista de nodos del nivel correspondiente
+-- del árbol, siendo 0 el nivel de la raíz.
+
+-- nivel at1 1
+-- [2, 3, 5].
+
+nivel :: AT a -> Int -> [a]
+nivel aTri n = foldAT (\root izq med der level ->
+                        if level == 0
+                        then [root]
+                        else if level > 0
+                             then izq (level - 1) ++ med (level - 1) ++ der (level - 1)
+                             else []) (const []) aTri n
 
 
 
