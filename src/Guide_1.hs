@@ -609,5 +609,21 @@ nivel aTri n = foldAT (\root izq med der level ->
                              else []) (const []) aTri n
 
 
+-- Ejercicio 17
+
+-- [x | x<-[1..3], y<-[x..3]]
+-- [1,1,1,2,2,3]
+
+-- [x | x<-[1..3], y<-[x..3], (x+y) `mod` 3 == 0]
+-- [1,3]
+
+-- Lista de valores de x tal x pertenece a [1..3] y y pertenece a [x..3] y la suma de x e y es divisible por 3.
+
+
+
+
+
+
+
 
 
