@@ -9,20 +9,26 @@ inverso,
 aEntero,
 limpiar,
 limpiarB,
+limpiarC,
+limpiarD,
 difPromedio,
 promedio,
 todosIguales,
 AB(Empty, Bin),
 vacioAB,
 negacionAB,
-productoAB
+productoAB,
+foldABExtra,
+vacioABExtra,
+negacionABExtra,
+productoABExtra,
 ) where
 
 -- Ejercicio 1
 
 -- :t null
 -- null :: Foldable t => t a -> Bool
--- Dado un a de tipo plegable, devuelve True si contiene al menos un elemento
+-- Dado un a de tipo plegable devuelve True si está vacío
 
 -- :t head
 -- head :: GHC.Stack.Types.HasCallStack => [a] -> a
@@ -68,7 +74,8 @@ productoAB
 
 -- a
 valorAbsoluto :: Float -> Float
-valorAbsoluto x = if x >= 0 then x else x * (-1)
+valorAbsoluto x | x >= 0 = x
+                | otherwise = x * (-1)
 
 -- b
 bisiesto :: Int -> Bool
@@ -110,13 +117,19 @@ aEntero (Right x) = if x then 1 else 0
 
 -- Ejercicio 4
 
--- a
+-- a limpiar "susto" "puerta"
 limpiar :: String -> String -> String
 limpiar _ [] = []
 limpiar s1 (x:xs) = if elem x s1 then limpiar s1 xs else (x:(limpiar s1 xs))
 
 limpiarB :: String -> String -> String
 limpiarB s1 s2 = filter(\s -> not (elem s s1)) s2
+
+limpiarC :: String -> String -> String
+limpiarC s1 s2 = [s | s <- s2, not (elem s s1)]
+
+limpiarD :: String -> String -> String
+limpiarD s1 s2 = foldr (\s acc -> if elem s s1 then acc else s:acc) [] s2
 
 -- b
 difPromedio :: [Float] -> [Float]
@@ -150,6 +163,23 @@ negacionAB (Bin left root right) = Bin (negacionAB left) (not root) (negacionAB 
 productoAB :: AB Int -> Int
 productoAB Empty = 1
 productoAB (Bin left root right) = (productoAB left) * root * (productoAB right)
+
+-- extra
+
+foldABExtra :: (a -> b -> b -> b) -> b -> AB a -> b
+foldABExtra _ z Empty = z
+foldABExtra f z (Bin left root right) = f root (foldABExtra f z left) (foldABExtra f z right)
+
+vacioABExtra :: AB a -> Bool
+vacioABExtra = foldABExtra (\_ _ _ -> False) True
+
+negacionABExtra :: AB Bool -> AB Bool
+negacionABExtra = foldABExtra (\root left right -> Bin left (not root) right) Empty
+
+productoABExtra :: AB Int -> Int
+productoABExtra = foldABExtra (\root left right -> left * root * right) 1
+
+
 
 
 
