@@ -70,6 +70,7 @@ module Guide_1 (
   preorder,
   mapAT,
   nivel,
+  paredDeNat,
 ) where
 
 import Guide_0 (AB(Empty, Bin))
@@ -620,10 +621,9 @@ nivel aTri n = foldAT (\root izq med der level ->
 -- Lista de valores de x tal x pertenece a [1..3] y y pertenece a [x..3] y la suma de x e y es divisible por 3.
 
 
+-- Ejercicio 18
 
-
-
-
-
+paredDeNat :: [(Integer, Integer)]
+paredDeNat = [(x, y) | z <- [0..], x <- [0..z], y <- [0..z], x + y == z]
 
 
