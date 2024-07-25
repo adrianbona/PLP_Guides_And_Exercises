@@ -70,7 +70,12 @@ module Guide_1 (
   preorder,
   mapAT,
   nivel,
-  paredDeNat,
+  paresDeNat,
+  pitagoricas,
+  listasQueSuman,
+  todasLasListas,
+  todosLosArboles,
+  arbolesAltura,
 ) where
 
 import Guide_0 (AB(Empty, Bin))
@@ -623,7 +628,52 @@ nivel aTri n = foldAT (\root izq med der level ->
 
 -- Ejercicio 18
 
-paredDeNat :: [(Integer, Integer)]
-paredDeNat = [(x, y) | z <- [0..], x <- [0..z], y <- [0..z], x + y == z]
+paresDeNat :: [(Integer, Integer)]
+paresDeNat = [(x, z-x) | z <- [0..5], x <- [0..z]]
+-- paresDeNat = [(x, y) | z <- [0..5], x <- [0..z], y <- [0..z], x + y == z]
+
+
+-- Ejercicio 19
+
+pitagoricas :: [(Integer, Integer, Integer)]
+pitagoricas = [(a, b, c) |  c <- [1..], a <- [1..c], b <-[1..c], a^2 + b^2 == c^2, a < b]
+
+
+-- Ejercicio 20
+
+listasQueSuman :: Int -> [[Int]]
+listasQueSuman 0 = [[]]
+listasQueSuman n = [ m:xs | m <- [1..n], xs <- listasQueSuman (n-m)]
+
+
+-- Ejercicio 21
+
+todasLasListas :: [[Int]]
+todasLasListas = [ xs | n <- [0..5], xs <- listasQueSuman n ]
+
+
+-- Ejercicio 22
+
+instance Show a => Show (AIH a) where
+    show (Hoja x) = "Hoja " ++ show x
+    show (Bin' left right) = "Bin' (" ++ show left ++ ") (" ++ show right ++ ")"
+
+-- a) Definir la lista (infinita) de todos los AIH
+
+-- data AIH a = Hoja a | Bin' (AIH a) (AIH a)
+
+todosLosArboles :: [[AIH Int]]
+todosLosArboles = [ arbolesAltura n | n <- [1..5] ]
+
+arbolesAltura :: Int -> [AIH Int]
+arbolesAltura 1 = [Hoja 1]
+-- arbolesAltura 2 = [Bin' (Hoja 1) (Hoja 1)]
+-- arbolesAltura 3 = [Bin' (Hoja 1) (Bin' (Hoja 1) (Hoja 1)), Bin' (Bin' (Hoja 1) (Hoja 1)) (Hoja 1)]
+-- arbolesAltura n = [ Bin' izq der | x <- [1..n-1], izq <- arbolesAltura x, der <- arbolesAltura (n-1) ]
+
+
+
+
+
 
 
