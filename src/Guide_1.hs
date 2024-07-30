@@ -75,7 +75,7 @@ module Guide_1 (
   listasQueSuman,
   todasLasListas,
   todosLosArboles,
-  arbolesAltura,
+  arbolesConNodos,
 ) where
 
 import Guide_0 (AB(Empty, Bin))
@@ -628,15 +628,15 @@ nivel aTri n = foldAT (\root izq med der level ->
 
 -- Ejercicio 18
 
-paresDeNat :: [(Integer, Integer)]
+paresDeNat :: [(Int, Int)]
 paresDeNat = [(x, z-x) | z <- [0..5], x <- [0..z]]
 -- paresDeNat = [(x, y) | z <- [0..5], x <- [0..z], y <- [0..z], x + y == z]
 
 
 -- Ejercicio 19
 
-pitagoricas :: [(Integer, Integer, Integer)]
-pitagoricas = [(a, b, c) |  c <- [1..], a <- [1..c], b <-[1..c], a^2 + b^2 == c^2, a < b]
+pitagoricas :: [(Int, Int, Int)]
+pitagoricas = [(a, b, c) |  c <- [1..], a <- [1..c], b <-[1..c], a^(2::Integer) + b^(2::Integer) == c^(2::Integer), a < b]
 
 
 -- Ejercicio 20
@@ -663,13 +663,13 @@ instance Show a => Show (AIH a) where
 -- data AIH a = Hoja a | Bin' (AIH a) (AIH a)
 
 todosLosArboles :: [[AIH Int]]
-todosLosArboles = [ arbolesAltura n | n <- [1..5] ]
+todosLosArboles = [ arbolesConNodos n | n <- [1..5] ]
 
-arbolesAltura :: Int -> [AIH Int]
-arbolesAltura 1 = [Hoja 1]
--- arbolesAltura 2 = [Bin' (Hoja 1) (Hoja 1)]
--- arbolesAltura 3 = [Bin' (Hoja 1) (Bin' (Hoja 1) (Hoja 1)), Bin' (Bin' (Hoja 1) (Hoja 1)) (Hoja 1)]
--- arbolesAltura n = [ Bin' izq der | x <- [1..n-1], izq <- arbolesAltura x, der <- arbolesAltura (n-1) ]
+arbolesConNodos :: Int -> [AIH Int]
+arbolesConNodos 1 = [Hoja 1]
+arbolesConNodos n = [ Bin' izq der | x <- [1..n-1], izq <- arbolesConNodos x, der <- arbolesConNodos (x-n) ]
+
+
 
 
 
