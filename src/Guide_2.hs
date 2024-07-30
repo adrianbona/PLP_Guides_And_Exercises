@@ -593,9 +593,11 @@ reverseFR = foldr (\x xs -> xs ++ [x]) [] --{RFR0}
 
 -- Ejercicio 5
 
+-- Zip con recursión estructural
 _zip :: [a] -> [b] -> [(a,b)]
 _zip = foldr (\x rec ys -> if null ys then [] else (x, head ys) : rec (tail ys)) (const []) --{Z0}
 
+-- Zip con recursión explícita
 _zip' :: [a] -> [b] -> [(a,b)]
 _zip' [] _ = [] --{Z'0}
 _zip' (x:xs) ys = if null ys then [] else (x, head ys) : _zip' xs (tail ys) --{Z'1}
